@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "994115423076",
+    "firebase_url": "https://asli-c404a.firebaseio.com",
+    "project_id": "asli-c404a",
+    "storage_bucket": "asli-c404a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994115423076:android:b099ef79d13710e1374871",
+        "android_client_info": {
+          "package_name": "com.kits.asli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994115423076-qj75rtb05pg437kggbf30t7a663e22u9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kits.asli",
+            "certificate_hash": "0754eae3f3bad0d66ae4c25e424c34fa4f6a4cda"
+          }
+        },
+        {
+          "client_id": "994115423076-drpolsoa0pt7shfpj9pts0c0qbsrkc0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp9T7On5gsaw-ZFfYSZ32BnvzIehGovVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994115423076-drpolsoa0pt7shfpj9pts0c0qbsrkc0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

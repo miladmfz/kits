@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/kowsar_back"
+    tools:context=".activity.SearchActivity"
+    android:layoutDirection="rtl">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/SearchActivity_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/SearchActivity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_weight="1"
+
+                android:background="?attr/colorPrimary"
+
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="جستجوی کالا">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/SearchActivityswitch"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:text="@string/active_activeswitch"
+                    android:theme="@style/SCBSwitch" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/SearchActivityswitch_amount"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:text="@string/amount_activeswitch"
+                    android:theme="@style/SCBSwitch" />
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_round_selected"
+            android:layout_margin="4dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+                <Button
+                    android:id="@+id/SearchActivity_refresh_fac"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0."
+                    android:background="@drawable/ic_refresh" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/totalfactorheader"
+                    android:textSize="20sp"
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/SearchActivity_sum_factor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:id="@+id/SearchActivity_customer_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:textSize="20sp"
+
+                android:gravity="center" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/customerfactorheader"
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/SearchActivity_customer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_weight="0.4"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/SearchActivity_grp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+
+
+                    android:textSize="18sp"
+                    android:text="@string/search_grp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_900"
+                    android:background="@drawable/bg_round_green"
+                    android:gravity="center"
+
+                    android:layout_weight="0.3" />
+
+                <Button
+                    android:id="@+id/SearchActivity_filter_active"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:visibility="gone"
+
+                    android:textSize="12sp"
+                    android:text="@string/prosearch_filter"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_900"
+                    android:background="@drawable/bg_round_green"
+                    android:gravity="center"
+                    android:layout_weight="0.3" />
+
+                <Button
+                    android:id="@+id/SearchActivity_change_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/bg_round_selected"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text="@string/prosearch_active"
+                    android:layout_weight="0.3" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/SearchActivity_grp_recy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:background="#ffffff" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp"
+            android:id="@+id/SearchActivity_search_line_p"
+            android:visibility="gone">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                >
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="0.5">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="0.5dp">
+
+                        <TextView
+                            android:layout_width="260dp"
+                            android:layout_height="50dp"
+                            android:paddingTop="5dp"
+                            android:layout_weight="0.8"
+                            android:gravity="center"
+                            android:text="@string/prosearch_et1" />
+
+                        <EditText
+                            android:id="@+id/SearchActivity_search_pro_good"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_weight="0.2"
+                            android:background="@drawable/bg_round_selected"
+                            android:layout_margin="2dp"
+                            android:gravity="center"
+                            android:autofillHints=""
+                            android:inputType="text"
+                            tools:ignore="LabelFor" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="1dp">
+
+                        <TextView
+                            android:layout_width="260dp"
+                            android:layout_height="50dp"
+                            android:paddingTop="5dp"
+                            android:layout_weight="0.8"
+                            android:gravity="center"
+                            android:text="@string/prosearch_et2" />
+
+                        <EditText
+                            android:id="@+id/SearchActivity_search_pro_dragoman"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_round_selected"
+                            android:layout_margin="2dp"
+                            android:layout_weight="0.2"
+                            android:gravity="center"
+                            android:autofillHints=""
+                            android:inputType="text"
+                            tools:ignore="LabelFor" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="1dp">
+
+                        <TextView
+                            android:layout_width="260dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="0.8"
+                            android:gravity="center"
+                            android:text="@string/prosearch_et3" />
+
+                        <EditText
+                            android:id="@+id/SearchActivity_search_pro_period"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_round_selected"
+                            android:layout_margin="2dp"
+                            android:layout_weight="0.2"
+                            android:inputType="numberDecimal"
+                            android:gravity="center"
+                            android:autofillHints=""
+                            tools:ignore="LabelFor" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="0.5">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="0.5dp">
+
+
+                        <TextView
+                            android:layout_width="260dp"
+                            android:layout_height="50dp"
+                            android:paddingTop="5dp"
+                            android:text="@string/prosearch_et4"
+                            android:gravity="center"
+                            android:layout_weight="0.8" />
+
+                        <EditText
+                            android:id="@+id/SearchActivity_search_pro_nasher"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_round_selected"
+                            android:layout_margin="2dp"
+                            android:layout_weight="0.2"
+                            android:gravity="center"
+                            android:autofillHints=""
+                            android:inputType="text"
+                            tools:ignore="LabelFor" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="1dp">
+
+                        <TextView
+                            android:layout_width="260dp"
+                            android:layout_height="50dp"
+                            android:paddingTop="5dp"
+                            android:layout_weight="0.8"
+                            android:gravity="center"
+                            android:text="@string/prosearch_et5" />
+
+                        <EditText
+                            android:id="@+id/SearchActivity_search_pro_writer"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_round_selected"
+                            android:layout_margin="2dp"
+                            android:layout_weight="0.2"
+                            android:gravity="center"
+                            android:autofillHints=""
+                            android:inputType="text"
+                            tools:ignore="LabelFor" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="1dp">
+
+                        <TextView
+                            android:layout_width="260dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="0.8"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:text="@string/prosearch_et6" />
+
+                        <EditText
+                            android:id="@+id/SearchActivity_search_pro_printyear"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@drawable/bg_round_selected"
+                            android:layout_margin="2dp"
+                            android:layout_weight="0.2"
+                            android:gravity="center"
+                            android:autofillHints=""
+                            android:inputType="text"
+                            tools:ignore="LabelFor"
+
+                            />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp"
+            android:id="@+id/SearchActivity_search_line">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <EditText
+                    android:id="@+id/SearchActivity_edtsearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/search_et"
+                    android:background="@drawable/bg_round_selected"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.3"
+                    android:singleLine="true"
+                    android:selectAllOnFocus="true"
+                    android:autofillHints=""
+                    android:inputType="text"
+                    tools:ignore="LabelFor" />
+
+
+                <Button
+
+                    android:id="@+id/SearchActivity_scan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.90"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/green_900"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:background="@drawable/bg_round_green"
+                    android:text="@string/scan" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/SearchActivity_R1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+
+            android:background="#ffffff" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/kowsar_back"
+    tools:context=".activity.BuyhistoryActivity"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.BuyActivity"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Buy_history_Activity_row"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_round_green_history_line"
+                    android:layout_margin="4dp"
+                    android:padding="5dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_round_selected"
+                    android:layout_margin="4dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="0.3">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/buyhistory_totalprice"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+
+
+                            android:layout_weight="0.5"
+                            tools:ignore="HardcodedText" />
+
+
+                        <TextView
+                            android:id="@+id/Buy_history_Activity_total_price_buy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:text="@string/buyhistory_totalprice"
+
+                            android:layout_weight="0.5" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="0.3">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/buyhistory_totalamount"
+                            android:textSize="16sp"
+
+
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_weight="0.3" />
+
+
+                        <TextView
+                            android:id="@+id/Buy_history_Activity_total_amount_buy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/buyhistory_totalamount"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_weight="0.3" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="0.3">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/buyhistory_totalrow"
+                            android:textSize="16sp"
+
+
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_weight="0.3" />
+
+
+                        <TextView
+                            android:id="@+id/Buy_history_Activity_total_row_buy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/buyhistory_totalrow"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_weight="0.3" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <EditText
+                android:id="@+id/Buy_history_Activity_edtsearch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/search_et"
+                android:background="@drawable/bg_round_selected"
+                android:layout_marginStart="2dp"
+                android:paddingEnd="20dp"
+                android:layout_weight="0.3"
+                android:singleLine="true"
+                android:selectAllOnFocus="true"
+                android:paddingStart="10dp"
+
+                android:autofillHints=""
+                android:inputType="text" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Buy_history_Activity_R1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="end|bottom"
+
+        >
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

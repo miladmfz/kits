@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/kowsar_back"
+    tools:context=".activity.ConfigActivity"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/config_broker"
+
+            android:layout_weight="0.5"
+
+            />
+
+        <TextView
+            android:id="@+id/config_borker"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittest1"
+
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/config_item"
+
+            android:layout_weight="0.5"
+
+            />
+
+        <TextView
+            android:id="@+id/config_grid"
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittest1"
+
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/config_searchitem"
+
+            android:layout_weight="0.5"
+
+            />
+
+        <TextView
+            android:id="@+id/config_itemamount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittest1"
+
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/config_off"
+            android:layout_weight="0.5"
+
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+
+            android:id="@+id/config_selloff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:enabled="false"
+            android:layout_gravity="center"
+            android:theme="@style/SCBSwitch" />
+
+        <androidx.appcompat.widget.SwitchCompat
+
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.75"
+            android:enabled="false"
+            android:layout_gravity="center"
+            android:theme="@style/SCBSwitch"
+            android:visibility="invisible" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/config_delay"
+
+            android:layout_weight="0.5"
+
+            />
+
+        <TextView
+            android:id="@+id/config_delay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittest1"
+
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layoutDirection="ltr"
+            android:text="@string/config_totalprice"
+            android:layout_weight="0.5"
+
+            />
+
+        <TextView
+            android:id="@+id/config_sum_factor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittest1"
+
+            android:layout_weight="0.5"
+            android:gravity="center" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="2dp"
+
+        >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/config_to_reg"
+                android:layout_margin="5dp"
+
+                android:background="#AB04B17B"
+                android:layout_width="match_parent"
+                android:text="@string/config_change"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+            <Button
+                android:id="@+id/config_to_home"
+                android:background="#AB04B17B"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:text="@string/config_returnhome"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="12sp"
+
+                android:layout_weight="0.5" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

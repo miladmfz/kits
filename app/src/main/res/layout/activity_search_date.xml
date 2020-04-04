@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Search_dateActivity"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+
+    <Button
+        android:id="@+id/search_date_1"
+        android:layout_margin="2dp"
+
+        android:background="@color/grayval"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:text="@string/last_1_day"
+
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" />
+
+    <Button
+        android:id="@+id/search_date_3"
+        android:layout_margin="2dp"
+
+        android:layout_width="match_parent"
+        android:text="@string/last_3_day"
+        android:background="@color/graymid"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" />
+
+    <Button
+        android:id="@+id/search_date_7"
+        android:layout_margin="2dp"
+
+        android:background="@color/grayval"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:text="@string/last_7_day"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" />
+
+    <Button
+        android:id="@+id/search_date_30"
+        android:layout_margin="2dp"
+
+        android:background="@color/graymid"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:text="@string/last_30_day"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" />
+
+    <Button
+        android:id="@+id/search_date_60"
+        android:layout_margin="2dp"
+
+        android:background="@color/grayval"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:text="@string/last_60_day"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" />
+
+    <Button
+        android:id="@+id/search_date_90"
+        android:layout_margin="2dp"
+
+        android:background="@color/graymid"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:text="@string/last_90_day"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

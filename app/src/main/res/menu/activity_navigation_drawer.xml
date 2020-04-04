@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:showIn="navigation_view"
+    android:layoutDirection="rtl">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search_w"
+
+            android:title="@string/good_search" />
+
+
+        <item
+            android:id="@+id/nav_search_date"
+            android:icon="@drawable/ic_search_w"
+
+            android:title="@string/good_new" />
+
+        <item
+            android:id="@+id/nav_buy"
+            android:icon="@drawable/ic_ww"
+            android:title="@string/good_bag"
+
+            />
+
+        <item
+            android:id="@+id/nav_open_fac"
+            android:icon="@drawable/ic_date_w"
+
+            android:title="@string/open_prefactor" />
+
+        <item
+            android:id="@+id/nav_buy_history"
+            android:icon="@drawable/ic_date_w"
+
+            android:title="@string/all_prefactor" />
+
+        <item
+            android:id="@+id/nav_rep"
+            android:icon="@drawable/ic_date_w"
+
+            android:title="@string/update" />
+
+
+    </group>
+
+    <item android:title="@string/nav_public">
+        <menu>
+
+            <item
+                android:id="@+id/nav_cfg"
+                android:icon="@drawable/ic_config_w"
+
+                android:title="@string/setting" />
+            <item
+                android:id="@+id/aboutus"
+                android:icon="@drawable/nav_about_us"
+
+                android:title="@string/aboutus" />
+
+
+        </menu>
+    </item>
+
+</menu>
