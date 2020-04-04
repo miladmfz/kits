@@ -97,6 +97,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
                 public void onResponse(Call<String> call2, Response<String> response) {
 
                     if (response.isSuccessful()) {
+                        assert response.body() != null;
                         if (response.body().equals("no_photo")) {
                             byte[] imageByteArray1;
                             imageByteArray1 = Base64.decode(mContext.getString(R.string.no_photo), Base64.DEFAULT);
@@ -114,6 +115,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
                 @Override
                 public void onFailure(Call<String> call2, Throwable t) {
                     Log.e("onFailure", "" + t.toString());
+
                 }
             });
 
