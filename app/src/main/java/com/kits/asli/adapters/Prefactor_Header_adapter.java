@@ -44,7 +44,6 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
 
     private final Context mContext;
     private String SERVER_IP_ADDRESS;
-    private int pfcode;
     private int customer_change;
     private Intent intent;
     private SharedPreferences.Editor sEdit;
@@ -218,8 +217,10 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                         goods.size();
                         shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
                         sEdit = shPref.edit();
-                        pfcode = Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null)));
-                        if (pfcode != facView.getPreFactorCode()) {
+
+                        if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) != facView.getPreFactorCode()) {
+                            sEdit.putString("prefactor_code", "0");
+                            sEdit.apply();
                             intent = new Intent(mContext, PrefactorActivity.class);
                             ((Activity) mContext).finish();
                             ((Activity) mContext).overridePendingTransition(0, 0);
