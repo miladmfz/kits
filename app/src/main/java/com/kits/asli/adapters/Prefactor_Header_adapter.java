@@ -221,6 +221,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                         if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) != facView.getPreFactorCode()) {
                             sEdit.putString("prefactor_code", "0");
                             sEdit.apply();
+
                             intent = new Intent(mContext, PrefactorActivity.class);
                             ((Activity) mContext).finish();
                             ((Activity) mContext).overridePendingTransition(0, 0);
