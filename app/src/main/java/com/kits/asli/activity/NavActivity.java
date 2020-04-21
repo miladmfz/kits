@@ -324,40 +324,26 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 
 
-        Data data = new Data.Builder().putString("manager","donwloadfile").build();
-        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-        final PeriodicWorkRequest req= new PeriodicWorkRequest.Builder(Wmanager.class,15, TimeUnit.MINUTES).setInputData(data).setConstraints(constraints).build();
-        //final OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).setConstraints(constraints).build();
-
-        // OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).build();
-
-        workManager = WorkManager.getInstance(NavActivity.this);
-        workManager.enqueue(req);
-        workManager.getWorkInfoByIdLiveData(req.getId()).observe(NavActivity.this, new Observer<WorkInfo>() {
-            @Override
-            public void onChanged(WorkInfo workInfo) {
-                if(workInfo!=null){
-                    if(workInfo.getState()==WorkInfo.State.RUNNING){
-                        workManager.cancelWorkById(req.getId());
-
-                    }
-                }
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//        Data data = new Data.Builder().putString("manager","donwloadfile").build();
+//        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+//        final PeriodicWorkRequest req= new PeriodicWorkRequest.Builder(Wmanager.class,15, TimeUnit.MINUTES).setInputData(data).setConstraints(constraints).build();
+//        //final OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).setConstraints(constraints).build();
+//
+//        // OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).build();
+//
+//        workManager = WorkManager.getInstance(NavActivity.this);
+//        workManager.enqueue(req);
+//        workManager.getWorkInfoByIdLiveData(req.getId()).observe(NavActivity.this, new Observer<WorkInfo>() {
+//            @Override
+//            public void onChanged(WorkInfo workInfo) {
+//                if(workInfo!=null){
+//                    if(workInfo.getState()==WorkInfo.State.RUNNING){
+//                        workManager.cancelWorkById(req.getId());
+//
+//                    }
+//                }
+//            }
+//        });
 
 
     }
