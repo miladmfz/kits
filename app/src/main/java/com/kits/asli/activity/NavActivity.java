@@ -24,6 +24,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,10 +41,12 @@ import com.kits.asli.adapters.Action;
 import com.kits.asli.adapters.Replication;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
+import com.kits.asli.webService.Wmanager;
 
 import java.text.DecimalFormat;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 //import com.kits.asli.model.Good;
 //import java.util.ArrayList;
@@ -59,7 +68,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private SharedPreferences shPref;
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private Replication replication;
-
+    WorkManager workManager;
 //    ArrayList<Good> goods;
 //    RecyclerView rc_test;
 //    GridLayoutManager gridLayoutManager = new GridLayoutManager(NavActivity.this, 2, GridLayoutManager.VERTICAL, false);
@@ -130,9 +139,15 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         }
 
 
+
+
+
+
         create_factor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
 
                 intent = new Intent(NavActivity.this, CustomerActivity.class);
                 intent.putExtra("edit", "0");
@@ -145,6 +160,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         good_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 intent = new Intent(NavActivity.this, SearchActivity.class);
                 intent.putExtra("scan", " ");
                 startActivity(intent);
@@ -301,6 +319,45 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         Log.e("msg=", "" + msg);
                     }
                 });
+
+
+
+
+
+        Data data = new Data.Builder().putString("manager","donwloadfile").build();
+        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        final PeriodicWorkRequest req= new PeriodicWorkRequest.Builder(Wmanager.class,15, TimeUnit.MINUTES).setInputData(data).setConstraints(constraints).build();
+        //final OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).setConstraints(constraints).build();
+
+        // OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).build();
+
+        workManager = WorkManager.getInstance(NavActivity.this);
+        workManager.enqueue(req);
+        workManager.getWorkInfoByIdLiveData(req.getId()).observe(NavActivity.this, new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if(workInfo!=null){
+                    if(workInfo.getState()==WorkInfo.State.RUNNING){
+                        workManager.cancelWorkById(req.getId());
+
+                    }
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

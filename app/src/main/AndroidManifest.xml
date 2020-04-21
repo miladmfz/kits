@@ -70,17 +70,17 @@
             android:name=".activity.NavActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.kits.asli.adapters.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="com.kits.asli.adapters.provider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
 
-            <!-- ressource file to create -->
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
+<!--            &lt;!&ndash; ressource file to create &ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/provider_paths" />-->
+<!--        </provider>-->
 
         <service
             android:name=".webService.MyMessagingService"
