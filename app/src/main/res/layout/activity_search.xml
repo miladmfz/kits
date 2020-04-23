@@ -448,9 +448,9 @@
                     android:layout_height="50dp"
                     android:hint="@string/search_et"
                     android:background="@drawable/bg_round_selected"
-                    android:layout_margin="5dp"
                     android:layout_weight="0.3"
                     android:singleLine="true"
+                    android:paddingStart="5dp"
                     android:selectAllOnFocus="true"
                     android:autofillHints=""
                     android:inputType="text"
@@ -467,6 +467,8 @@
                     android:textSize="14sp"
                     android:textColor="@color/green_900"
                     android:gravity="center"
+                    android:layout_margin="5dp"
+
                     android:singleLine="true"
                     android:background="@drawable/bg_round_green"
                     android:text="@string/scan" />

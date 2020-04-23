@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.kits.asli.R;
 import com.kits.asli.activity.DetailActivity;
 import com.kits.asli.activity.PrefactoropenActivity;
@@ -138,18 +139,18 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
 
         });
 
-
-        holder.rltv.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-                holder.ggg.setBackgroundColor(Color.GRAY);
-                Log.e("", "" + goodView.getGoodCode());
-                return true;
-            }
-
-
-        });
+//
+//        holder.rltv.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//
+//                holder.ggg.setBackgroundColor(Color.GRAY);
+//                Log.e("", "" + goodView.getGoodCode());
+//                return true;
+//            }
+//
+//
+//        });
 
 
         holder.btnadd.setOnClickListener(new View.OnClickListener() {

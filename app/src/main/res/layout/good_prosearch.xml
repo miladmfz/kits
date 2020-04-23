@@ -5,16 +5,17 @@
     android:id="@+id/good_prosearch"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
+    android:layout_height="350dp"
     android:layout_margin="3dp"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="6dp"
-    android:layoutDirection="rtl">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:layoutDirection="rtl"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_round_gray"
+
         android:orientation="vertical"
         android:id="@+id/proserch_ggg">
 

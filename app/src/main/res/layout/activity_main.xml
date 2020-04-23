@@ -144,37 +144,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_margin="10dp"
-                    android:text="@string/insert_prefactor"
                     android:background="@drawable/bg_round_green_buy"
-                    android:textSize="42sp"
-                    android:textColor="#ffffff" />
+                    android:text="@string/insert_prefactor"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
 
                 <Button
                     android:id="@+id/mainactivity_good_search"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:text="@string/good_search"
                     android:layout_margin="10dp"
-                    android:textSize="42sp"
-                    android:background="@drawable/bg_round_green" />
+                    android:background="@drawable/bg_round_green"
+                    android:text="@string/good_search"
+                    android:textSize="42sp" />
 
                 <Button
                     android:id="@+id/mainactivity_open_factor"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:text="@string/open_prefactor"
                     android:layout_margin="10dp"
-                    android:textSize="42sp"
-                    android:background="@drawable/bg_round_selected" />
+                    android:background="@drawable/bg_round_selected"
+                    android:clickable="true"
+
+                    android:focusable="true"
+                    android:text="@string/open_prefactor"
+                    android:textSize="42sp" />
 
                 <Button
                     android:id="@+id/mainactivity_all_factor"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:text="@string/all_prefactor"
                     android:layout_margin="10dp"
-                    android:textSize="42sp"
-                    android:background="@drawable/bg_round_red" />
+                    android:background="@drawable/bg_round_red"
+                    android:text="@string/all_prefactor"
+                    android:textSize="42sp" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
