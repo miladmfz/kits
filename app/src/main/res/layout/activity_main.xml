@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:theme="@style/AppTheme.AppBarOverlay">
+            >
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/NavActivity_toolbar"
@@ -25,7 +25,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@color/white"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:title="@string/app_name">
 
@@ -127,7 +127,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
@@ -139,50 +139,66 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mainactivity_create_factor"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/bg_round_green_buy"
                     android:text="@string/insert_prefactor"
                     android:textColor="#ffffff"
+                    app:rippleColor="@color/deep_purple_300"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/green_600"
                     android:textSize="42sp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
+
                     android:id="@+id/mainactivity_good_search"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/bg_round_green"
                     android:text="@string/good_search"
-                    android:textSize="42sp" />
+                    android:textColor="@color/grey_1000"
+                    android:textSize="42sp"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/green_100"
+                    app:rippleColor="@color/deep_purple_300" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mainactivity_open_factor"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/bg_round_selected"
                     android:clickable="true"
-
+                    app:backgroundTint="@color/white"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
                     android:focusable="true"
+                    android:textColor="@color/grey_1000"
+                    app:rippleColor="@color/deep_purple_300"
+
                     android:text="@string/open_prefactor"
                     android:textSize="42sp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mainactivity_all_factor"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/bg_round_red"
+                    android:textColor="@color/grey_1000"
+                    app:rippleColor="@color/deep_purple_300"
+                    app:backgroundTint="@color/red_100"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
                     android:text="@string/all_prefactor"
                     android:textSize="42sp" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

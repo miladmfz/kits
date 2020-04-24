@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pf_header_box"
     android:layoutDirection="rtl"
@@ -8,6 +8,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardCornerRadius="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/grey_1000"
     app:cardElevation="6dp">
 
 
@@ -300,9 +302,9 @@
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/red" />
+            android:background="@color/red_900" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:theme="@style/AppTheme.AppBarOverlay">
+            >
+
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/DetailActivity_toolbar"
@@ -30,7 +31,7 @@
                 android:layout_weight="1"
                 android:background="?attr/colorPrimary"
 
-                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@color/white"
                 app:title="@string/detail_toolbarname">
 
             </androidx.appcompat.widget.Toolbar>
@@ -121,58 +122,76 @@
                 android:id="@+id/DetailActivity_btnbuy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:theme="@style/MyButton"
-                android:layout_margin="2dp"
+                android:layout_margin="5dp"
                 android:text="@string/detail_buy"
                 android:textSize="25sp"
                 android:textColor="#ffffff"
                 android:layout_weight="0.75"
+
+                app:backgroundTint="@color/green_600"
+                app:strokeColor="@color/grey_1000"
+                app:strokeWidth="1dp"
+                app:icon="@drawable/ic_add_shopping_black"
+                app:iconTint="@color/white"
+                style="?attr/materialButtonOutlinedStyle"
+
 
                 />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="3dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/grey_1000"
+            app:cardElevation="4dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:textColor="#000000"
-
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/grayval"
-                android:textSize="20sp"
-                android:text="@string/detail_price"
-                android:gravity="center"
-                android:layout_weight="0.7" />
+                android:layout_height="60dp"
+                android:layout_weight="1">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:textColor="@color/red"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="#000000"
 
-                android:id="@+id/DetailActivity_tv13"
-                android:text="@string/detail_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_10"
+                    android:textSize="20sp"
+                    android:text="@string/detail_price"
+                    android:gravity="center"
+                    android:layout_weight="0.7" />
 
-                android:gravity="center"
-                android:layout_weight="0.3"
-                style="@style/Divider" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/red_900"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="30sp"
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:id="@+id/DetailActivity_tv13"
+                    android:text="@string/detail_empty"
 
-        <androidx.viewpager.widget.ViewPager
+                    android:gravity="center"
+                    android:layout_weight="0.3"
+                    style="@style/Divider" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/graytxt" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="3dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/grey_1000"
+            app:cardElevation="4dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -181,14 +200,13 @@
 
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:textColor="#000000"
-                    android:textSize="30sp"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
                     android:text="@string/detail_good"
-                    android:layout_marginTop="10dp"
-
-                    android:background="@color/graymid" />
+                    android:padding="5dp"
+                    android:background="@color/grey_60" />
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -202,7 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
 
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="22sp"
 
                         android:text="@string/detail_category"
@@ -227,7 +245,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -241,7 +259,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
 
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="22sp"
 
                         android:text="@string/deatil_goodcode"
@@ -266,7 +284,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -278,7 +297,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
 
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="22sp"
 
                         android:text="@string/detail_goodname"
@@ -303,7 +322,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -315,7 +335,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_goodexplain1"
                         android:gravity="center"
@@ -339,7 +359,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -353,7 +373,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/amount"
                         android:gravity="center"
@@ -377,7 +397,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -389,7 +410,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_isbn"
                         android:gravity="center"
@@ -412,7 +433,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -424,7 +446,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_tahvildate"
                         android:gravity="center"
@@ -448,7 +470,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -460,7 +483,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_nvarchar1"
                         android:gravity="center"
@@ -484,7 +507,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -496,7 +520,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_nvarchar2"
                         android:gravity="center"
@@ -520,7 +544,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -532,7 +557,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_float1"
                         android:gravity="center"
@@ -555,7 +580,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -567,7 +593,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_nvarchar13"
                         android:gravity="center"
@@ -590,7 +616,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -602,7 +629,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_nvarchar20"
                         android:gravity="center"
@@ -625,7 +652,8 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -637,7 +665,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grayval"
+                        android:background="@color/grey_10"
                         android:textSize="20sp"
                         android:text="@string/detail_float5"
                         android:gravity="center"
@@ -660,10 +688,12 @@
                 <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/graytxt" />
+                    android:background="@color/grey_40" />
+
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

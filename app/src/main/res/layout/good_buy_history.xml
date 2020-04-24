@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/good_buy_history"
@@ -9,6 +9,8 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="6dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/grey_1000"
     android:layoutDirection="rtl">
 
     <LinearLayout
@@ -19,7 +21,7 @@
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1">
@@ -32,10 +34,8 @@
                 <TextView
                     android:layout_width="321dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:layout_weight="0.80"
 
-                    android:paddingEnd="8dp"
                     android:text="کد کالا : "
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -45,7 +45,6 @@
                     android:id="@+id/good_buy_history_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
                     android:paddingLeft="8dp"
                     android:paddingTop="1dp"
                     android:paddingRight="8dp"
@@ -67,10 +66,7 @@
                 <TextView
                     android:layout_width="321dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:layout_weight="0.80"
-
-                    android:paddingEnd="8dp"
                     android:text="نام کالا : "
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -97,7 +93,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/graytxt" />
+                android:background="@color/grey_1000" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,11 +104,7 @@
                 <TextView
                     android:layout_width="155dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="0.25"
-
-                    android:gravity="right"
                     android:text="فی خالص :"
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -122,11 +114,8 @@
                     android:id="@+id/good_buy_history_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:layout_weight="0.25"
-
-                    android:gravity="right"
-                    android:text="price"
+                    android:text="sdsf"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -143,11 +132,7 @@
                 <TextView
                     android:layout_width="155dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="0.25"
-
-                    android:gravity="right"
                     android:text="جمع خالص :"
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -157,9 +142,7 @@
                     android:id="@+id/good_buy_history_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:layout_weight="0.25"
-                    android:gravity="right"
                     android:text="total"
                     android:textColor="#000000"
                     android:textSize="16sp"
@@ -172,7 +155,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/graytxt" />
+                android:background="@color/grey_1000" />
 
 
             <LinearLayout
@@ -184,10 +167,7 @@
                 <TextView
                     android:layout_width="321dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
                     android:layout_weight="0.80"
-
-                    android:paddingEnd="8dp"
                     android:text="فی ناخالص : "
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -197,9 +177,7 @@
                     android:id="@+id/good_buy_history_maxprice"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
                     android:layout_weight="0.25"
-                    android:gravity="right"
                     android:text="max price"
                     android:textColor="#000000"
                     android:textSize="16sp"
@@ -218,11 +196,7 @@
                 <TextView
                     android:layout_width="155dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="0.25"
-
-                    android:gravity="right"
                     android:text="جمع ناخالص :"
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -247,7 +221,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/graytxt" />
+                android:background="@color/grey_1000" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -260,7 +234,6 @@
                     android:layout_width="12dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="0.3"
 
                     android:text="تعداد : "
@@ -288,7 +261,7 @@
         <androidx.viewpager.widget.ViewPager
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:background="@color/graytxt" />
+            android:background="@color/grey_1000" />
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -301,7 +274,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
 
-                android:outlineSpotShadowColor="#000000">
+                >
 
 
                 <ImageView
@@ -319,4 +292,4 @@
     </LinearLayout>
 
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

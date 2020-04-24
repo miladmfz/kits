@@ -2,15 +2,19 @@ package com.kits.asli.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kits.asli.R;
@@ -50,12 +54,16 @@ public class Grp_Vlist_detail_Adapter extends RecyclerView.Adapter<Grp_Vlist_det
         holder.grpname.setText(GoodGroupView.getName());
         Log.e("id", "" + GoodGroupView.getGoodGroupCode());
         Log.e("id", "" + GoodGroupView.getName());
-        if (dbh.getAllGroups("", GoodGroupView.getGoodGroupCode()).size() == 0) {
-            holder.arwn.getLayoutParams().height = 0;
-        } else
-            holder.arwn.getLayoutParams().height = 75;
 
-        holder.rltv.setOnClickListener(new View.OnClickListener() {
+
+        if (dbh.getAllGroups("", GoodGroupView.getGoodGroupCode()).size() == 0) {
+            holder.grpname.setIconSize(1);
+
+        } else
+            holder.grpname.setIconSize(50);
+
+
+        holder.grpname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -74,14 +82,13 @@ public class Grp_Vlist_detail_Adapter extends RecyclerView.Adapter<Grp_Vlist_det
     }
 
     class GoodGroupViewHolder extends RecyclerView.ViewHolder {
-        private TextView grpname;
-        private ImageView arwn;
-        CardView rltv;
+
+        private MaterialButton grpname;
+        MaterialCardView rltv;
 
         GoodGroupViewHolder(View itemView) {
             super(itemView);
             grpname = itemView.findViewById(R.id.grp_vlist_detail_name);
-            arwn = itemView.findViewById(R.id.grp_vlist_arrow_down);
             rltv = itemView.findViewById(R.id.grp_vlist_detail);
         }
     }

@@ -3,16 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.RegistrationActivity"
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:layoutDirection="rtl">
 
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/BuyActivity_appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
 
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            app:title="تفییر اطلاعات"
+
+            app:titleTextColor="@color/white"
+            android:background="?attr/colorPrimary">
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,13 +43,18 @@
                 android:background="#AB04B17B"
                 android:layout_width="match_parent"
                 android:text="@string/reg_save"
-                android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_gravity="end|bottom"
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4" />
+                android:layout_weight="0.4"
+
+                android:textColor="@color/white"
+                app:backgroundTint="@color/green_600"
+                app:strokeColor="@color/grey_1000"
+                app:strokeWidth="1dp"
+                style="?attr/materialButtonOutlinedStyle" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -133,18 +155,16 @@
                     android:text="@string/config_off"
                     android:layout_weight="0.5" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/Registr_selloff"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:theme="@style/SCBSwitch" />
+                    android:layout_weight="0.75" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.75"
-                    android:theme="@style/SCBSwitch"
                     android:visibility="invisible" />
 
 
@@ -181,7 +201,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </ScrollView>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

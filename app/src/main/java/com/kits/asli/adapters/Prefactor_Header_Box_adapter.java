@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kits.asli.R;
@@ -95,7 +96,7 @@ public class Prefactor_Header_Box_adapter extends RecyclerView.Adapter<Prefactor
         private TextView fac_price;
         private TextView fac_customer;
 
-        CardView fac_rltv;
+        MaterialCardView fac_rltv;
 
         facViewHolder(View itemView) {
             super(itemView);

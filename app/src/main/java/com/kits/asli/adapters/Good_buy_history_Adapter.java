@@ -14,7 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kits.asli.R;
@@ -138,7 +139,7 @@ public class Good_buy_history_Adapter extends RecyclerView.Adapter<Good_buy_hist
         private TextView code;
 
         private ImageView img;
-        CardView rltv;
+        MaterialCardView rltv;
 
         GoodViewHolder(View itemView) {
             super(itemView);

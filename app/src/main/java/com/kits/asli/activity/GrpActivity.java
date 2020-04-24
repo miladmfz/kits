@@ -20,9 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -105,16 +107,16 @@ public class GrpActivity extends AppCompatActivity {
 
 
         Toolbar toolbar = findViewById(R.id.GrpActivity_toolbar);
-        final SwitchCompat mySwitch = findViewById(R.id.qep_Activityswitch);
-        final SwitchCompat mySwitc_amount = findViewById(R.id.qep_Activityswitch_amount);
+        final SwitchMaterial mySwitch = findViewById(R.id.qep_Activityswitch);
+        final SwitchMaterial mySwitc_amount = findViewById(R.id.qep_Activityswitch_amount);
         final TextView customer = findViewById(R.id.GrpActivity_customer);
         final TextView sumfac = findViewById(R.id.GrpActivity_sum_factor);
         final TextView customer_code = findViewById(R.id.GrpActivity_customer_code);
         final Button change_search = findViewById(R.id.GrpActivity_change_search);
         final Button filter_active = findViewById(R.id.GrpActivity_filter_active);
         final Button ref_fac = findViewById(R.id.GrpActivity_refresh_fac);
-        final CardView line_pro = findViewById(R.id.GrpActivity_search_line_p);
-        final CardView line = findViewById(R.id.GrpActivity_search_line);
+        final MaterialCardView line_pro = findViewById(R.id.GrpActivity_search_line_p);
+        final MaterialCardView line = findViewById(R.id.GrpActivity_search_line);
         final EditText edtsearch = findViewById(R.id.GrpActivity_edtsearch);
         final Handler handler = new Handler();
         rc_good = findViewById(R.id.GrpActivity_good);

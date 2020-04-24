@@ -24,7 +24,7 @@
     <string name="setting">تنظیمات</string>
     <string name="aboutus">درباره ما</string>
     <string name="aboutus_address">نشانی :میدان توحید خیابان پرچم پلاک 37</string>
-    <string name="aboutus_number">تلفن :3--66569320</string>
+    <string name="aboutus_number">تلفن :3—66569320</string>
     <string name="aboutus_email">پست الکترونیک :info@Kits.ir</string>
     <string name="aboutus_downpage">تمامی حقوق این نرم افزار متعلق به گروه نرم افزاری کوثر می باشد</string>
     <string name="buy_total">مبلغ نهایی</string>
@@ -66,8 +66,8 @@
     <string name="detail_float5">تعداد صفحات</string>
     <string name="detailsetting_name">نام ستون مورد نظر</string>
     <string name="detailsetting_row">ردیف :</string>
-    <string name="active_activeswitch">فعال-غیرفعال</string>
-    <string name="amount_activeswitch">هردو</string>
+    <string name="active_activeswitch">فعال</string>
+    <string name="amount_activeswitch">موجود</string>
     <string name="prosearch_filter">اعمال فیلتر</string>
     <string name="prosearch_active">جستجوی پیشرفته</string>
     <string name="prosearch_et4">ناشر :</string>
@@ -121,6 +121,16 @@
     <string name="prefactor_kowsardate">تاریخ کوثر :</string>
     <string name="prefactor_kowsarcode">کد کوثر :</string>
     <string name="factor_closed">فاکتور بسته می باشد</string>
+    <string name="good_buy_name">نام کالا :</string>
+    <string name="good_buy_sellprice">فی خالص :</string>
+    <string name="good_buy_totalsellprice">جمع خالص :</string>
+    <string name="good_buy_maxsellprice">فی ناخالص :</string>
+    <string name="good_buy_totalmaxsellprice">جمع ناخالص :</string>
+    <string name="good_buy_shortage">کسر موجودی</string>
+    <string name="good_buy_amount">تعداد :</string>
+    <string name="good_buy_imaga_Description">good_buy_imaga_Description</string>
+    <string name="good_buy_offer">offer</string>
+    <string name="good_buy_delete">حذف از سبد</string>
 
 
 </resources>

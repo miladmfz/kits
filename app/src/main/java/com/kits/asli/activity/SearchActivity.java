@@ -25,9 +25,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -123,14 +125,14 @@ public class SearchActivity extends AppCompatActivity {
         itemamount = Integer.parseInt(Objects.requireNonNull(shPref.getString("itemamount", null)));
 
 
-        final SwitchCompat mySwitch = findViewById(R.id.SearchActivityswitch);
-        final SwitchCompat mySwitch_amount = findViewById(R.id.SearchActivityswitch_amount);
+        final SwitchMaterial mySwitch = findViewById(R.id.SearchActivityswitch);
+        final SwitchMaterial mySwitch_amount = findViewById(R.id.SearchActivityswitch_amount);
         final Button change_search = findViewById(R.id.SearchActivity_change_search);
         final Button grp = findViewById(R.id.SearchActivity_grp);
         final Button filter_active = findViewById(R.id.SearchActivity_filter_active);
         final Button ref_fac = findViewById(R.id.SearchActivity_refresh_fac);
-        final CardView line_pro = findViewById(R.id.SearchActivity_search_line_p);
-        final CardView line = findViewById(R.id.SearchActivity_search_line);
+        final MaterialCardView line_pro = findViewById(R.id.SearchActivity_search_line_p);
+        final MaterialCardView line = findViewById(R.id.SearchActivity_search_line);
         final Handler handler = new Handler();
         final TextView customer = findViewById(R.id.SearchActivity_customer);
         final TextView sumfac = findViewById(R.id.SearchActivity_sum_factor);

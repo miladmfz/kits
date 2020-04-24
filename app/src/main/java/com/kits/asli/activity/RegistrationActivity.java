@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import com.kits.asli.R;
 import com.kits.asli.adapters.Action;
@@ -63,7 +64,7 @@ public class RegistrationActivity extends AppCompatActivity {
         regitemamount = findViewById(R.id.Registr_itemamount);
 
 
-        SwitchCompat regselloff = findViewById(R.id.Registr_selloff);
+        SwitchMaterial regselloff = findViewById(R.id.Registr_selloff);
 
 
         UserInfo auser = dbh.LoadPersonalInfo();

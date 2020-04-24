@@ -17,7 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kits.asli.R;
@@ -413,7 +414,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
         private Button fac_excel;
         private Button fac_select;
         private Button fac_good_edit;
-        CardView fac_rltv;
+        MaterialCardView fac_rltv;
 
         facViewHolder(View itemView) {
             super(itemView);

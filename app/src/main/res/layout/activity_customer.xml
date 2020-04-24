@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/kowsar_back"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.CustomerActivity"
@@ -14,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:theme="@style/AppTheme.AppBarOverlay">
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/CustomerActivity_toolbar"
@@ -24,7 +23,7 @@
 
             android:background="?attr/colorPrimary"
 
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white"
             app:title="@string/customer_toolbarname">
 
         </androidx.appcompat.widget.Toolbar>
@@ -41,10 +40,15 @@
         android:hint="@string/search_et"
         android:textSize="30sp"
         android:singleLine="true"
-
-        android:background="#E0E0E0"
+        android:paddingStart="5dp"
+        android:layout_margin="5dp"
+        android:textColorHint="@color/grey_40"
         android:autofillHints=""
-        android:inputType="text" />
+        android:inputType="text"
+        android:background="@drawable/bg_round_selected"
+
+
+        />
 
 
     <ScrollView

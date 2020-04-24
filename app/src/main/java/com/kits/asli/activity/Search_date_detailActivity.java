@@ -16,7 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -137,7 +138,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
         re.setItemAnimator(new DefaultItemAnimator());
 
 
-        final SwitchCompat mySwitch_amount = findViewById(R.id.search_date_switch_amount);
+        final SwitchMaterial mySwitch_amount = findViewById(R.id.search_date_switch_amount);
         mySwitch_amount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

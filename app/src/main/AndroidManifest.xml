@@ -26,61 +26,31 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
 
-        <activity android:name=".activity.DetailsettingActivity" />
-        <activity
-            android:name=".activity.Search_date_detailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.Search_dateActivity" />
-        <activity android:name=".activity.ScanCodeActivity" />
-        <activity
-            android:name=".activity.CustomerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.PrefactoropenActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.BuyhistoryActivity" />
-        <activity
-            android:name=".activity.PrefactorActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".activity.AboutusActivity" />
+        <activity android:name=".activity.BuyActivity" />
+        <activity android:name=".activity.BuyhistoryActivity" />
         <activity android:name=".activity.ConfigActivity" />
+        <activity android:name=".activity.CustomerActivity" />
+        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".activity.DetailsettingActivity" />
+        <activity android:name=".activity.GrpActivity" />
+        <activity android:name=".activity.NavActivity" />
+        <activity android:name=".activity.PrefactorActivity" />
+        <activity android:name=".activity.PrefactoropenActivity" />
         <activity android:name=".activity.RegistrationActivity" />
-        <activity
-            android:name=".activity.BuyActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.GrpActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".activity.ScanCodeActivity" />
+        <activity android:name=".activity.Search_date_detailActivity" />
+        <activity android:name=".activity.Search_dateActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.NavActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
-<!--        <provider-->
-<!--            android:name="androidx.core.content.FileProvider"-->
-<!--            android:authorities="com.kits.asli.adapters.provider"-->
-<!--            android:exported="false"-->
-<!--            android:grantUriPermissions="true">-->
-
-<!--            &lt;!&ndash; ressource file to create &ndash;&gt;-->
-<!--            <meta-data-->
-<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-<!--                android:resource="@xml/provider_paths" />-->
-<!--        </provider>-->
 
         <service
             android:name=".webService.MyMessagingService"

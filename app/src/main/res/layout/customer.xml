@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/customer"
@@ -7,8 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="3dp"
     app:cardElevation="6dp"
+    app:strokeColor="@color/grey_1000"
+    app:strokeWidth="1dp"
     android:layoutDirection="rtl">
 
 
@@ -40,7 +42,7 @@
                     android:layout_weight="0.25"
                     android:gravity="center"
                     android:text="@string/customer_code"
-                    android:textColor="@color/graydark"
+                    android:textColor="@color/grey_900"
                     android:textSize="12sp"
                     tools:ignore="NestedWeights" />
 
@@ -76,7 +78,7 @@
                     tools:ignore="NestedWeights"
                     android:gravity="center"
                     android:text="@string/customer_credite"
-                    android:textColor="@color/graydark"
+                    android:textColor="@color/grey_900"
                     android:textSize="12sp" />
 
                 <TextView
@@ -112,7 +114,7 @@
                 android:layout_weight="0.25"
                 android:text="@string/customerfactorheader"
                 android:gravity="center"
-                android:textColor="@color/graydark"
+                android:textColor="@color/grey_900"
 
                 android:textSize="12sp" />
 
@@ -144,7 +146,7 @@
                 android:layout_weight="0.25"
                 android:text="@string/customer_manager"
                 android:gravity="center"
-                android:textColor="@color/graydark"
+                android:textColor="@color/grey_900"
 
                 android:textSize="12sp" />
 
@@ -177,7 +179,7 @@
                 android:layout_weight="0.25"
                 android:text="@string/customer_phone"
                 android:gravity="center"
-                android:textColor="@color/graydark"
+                android:textColor="@color/grey_900"
 
                 android:textStyle="bold" />
 
@@ -210,7 +212,7 @@
                 android:layout_weight="0.25"
                 android:text="@string/customer_addres"
                 android:gravity="center"
-                android:textColor="@color/graydark"
+                android:textColor="@color/grey_900"
 
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -233,4 +235,4 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

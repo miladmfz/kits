@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:theme="@style/AppTheme.AppBarOverlay">
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/GrpActivity_toolbar"
@@ -22,25 +22,29 @@
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
 
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white"
             app:title="گروه ها">
 
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/qep_Activityswitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:text="@string/active_activeswitch"
-                android:theme="@style/SCBSwitch" />
+                android:checked="true"
+                android:textColor="@color/white" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/qep_Activityswitch_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:text="@string/amount_activeswitch"
-                android:theme="@style/SCBSwitch" />
+                android:checked="true"
+                android:textColor="@color/white"
+
+                />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -129,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -143,7 +147,7 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
 
@@ -151,34 +155,41 @@
                     android:id="@+id/GrpActivity_filter_active"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="3dp"
                     android:visibility="gone"
                     android:textSize="12sp"
                     android:text="@string/prosearch_filter"
                     android:textStyle="bold"
                     android:textColor="@color/green_900"
-                    android:background="@drawable/bg_round_green"
                     android:gravity="center"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.5"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/green_200"
+                    style="?attr/materialButtonOutlinedStyle" />
 
 
                 <Button
                     android:id="@+id/GrpActivity_change_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/bg_round_selected"
                     android:textSize="12sp"
                     android:gravity="center"
                     android:text="@string/prosearch_active"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.5"
+                    android:textColor="@color/grey_1000"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/white"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_margin="3dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -391,10 +402,10 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -419,7 +430,7 @@
                 android:inputType="text"
                 tools:ignore="LabelFor" />
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <androidx.recyclerview.widget.RecyclerView

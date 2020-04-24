@@ -21,7 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kits.asli.R;
@@ -247,7 +248,7 @@ public class Good_buy_Adapter extends RecyclerView.Adapter<Good_buy_Adapter.Good
         private Button btndlt;
 
         private ImageView img;
-        CardView rltv;
+        MaterialCardView rltv;
 
         GoodViewHolder(View itemView) {
             super(itemView);

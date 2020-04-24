@@ -21,37 +21,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:theme="@style/AppTheme.AppBarOverlay">
-
+            >
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/SearchActivity_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
-
                 android:background="?attr/colorPrimary"
+                app:title="جستجوی کالا"
+                app:titleTextColor="@color/white">
 
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="جستجوی کالا">
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/SearchActivityswitch"
-
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:text="@string/active_activeswitch"
-                    android:theme="@style/SCBSwitch" />
+                    android:textColor="@color/white"
+
+                    />
 
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/SearchActivityswitch_amount"
-
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:text="@string/amount_activeswitch"
-                    android:theme="@style/SCBSwitch" />
+                    android:textColor="@color/white"
+
+                    />
 
 
             </androidx.appcompat.widget.Toolbar>
@@ -132,7 +134,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -152,48 +154,62 @@
                 <Button
                     android:id="@+id/SearchActivity_grp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-
-
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="@string/search_grp"
                     android:textStyle="bold"
                     android:textColor="@color/green_900"
-                    android:background="@drawable/bg_round_green"
                     android:gravity="center"
+                    android:layout_margin="2dp"
+                    android:layout_weight="0.3"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/green_200"
+                    style="?attr/materialButtonOutlinedStyle"
 
-                    android:layout_weight="0.3" />
+
+                    />
 
                 <Button
                     android:id="@+id/SearchActivity_filter_active"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:visibility="gone"
+                    android:layout_margin="2dp"
 
                     android:textSize="12sp"
                     android:text="@string/prosearch_filter"
                     android:textStyle="bold"
                     android:textColor="@color/green_900"
-                    android:background="@drawable/bg_round_green"
                     android:gravity="center"
-                    android:layout_weight="0.3" />
+                    android:layout_weight="0.3"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/green_200"
+                    style="?attr/materialButtonOutlinedStyle"
+
+                    />
 
                 <Button
                     android:id="@+id/SearchActivity_change_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/bg_round_selected"
                     android:textSize="12sp"
                     android:gravity="center"
                     android:text="@string/prosearch_active"
-                    android:layout_weight="0.3" />
+                    android:textColor="@color/grey_1000"
+                    android:layout_weight="0.3"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/white"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_margin="2dp"
+
+                    />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/SearchActivity_grp_recy"
@@ -205,7 +221,7 @@
             android:background="#ffffff" />
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -421,9 +437,9 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -470,22 +486,26 @@
                     android:layout_margin="5dp"
 
                     android:singleLine="true"
-                    android:background="@drawable/bg_round_green"
-                    android:text="@string/scan" />
+                    android:text="@string/scan"
+
+
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/green_200"
+                    style="?attr/materialButtonOutlinedStyle"
+
+                    />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/SearchActivity_R1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="5dp"
-
-            android:background="#ffffff" />
+            android:layout_marginTop="5dp" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

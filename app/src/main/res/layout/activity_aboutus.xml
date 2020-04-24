@@ -3,12 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.AboutusActivity"
     android:orientation="vertical"
     android:layoutDirection="rtl">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/BuyActivity_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-    <androidx.cardview.widget.CardView
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/SearchActivity_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/AboutusActivity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimary"
+                app:title="@string/aboutus"
+                app:titleTextColor="@color/white">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -26,51 +55,42 @@
                 android:background="@drawable/kits" />
 
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:text="@string/aboutus_address"
-
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginTop="20sp"
 
                 />
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:text="@string/aboutus_number"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginTop="20sp"
 
                 />
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:text="@string/aboutus_email"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginTop="20sp"
 
                 />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <Button
-            android:id="@+id/kits"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="end|bottom"
-            android:background="@color/white"
-
-            android:textSize="20sp"
-            android:text="@string/aboutus_downpage"
-
-            />
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

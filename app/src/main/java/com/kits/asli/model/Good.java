@@ -10,6 +10,11 @@ import static android.text.TextUtils.isEmpty;
 
 public class Good implements Serializable {
 
+
+//    movie = new Movie("The LEGO Movie", "Animation", "2014");
+//        movieList.add(movie);
+
+
     @SerializedName("GoodCode")
     private Integer GoodCode;
     @SerializedName("state")

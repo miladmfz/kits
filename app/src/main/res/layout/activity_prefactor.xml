@@ -14,17 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:theme="@style/AppTheme.AppBarOverlay">
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/PrefactorActivity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_weight="1"
-
+            app:titleTextColor="@color/white"
             android:background="?attr/colorPrimary"
             android:layout_gravity="center"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+
             app:title="انتخاب فاکتور">
 
         </androidx.appcompat.widget.Toolbar>
@@ -35,7 +35,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#6F5F5F5F"
+        android:background="@color/grey_10"
         android:orientation="horizontal">
 
 
@@ -45,7 +45,7 @@
             android:text="@string/factor_in_use"
             android:gravity="center"
 
-            android:textColor="@color/windowBackground"
+            android:textColor="@color/grey_1000"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_weight="0.3" />
@@ -55,7 +55,7 @@
             android:id="@+id/PrefactorActivity_lastfactor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/windowBackground"
+            android:textColor="@color/grey_1000"
             android:textStyle="bold"
             android:textSize="22sp"
             android:gravity="center"
@@ -68,11 +68,15 @@
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:text="@string/insert_prefactor"
-            android:background="@drawable/bg_round_green_buy"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/windowBackground2"
-            android:theme="@style/MyButton"
+
+
+            android:textColor="@color/white"
+            app:backgroundTint="@color/green_600"
+            app:strokeColor="@color/grey_1000"
+            app:strokeWidth="1dp"
+            style="?attr/materialButtonOutlinedStyle"
 
             />
 
@@ -84,11 +88,14 @@
             android:layout_height="match_parent"
             android:text="@string/refresh"
 
-            android:background="@drawable/bg_round_green_buy"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/windowBackground2"
-            android:theme="@style/MyButton" />
+
+            android:textColor="@color/white"
+            app:backgroundTint="@color/green_600"
+            app:strokeColor="@color/grey_1000"
+            app:strokeWidth="1dp"
+            style="?attr/materialButtonOutlinedStyle" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -102,7 +109,9 @@
         android:singleLine="true"
         android:selectAllOnFocus="true"
         android:autofillHints=""
-        android:inputType="text" />
+        android:inputType="text"
+        android:paddingRight="10dp"
+        android:layout_margin="5dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/PrefactorActivity_recyclerView"

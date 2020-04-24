@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:theme="@style/AppTheme.AppBarOverlay">
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/PrefactoropenActivity_toolbar"
@@ -26,7 +26,7 @@
 
             android:background="?attr/colorPrimary"
             android:layout_gravity="center"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/white"
             app:title="انتخاب فاکتور">
 
         </androidx.appcompat.widget.Toolbar>
@@ -41,33 +41,33 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:layout_height="50dp"
-        android:background="@drawable/bg_round_green_buy"
-
-
-        android:theme="@style/MyButton"
         android:text="@string/insert_prefactor"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:textColor="#ffffff" />
+
+
+        android:textColor="@color/white"
+        app:backgroundTint="@color/green_600"
+        app:strokeColor="@color/grey_1000"
+        app:strokeWidth="1dp"
+        style="?attr/materialButtonOutlinedStyle" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/bg_round_selected"
-        android:layout_margin="10dp"
-        android:weightSum="1">
+        android:layout_margin="10dp">
 
 
         <TextView
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:gravity="center"
             android:text="@string/open_amountprefactor"
-            android:textColor="@color/windowBackground"
+            android:textColor="@color/grey_1000"
             android:focusable="true"
             android:layout_weight="0.3" />
 
@@ -75,26 +75,30 @@
             android:id="@+id/PrefactoropenActivity_amount"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_weight="0.3"
-            android:textColor="@color/windowBackground"
+            android:layout_weight="0.4"
+            android:textColor="@color/grey_1000"
             android:focusable="true" />
 
         <Button
             android:id="@+id/PrefactoropenActivity_deleteempty"
             android:layout_margin="2dp"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/open_deleteprefactor"
             android:layout_weight="0.3"
-            android:background="@drawable/bg_round_green_buy"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/windowBackground2"
-            android:theme="@style/MyButton" />
+            android:textColor="@color/white"
+
+
+            app:backgroundTint="@color/green_600"
+            app:strokeColor="@color/grey_1000"
+            app:strokeWidth="1dp"
+            style="?attr/materialButtonOutlinedStyle" />
 
 
         <Button
@@ -103,12 +107,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="@string/refresh"
-            android:layout_weight="0"
+            android:layout_weight="0.3"
             android:background="@drawable/bg_round_green_buy"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/windowBackground2"
-            android:theme="@style/MyButton"
+            android:textColor="@color/white"
             android:visibility="gone" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

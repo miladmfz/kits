@@ -19,7 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -139,18 +140,24 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
 
         });
 
-//
-//        holder.rltv.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//
-//                holder.ggg.setBackgroundColor(Color.GRAY);
-//                Log.e("", "" + goodView.getGoodCode());
-//                return true;
-//            }
-//
-//
-//        });
+
+        holder.rltv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                holder.rltv.getVerticalScrollbarPosition();
+
+                holder.rltv.setChecked(!holder.rltv.isChecked());
+                return true;
+            }
+
+
+        });
+
+
+
+
+
 
 
         holder.btnadd.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +200,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         private Button btnadd;
         private ImageView img;
         private LinearLayout ggg;
-        CardView rltv;
+        MaterialCardView rltv;
 
         GoodViewHolder(View itemView) {
             super(itemView);

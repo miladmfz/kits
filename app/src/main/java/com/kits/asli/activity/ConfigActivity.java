@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import com.kits.asli.R;
 import com.kits.asli.model.DatabaseHelper;
@@ -67,7 +68,8 @@ public class ConfigActivity extends AppCompatActivity {
         TextView itemamount = findViewById(R.id.config_itemamount);
         TextView sum_factor = findViewById(R.id.config_sum_factor);
 
-        SwitchCompat regselloff = findViewById(R.id.config_selloff);
+        SwitchMaterial regselloff = findViewById(R.id.config_selloff);
+
 
 
         sum_factor.setText(Farsi_number.PerisanNumber(decimalFormat.format(dbh.getsum_sumfactor())));

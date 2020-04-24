@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kits.asli.R;
@@ -72,7 +73,7 @@ public class Good_buy_history_Adapter_line extends RecyclerView.Adapter<Good_buy
         private TextView total;
         private TextView amount;
         private TextView code;
-        CardView rltv;
+        MaterialCardView rltv;
 
         GoodViewHolder(View itemView) {
             super(itemView);

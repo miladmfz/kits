@@ -12,7 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+
+import com.google.android.material.card.MaterialCardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,11 +82,11 @@ public class Customer_Adapter extends RecyclerView.Adapter<Customer_Adapter.facV
 
         if (Customerview.getBestankar() > -1) {
             holder.cus_bes.setText(Farsi_number.PerisanNumber(String.valueOf(decimalFormat.format(Customerview.getBestankar()))));
-            holder.cus_bes.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+            holder.cus_bes.setTextColor(ContextCompat.getColor(mContext, R.color.green_900));
         } else {
             int a = (Customerview.getBestankar()) * (-1);
             holder.cus_bes.setText(Farsi_number.PerisanNumber(decimalFormat.format(a)));
-            holder.cus_bes.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+            holder.cus_bes.setTextColor(ContextCompat.getColor(mContext, R.color.red_900));
         }
 
         holder.fac_rltv.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +131,7 @@ public class Customer_Adapter extends RecyclerView.Adapter<Customer_Adapter.facV
         private TextView cus_phone;
         private TextView cus_addres;
         private TextView cus_bes;
-        CardView fac_rltv;
+        MaterialCardView fac_rltv;
 
         facViewHolder(View itemView) {
             super(itemView);
