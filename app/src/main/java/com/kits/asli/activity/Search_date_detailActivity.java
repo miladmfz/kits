@@ -39,7 +39,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
 
     private Integer conter = 0;
     private Integer date, grid;
-    private boolean goodamount = false;
+    private boolean goodamount = true;
     private SharedPreferences shPref;
     private ArrayList<Good> goods = new ArrayList<>();
     private DatabaseHelper dbh = new DatabaseHelper(Search_date_detailActivity.this);

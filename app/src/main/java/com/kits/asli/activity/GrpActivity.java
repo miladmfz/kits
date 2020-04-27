@@ -48,7 +48,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class GrpActivity extends AppCompatActivity {
 
     private Integer grid, id = 0, conter = 0, itemamount;
-    private boolean activestack = false, goodamount = false;
+    private boolean activestack = true, goodamount = true;
     private Action action;
     private Intent intent;
     private SharedPreferences shPref;

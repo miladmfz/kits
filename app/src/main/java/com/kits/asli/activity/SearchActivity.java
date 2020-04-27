@@ -60,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<Good> goods = new ArrayList<>();
     private Integer id = 0, showflag = 0, grid, itemamount;
     public static String scan = "";
-    private boolean activestack = false, goodamount = false;
+    private boolean activestack = true, goodamount = true;
     private RecyclerView re;
     private EditText edtsearch;
 
