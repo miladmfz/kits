@@ -93,6 +93,10 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
 
 
         } else {
+            byte[] imageByteArray1;
+            imageByteArray1 = Base64.decode(mContext.getString(R.string.no_photo), Base64.DEFAULT);
+            holder.img.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(imageByteArray1, 0, imageByteArray1.length), BitmapFactory.decodeByteArray(imageByteArray1, 0, imageByteArray1.length).getWidth() * 2, BitmapFactory.decodeByteArray(imageByteArray1, 0, imageByteArray1.length).getHeight() * 2, false));
+
             Call<String> call2 = apiInterface.GetImage("getImage", goodView.getGoodCode().toString(), 0);
             call2.enqueue(new Callback<String>() {
                 @Override
