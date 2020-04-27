@@ -108,7 +108,6 @@
             android:layout_height="match_parent"
             android:text="@string/refresh"
             android:layout_weight="0.3"
-            android:background="@drawable/bg_round_green_buy"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/white"
