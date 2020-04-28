@@ -63,14 +63,20 @@ public class SplashActivity extends AppCompatActivity {
 
         if (firstStart) {
             Registration();
-//            database.execSQL("Alter Table Good Add Column Nvarchar13 Text");
-//            database.execSQL("Alter Table Good Add Column Nvarchar20 Text");
-//            database.execSQL("Alter Table Good Add Column Float5 INTEGER");
+
+            //database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER");
+
+            if (getString(R.string.app_name).equals("ققنوس")) {
+                database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER");
+
+            }
             sEdit.putBoolean("firstStart", false);
             sEdit.putString("selloff", "1");
             sEdit.putString("grid", "3");
             sEdit.putString("delay", "1000");
             sEdit.putString("itemamount", "200");
+            sEdit.putBoolean("real_amount", true);
+
             sEdit.apply();
         }
         Handler handler;

@@ -131,10 +131,18 @@ public class DetailActivity extends AppCompatActivity {
         nvar13.setText(Farsi_number.PerisanNumber(gd.getNvarchar13() + ""));
         nvar20.setText(Farsi_number.PerisanNumber(gd.getNvarchar20() + ""));
         ex1.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain1()));
-        amount.setText(Farsi_number.PerisanNumber("" + gd.getAmount()));
         grp.setText(Farsi_number.PerisanNumber("" + dbh.getgoodgroups(id)));
         price.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + gd.getMaxSellPrice()))));
         ImageName = gd.getImageName();
+
+
+        if (shPref.getBoolean("real_amount", true)) {
+            amount.setText(Farsi_number.PerisanNumber("" + (gd.getAmount() - gd.getReservedAmount())));
+
+        } else {
+            amount.setText(Farsi_number.PerisanNumber("" + gd.getAmount()));
+
+        }
 
 
         //Picasso.with(DetailActivity.this).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+gd.getImageName()).centerInside().resize(700, 1000).into(img);

@@ -27,6 +27,10 @@ public class Good implements Serializable {
     private Integer DefaultUnitValue;
     @SerializedName("Amount")
     private Integer Amount;
+    @SerializedName("ReservedAmount")
+    private Integer ReservedAmount;
+
+
     @SerializedName("FactorAmount")
     private Integer FactorAmount;
     @SerializedName("Shortage")
@@ -292,5 +296,12 @@ public class Good implements Serializable {
         GoodMainCode = goodMainCode;
     }
 
+    public Integer getReservedAmount() {
+        return ReservedAmount;
+    }
+
+    public void setReservedAmount(Integer reservedAmount) {
+        ReservedAmount = reservedAmount;
+    }
 
 }

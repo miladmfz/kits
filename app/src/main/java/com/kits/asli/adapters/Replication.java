@@ -586,15 +586,16 @@ public class Replication {
                                     case "u":
                                     case "I":
                                     case "i":
-                                        String Amount = String.valueOf((jo.getDouble("Amount") - jo.getDouble("ReservedAmount")));
-                                        //String Amount = String.valueOf((jo.getDouble("Amount")));
+                                        //String Amount = String.valueOf((jo.getDouble("Amount") - jo.getDouble("ReservedAmount")));
+                                        String Amount = String.valueOf((jo.getDouble("Amount")));
+                                        String ReservedAmount = String.valueOf((jo.getDouble("ReservedAmount")));
                                         String ActiveStack = jo.getString("ActiveStack");
 
                                         Cursor d = database.rawQuery("Select Count(*) AS cntRec From Good Where GoodCode =" + code, null);
                                         d.moveToFirst();
 
                                     {
-                                        qCol = "Update Good Set StackAmount = " + Amount + ", ActiveStack=" + ActiveStack + " Where GoodCode=" + code;
+                                        qCol = "Update Good Set StackAmount = " + Amount + ", ActiveStack=" + ActiveStack + ", ReservedAmount=" + ReservedAmount + " Where GoodCode=" + code;
                                     }
 
                                     database.execSQL(qCol);

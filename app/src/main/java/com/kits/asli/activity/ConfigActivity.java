@@ -69,6 +69,7 @@ public class ConfigActivity extends AppCompatActivity {
         TextView sum_factor = findViewById(R.id.config_sum_factor);
 
         SwitchMaterial regselloff = findViewById(R.id.config_selloff);
+        SwitchMaterial real_amount = findViewById(R.id.config_real_amount);
 
 
 
@@ -96,6 +97,12 @@ public class ConfigActivity extends AppCompatActivity {
             regselloff.setChecked(false);
         } else {
             regselloff.setChecked(true);
+        }
+
+        if (shPref.getBoolean("real_amount", true)) {
+            real_amount.setChecked(true);
+        } else {
+            real_amount.setChecked(false);
         }
 
         tohome.setOnClickListener(new View.OnClickListener() {

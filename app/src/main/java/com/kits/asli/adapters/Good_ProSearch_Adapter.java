@@ -62,6 +62,8 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         this.mContext = mContext;
         this.goods = goods;
         SERVER_IP_ADDRESS = mContext.getString(R.string.SERVERIP);
+        shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+
     }
 
     @NonNull
@@ -76,7 +78,13 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         final Good goodView = goods.get(position);
         String img = goodView.getImageName();
         UnitName = goodView.getUnitName();
-        holder.good_prosearch_amount.setText(Farsi_number.PerisanNumber("" + goodView.getAmount()));
+
+        if (shPref.getBoolean("real_amount", true)) {
+            holder.good_prosearch_amount.setText(Farsi_number.PerisanNumber("" + (goodView.getAmount() - goodView.getReservedAmount())));
+        } else {
+            holder.good_prosearch_amount.setText(Farsi_number.PerisanNumber("" + goodView.getAmount()));
+        }
+
         holder.goodnameTextView.setText(Farsi_number.PerisanNumber(goodView.getGoodName()));
         holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getMaxSellPrice()))));
         //Picasso.with(mContext).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+img).centerInside().resize(1000, 1000).into(holder.img);
@@ -168,7 +176,6 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
             @Override
             public void onClick(View view) {
 
-                shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
 
                 if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) != 0) {
 

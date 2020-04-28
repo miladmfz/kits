@@ -41,6 +41,7 @@
     <string name="config_item">تعداد ایتم در ردیف :</string>
     <string name="config_searchitem">تعداد آیتم های ایجاد شده از جستجو :</string>
     <string name="config_off">تغییر درصد فروش :</string>
+    <string name="config_real_amount">نمایش موجودی رزرو نشده:</string>
     <string name="config_delay">وقفه برای جستجو کردن:</string>
     <string name="config_totalprice">جمع مبلغ فروش به ریال :</string>
     <string name="customer_toolbarname">لیست مشتریان</string>

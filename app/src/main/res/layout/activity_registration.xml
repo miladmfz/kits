@@ -174,6 +174,36 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_real_amount"
+                    android:layout_weight="0.5" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/Registr_real_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:visibility="invisible" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:padding="5dp">
 
                 <TextView

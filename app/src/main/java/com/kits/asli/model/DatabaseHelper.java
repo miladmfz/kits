@@ -2,6 +2,7 @@ package com.kits.asli.model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,7 +17,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private String dbname;
+    private SharedPreferences shPref;
     private Context mContext;
     @SuppressLint("SdCardPath")
     private static final String DATABASE_NAME = "/data/data/com.kits.asli/databases/KowsarDb.sqlite";
@@ -53,15 +54,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context, String db) {
         super(context, DATABASE_NAME, null, 1);
-        dbname = db;
         this.mContext = context;
 
     }
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        dbname = "Good";
     }
+
 
     public ArrayList<GoodGroup> getAllGroups(String GName, Integer GL) {
         String gs = GL.toString();
@@ -161,6 +161,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+
                 goods.add(gooddetail);
             }
         }
@@ -209,6 +211,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+
                 goods.add(gooddetail);
             }
         }
@@ -287,6 +291,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
                 //gooddetail.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
+                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
 
                 goods.add(gooddetail);
             }
@@ -341,6 +346,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+
                 goods.add(gooddetail);
             }
         }
@@ -396,6 +403,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             gd.setFloat5(c.getInt(c.getColumnIndex("Float5")));
             gd.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
             gd.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+            gd.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
 
         }
         c.close();

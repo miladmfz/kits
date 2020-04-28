@@ -65,6 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         SwitchMaterial regselloff = findViewById(R.id.Registr_selloff);
+        SwitchMaterial real_amount = findViewById(R.id.Registr_real_amount);
 
 
         UserInfo auser = dbh.LoadPersonalInfo();
@@ -100,6 +101,34 @@ public class RegistrationActivity extends AppCompatActivity {
                 } else {
                     sEdit = shPref.edit();
                     sEdit.putString("selloff", "0");
+                    sEdit.apply();
+                    Toast.makeText(RegistrationActivity.this, "خیر", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+
+
+        if (shPref.getBoolean("real_amount", true)) {
+            real_amount.setChecked(true);
+        } else {
+            real_amount.setChecked(false);
+        }
+
+        real_amount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("real_amount", true);
+                    sEdit.apply();
+                    Toast.makeText(RegistrationActivity.this, "بله", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("real_amount", false);
                     sEdit.apply();
                     Toast.makeText(RegistrationActivity.this, "خیر", Toast.LENGTH_SHORT).show();
 
