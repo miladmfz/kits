@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
     tools:showIn="navigation_view"
     android:layoutDirection="rtl">
 
@@ -10,9 +9,23 @@
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search_w"
-
             android:title="@string/good_search" />
 
+        <item
+            android:id="@+id/nav_tajdid"
+            android:icon="@drawable/ic_search_w"
+            android:visible="false"
+            android:title="تجدید چاپ" />
+        <item
+            android:id="@+id/nav_porforosh"
+            android:icon="@drawable/ic_search_w"
+            android:visible="false"
+            android:title="پرفروش ترین ها" />
+        <item
+            android:id="@+id/nav_pazel"
+            android:icon="@drawable/ic_search_w"
+            android:visible="false"
+            android:title="پازل" />
 
         <item
             android:id="@+id/nav_search_date"

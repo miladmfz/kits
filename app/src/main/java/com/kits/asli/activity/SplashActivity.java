@@ -65,14 +65,12 @@ public class SplashActivity extends AppCompatActivity {
 
         if (firstStart) {
             Registration();
-
             try {
                 database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
             } catch (Exception e) {
                 Log.e("catch_Alter_Reserve", "" + e.getMessage());
             }
-
             sEdit.putBoolean("firstStart", false);
             sEdit.putString("selloff", "1");
             sEdit.putString("grid", "3");
@@ -81,7 +79,6 @@ public class SplashActivity extends AppCompatActivity {
             sEdit.putBoolean("real_amount", true);
             sEdit.putBoolean("activestack", true);
             sEdit.putBoolean("goodamount", true);
-
             sEdit.apply();
         }
         Handler handler;
