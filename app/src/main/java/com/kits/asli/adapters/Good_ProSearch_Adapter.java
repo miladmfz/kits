@@ -58,8 +58,8 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
     private byte[] imageByteArray;
 
 
-    public Good_ProSearch_Adapter(ArrayList<Good> goods, Context mContext) {
-        this.mContext = mContext;
+    public Good_ProSearch_Adapter(ArrayList<Good> goods, Context context) {
+        this.mContext = context;
         this.goods = goods;
         SERVER_IP_ADDRESS = mContext.getString(R.string.SERVERIP);
         shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);

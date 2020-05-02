@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.kits.asli.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,14 +54,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY29 = "UnitName";
     private static final String KEY30 = "DefaultUnitValue";
 
-    public DatabaseHelper(Context context, String db) {
-        super(context, DATABASE_NAME, null, 1);
-        this.mContext = context;
 
-    }
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
+        this.mContext = context;
+
     }
 
 
@@ -103,7 +103,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cond = cond + " And ActiveStack = 1";
         }
         if (aOnlyAvailable) {
-            cond = cond + " And StackAmount > 0 ";
+            SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+            if (shPref.getBoolean("real_amount", true)) {
+                cond = cond + " And StackAmount-ReservedAmount > 0 ";
+            } else {
+                cond = cond + " And StackAmount > 0 ";
+            }
         }
         if (!aFromDate.equals("")) {
             cond = cond + " And Date2 >= '" + aFromDate + "'";
@@ -136,7 +141,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (aPrintPeriod > 0) {
             cond = cond + " And Float1 = " + aPrintPeriod;
         }
-//        if (aSubject != ""){cond = cond + "And GoodName Like '%"+aSubject+"%'";}
 
         query = query + cond + " order by Date2 DESC, GoodCode DESC LIMIT 250 ";
 
@@ -188,7 +192,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cond = cond + " And ActiveStack = 1";
         }
         if (aOnlyAvailable) {
-            cond = cond + " And StackAmount > 0 ";
+            SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+            if (shPref.getBoolean("real_amount", true)) {
+                cond = cond + " And StackAmount-ReservedAmount > 0 ";
+            } else {
+                cond = cond + " And StackAmount > 0 ";
+            }
         }
         query = query + cond + " order by Date2 DESC , GoodCode DESC ";
         ArrayList<Good> goods = new ArrayList<Good>();
@@ -228,42 +237,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         name = name.replaceAll(" ", "%");
 
-        if (name == "") {
+        if (name.equals("")) {
             cond = "Where 1=1";
         } else {
             cond = "Where (GoodName Like '%" + name + "%' or GoodMainCode Like '%" + name + "%' or GoodCode Like '%" + name + "%' or FirstBarCode Like '%" + name + "%' or Isbn Like '%" + name + "%' or GoodExplain1 Like '%" + name + "%' or GoodExplain2 Like '%" + name + "%')";
         }
-        // else {cond = "Where (GoodName Like '%"+name+"%' or GoodMainCode Like '%"+name+"%' or GoodCode Like '%"+name+"%' or FirstBarCode Like '%"+name+"%' or GoodExplain1 Like '%"+name+"%' or GoodExplain2 Like '%"+name+"%')";}
         if (aOnlyActive) {
             cond = cond + " And ActiveStack = 1";
         }
 
         if (aOnlyAvailable) {
-            cond = cond + " And StackAmount > 0 ";
+            SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+            if (shPref.getBoolean("real_amount", true)) {
+                cond = cond + " And StackAmount-ReservedAmount > 0 ";
+            } else {
+                cond = cond + " And StackAmount > 0 ";
+            }
         }
 
 
-        if (aGroupCode > 0) {
-            cond = cond + " And GoodCode in(Select GoodRef From GoodGroup p "
-                    + "Join GoodsGrp s on p.GoodGroupRef = s.GroupCode "
-                    + "Where s.GroupCode = " + aGroupCode.toString() + " or s.L1 = " + aGroupCode.toString()
-                    + " or s.L2 = " + aGroupCode.toString() + " or s.L3 = " + aGroupCode.toString()
-                    + " or s.L4 = " + aGroupCode.toString() + " or s.L5 = " + aGroupCode.toString() + ")";
+        if (mContext.getString(R.string.app_name).equals("انتشارات ماهریس")) {
+            if (aGroupCode > 0) {    //baraye farhangee
+                cond = cond + " And GoodCode in(Select GoodRef From GoodGroup Where GoodGroupRef = " + aGroupCode.toString() + ")";
+                if ((aGroupCode == 1255) || (aGroupCode == 1257)) {
+                    order = order + " (Select Max(GoodGroupCode) From GoodGroup Where GoodGroupRef = " + aGroupCode.toString() + " And GoodRef = GoodCode) DESC,";
+                }
+            } else if (aShowFlag == 1) {
+                cond = cond + " And GoodCode in(Select GoodRef From Favorites)";
+            } else if (aShowFlag == 2) {
+                query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef Join PreFactor on GoodRef = GoodCode ";
+                cond = cond + " and ifnull(PreFactorCode,0)=0";
+            } else if (LikeGoodRef > 0) {
+                cond = cond + " And GoodCode in(select p.goodref from GoodGroup p where GoodGroupRef in(select s.GoodGroupRef From GoodGroup s where s.GoodRef = " + LikeGoodRef.toString() + "))";
+            }
+        } else {
+            if (aGroupCode > 0) {
+                cond = cond + " And GoodCode in(Select GoodRef From GoodGroup p "
+                        + "Join GoodsGrp s on p.GoodGroupRef = s.GroupCode "
+                        + "Where s.GroupCode = " + aGroupCode.toString() + " or s.L1 = " + aGroupCode.toString()
+                        + " or s.L2 = " + aGroupCode.toString() + " or s.L3 = " + aGroupCode.toString()
+                        + " or s.L4 = " + aGroupCode.toString() + " or s.L5 = " + aGroupCode.toString() + ")";
+            } else if (aShowFlag == 1) {
+                cond = cond + " And GoodCode in(Select GoodRef From Favorites)";
+            } else if (aShowFlag == 2) {
+                query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef Join PreFactor on GoodRef = GoodCode ";
+                cond = cond + " and ifnull(PreFactorCode,0)=0";
+            } else if (LikeGoodRef > 0) {
+                cond = cond + " And GoodCode in(select p.goodref from GoodGroup p where GoodGroupRef in(select s.GoodGroupRef From GoodGroup s where s.GoodRef = " + LikeGoodRef.toString() + "))";
+            }
+
         }
-//        if (aGroupCode>0){    //baraye farhangee
-//            cond = cond +" And GoodCode in(Select GoodRef From GoodGroup Where GoodGroupRef = "+aGroupCode.toString()+")";
-//            if ((aGroupCode == 1255) || (aGroupCode == 1257)) {
-//                order = order + " (Select Max(GoodGroupCode) From GoodGroup Where GoodGroupRef = " + aGroupCode.toString() + " And GoodRef = GoodCode) DESC,";
-//            }
-//        }
-        else if (aShowFlag == 1) {
-            cond = cond + " And GoodCode in(Select GoodRef From Favorites)";
-        } else if (aShowFlag == 2) {
-            query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef Join PreFactor on GoodRef = GoodCode ";
-            cond = cond + " and ifnull(PreFactorCode,0)=0";
-        } else if (LikeGoodRef > 0) {
-            cond = cond + " And GoodCode in(select p.goodref from GoodGroup p where GoodGroupRef in(select s.GoodGroupRef From GoodGroup s where s.GoodRef = " + LikeGoodRef.toString() + "))";
-        }
+
 
         order = order + "Date2 DESC , GoodCode DESC";
 
