@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,23 +60,27 @@ public class SplashActivity extends AppCompatActivity {
         sEdit.putString("prefactor_code", "0");
         sEdit.putString("prefactor_good", "0");
 
+
         sEdit.apply();
 
         if (firstStart) {
             Registration();
 
-            //database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER");
+            try {
+                database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
-            if (getString(R.string.app_name).equals("ققنوس")) {
-                database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER");
-
+            } catch (Exception e) {
+                Log.e("catch_Alter_Reserve", "" + e.getMessage());
             }
+
             sEdit.putBoolean("firstStart", false);
             sEdit.putString("selloff", "1");
             sEdit.putString("grid", "3");
             sEdit.putString("delay", "1000");
             sEdit.putString("itemamount", "200");
             sEdit.putBoolean("real_amount", true);
+            sEdit.putBoolean("activestack", true);
+            sEdit.putBoolean("goodamount", true);
 
             sEdit.apply();
         }

@@ -39,8 +39,9 @@ public class Search_date_detailActivity extends AppCompatActivity {
 
     private Integer conter = 0;
     private Integer date, grid;
-    private boolean goodamount = true;
     private SharedPreferences shPref;
+    private SharedPreferences.Editor sEdit;
+
     private ArrayList<Good> goods = new ArrayList<>();
     private DatabaseHelper dbh = new DatabaseHelper(Search_date_detailActivity.this);
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
@@ -127,7 +128,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
 
         final RecyclerView re = findViewById(R.id.search_date_recycler);
         try {
-            goods = dbh.getAllGood_ByDate(date, false, goodamount);
+            goods = dbh.getAllGood_ByDate(date, false, shPref.getBoolean("goodamount", true));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -138,18 +139,31 @@ public class Search_date_detailActivity extends AppCompatActivity {
         re.setItemAnimator(new DefaultItemAnimator());
 
 
-        final SwitchMaterial mySwitch_amount = findViewById(R.id.search_date_switch_amount);
-        mySwitch_amount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final SwitchMaterial mySwitch_goodamount = findViewById(R.id.search_date_switch_amount);
+
+        if (shPref.getBoolean("goodamount", true)) {
+            mySwitch_goodamount.setChecked(true);
+            mySwitch_goodamount.setText("موجود");
+
+        } else {
+            mySwitch_goodamount.setChecked(false);
+            mySwitch_goodamount.setText("هردو");
+
+        }
+
+        mySwitch_goodamount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
 
-                    mySwitch_amount.setText("موجود");
-                    goodamount = true;
+                    mySwitch_goodamount.setText("موجود");
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("goodamount", true);
+                    sEdit.apply();
                     if (conter == 0) {
 
                         try {
-                            goods = dbh.getAllGood_ByDate(date, false, goodamount);
+                            goods = dbh.getAllGood_ByDate(date, false, shPref.getBoolean("goodamount", true));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -162,13 +176,15 @@ public class Search_date_detailActivity extends AppCompatActivity {
                     }
                 } else {
 
-                    mySwitch_amount.setText("هردو");
-                    goodamount = false;
+                    mySwitch_goodamount.setText("هردو");
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("goodamount", false);
+                    sEdit.apply();
                     if (conter == 0) {
 
 
                         try {
-                            goods = dbh.getAllGood_ByDate(date, false, goodamount);
+                            goods = dbh.getAllGood_ByDate(date, false, shPref.getBoolean("goodamount", true));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

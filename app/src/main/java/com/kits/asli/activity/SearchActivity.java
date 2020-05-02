@@ -60,12 +60,13 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<Good> goods = new ArrayList<>();
     private Integer id = 0, showflag = 0, grid, itemamount;
     public static String scan = "";
-    private boolean activestack = true, goodamount = true;
     private RecyclerView re;
     private EditText edtsearch;
 
     Intent intent;
     SharedPreferences shPref;
+    private SharedPreferences.Editor sEdit;
+
     DatabaseHelper dbh = new DatabaseHelper(SearchActivity.this);
 
     DecimalFormat decimalFormat = new DecimalFormat("0,000");
@@ -122,11 +123,13 @@ public class SearchActivity extends AppCompatActivity {
         action = new Action(getApplicationContext());
         shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
         grid = Integer.parseInt(Objects.requireNonNull(shPref.getString("grid", null)));
+        shPref.getBoolean("activestack", true);
+        shPref.getBoolean("goodamount", true);
         itemamount = Integer.parseInt(Objects.requireNonNull(shPref.getString("itemamount", null)));
 
 
-        final SwitchMaterial mySwitch = findViewById(R.id.SearchActivityswitch);
-        final SwitchMaterial mySwitch_amount = findViewById(R.id.SearchActivityswitch_amount);
+        final SwitchMaterial mySwitch_activestack = findViewById(R.id.SearchActivityswitch);
+        final SwitchMaterial mySwitch_goodamount = findViewById(R.id.SearchActivityswitch_amount);
         final Button change_search = findViewById(R.id.SearchActivity_change_search);
         final Button grp = findViewById(R.id.SearchActivity_grp);
         final Button filter_active = findViewById(R.id.SearchActivity_filter_active);
@@ -188,7 +191,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                                 String srch = action.arabicToenglish(editable.toString());
-                                ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, activestack, goodamount, itemamount);
+                                ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                                 Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
                                 GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                                 re.setLayoutManager(gridLayoutManager);
@@ -208,7 +211,7 @@ public class SearchActivity extends AppCompatActivity {
                 });
 
 
-        goods = dbh.getAllGood(scan, id, showflag, 0, activestack, goodamount, itemamount);
+        goods = dbh.getAllGood(scan, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
         Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
         re.setLayoutManager(gridLayoutManager);
@@ -258,7 +261,7 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
                     aperiod = 0;
                 }
-                goods = dbh.getAllGood_Extended("", "", 0, agoodname, awriter, adragoman, anasher, aperiod, aprintyear, activestack, goodamount);
+                goods = dbh.getAllGood_Extended("", "", 0, agoodname, awriter, adragoman, anasher, aperiod, aprintyear, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true));
                 Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
                 re.setLayoutManager(gridLayoutManager);
@@ -308,16 +311,38 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if (shPref.getBoolean("activestack", true)) {
+            mySwitch_activestack.setChecked(true);
+            mySwitch_activestack.setText("فعال");
+
+        } else {
+            mySwitch_activestack.setChecked(false);
+            mySwitch_activestack.setText("فعال -غیرفعال");
+
+        }
+
+        if (shPref.getBoolean("goodamount", true)) {
+            mySwitch_goodamount.setChecked(true);
+            mySwitch_goodamount.setText("موجود");
+
+        } else {
+            mySwitch_goodamount.setChecked(false);
+            mySwitch_goodamount.setText("هردو");
+
+        }
+
+        mySwitch_activestack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
 
-                    mySwitch.setText("فعال");
-                    activestack = true;
+                    mySwitch_activestack.setText("فعال");
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("activestack", true);
+                    sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, activestack, goodamount, itemamount);
+                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -326,11 +351,14 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 } else {
 
-                    mySwitch.setText("فعال -غیرفعال");
-                    activestack = false;
+                    mySwitch_activestack.setText("فعال -غیرفعال");
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("activestack", false);
+                    sEdit.apply();
+
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, activestack, goodamount, itemamount);
+                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -343,16 +371,18 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
-        mySwitch_amount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mySwitch_goodamount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
 
-                    mySwitch_amount.setText("موجود");
-                    goodamount = true;
+                    mySwitch_goodamount.setText("موجود");
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("goodamount", true);
+                    sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, activestack, goodamount, itemamount);
+                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -361,11 +391,13 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 } else {
 
-                    mySwitch_amount.setText("هردو");
-                    goodamount = false;
+                    mySwitch_goodamount.setText("هردو");
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("goodamount", false);
+                    sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, activestack, goodamount, itemamount);
+                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
