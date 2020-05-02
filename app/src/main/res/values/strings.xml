@@ -57,6 +57,7 @@
     <string name="detail_goodname">نام محصول</string>
     <string name="detail_goodexplain1">ناشر</string>
     <string name="amount">تعداد</string>
+    <string name="Reserveamount">تعداد رزرو</string>
     <string name="detail_isbn">شابک</string>
     <string name="detail_tahvildate">تاریخ تحویل</string>
     <string name="detail_nvarchar1">مولف</string>

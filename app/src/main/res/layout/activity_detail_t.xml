@@ -396,6 +396,44 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:id="@+id/DetailActivity_Reserveamount_line"
+                    android:visibility="gone">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:textColor="#000000"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey_10"
+                        android:textSize="20sp"
+                        android:text="@string/Reserveamount"
+                        android:gravity="center"
+                        android:layout_weight="0.7" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:textColor="#000000"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/DetailActivity_Reserveamount"
+                        android:text="@string/detail_empty"
+                        android:textSize="22sp"
+                        android:gravity="center"
+                        android:layout_weight="0.3" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey_40" />
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_weight="1">
 
                     <androidx.appcompat.widget.AppCompatTextView

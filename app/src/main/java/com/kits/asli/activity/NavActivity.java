@@ -113,6 +113,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.NavActivity_nav);
+        //navigationView.getMenu(R.me);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -215,8 +216,62 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
+        final int id = item.getItemId();
+
+//        if (getString(R.string.app_name).equals("انتشارات ماهریس")) {
+//            if (id == R.id.nav_search) {
+//                intent = new Intent(NavActivity.this, SearchActivity.class);
+//                intent.putExtra("scan", " ");
+//                startActivity(intent);
+//            } else if (id == R.id.aboutus) {
+//                intent = new Intent(NavActivity.this, AboutusActivity.class);
+//                startActivity(intent);
+//            } else if (id == R.id.nav_tajdid) {
+//                intent = new Intent(NavActivity.this, GrpActivity.class);
+//                intent.putExtra("id", 1255);
+//                intent.putExtra("title","تجدید چاپ");
+//                startActivity(intent);
+//            } else if (id == R.id.nav_porforosh) {
+//                intent = new Intent(NavActivity.this, GrpActivity.class);
+//                intent.putExtra("id", 1257);
+//                intent.putExtra("title","پر فروش ترین ها");
+//                startActivity(intent);
+//            } else if (id == R.id.nav_pazel) {
+//                intent = new Intent(NavActivity.this, GrpActivity.class);
+//                intent.putExtra("id", 1283);
+//                intent.putExtra("title","پازل");
+//                startActivity(intent);
+//            } else if (id == R.id.nav_buy_history) {
+//                intent = new Intent(NavActivity.this, PrefactorActivity.class);
+//                startActivity(intent);
+//            } else if (id == R.id.nav_open_fac) {
+//                intent = new Intent(NavActivity.this, PrefactoropenActivity.class);
+//                intent.putExtra("fac", 1);
+//                startActivity(intent);
+//            } else if (id == R.id.nav_rep) {
+//                action.app_info();
+//                replication.replicateCentralChange();
+//            } else if (id == R.id.nav_buy) {
+//                if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
+//                    intent = new Intent(NavActivity.this, BuyActivity.class);
+//                    intent.putExtra("PreFac", Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))));
+//                    intent.putExtra("showflag", 2);
+//                    startActivity(intent);
+//                } else {
+//                    Toast.makeText(this, "سبد خرید خالی است.", Toast.LENGTH_SHORT).show();
+//                }
+//            } else if (id == R.id.nav_search_date) {
+//                intent = new Intent(NavActivity.this, Search_dateActivity.class);
+//                startActivity(intent);
+//            } else if (id == R.id.nav_cfg) {
+//                intent = new Intent(NavActivity.this, ConfigActivity.class);
+//                startActivity(intent);
+//            }
+//            DrawerLayout drawer = findViewById(R.id.NavActivity_drawer_layout);
+//            drawer.closeDrawer(GravityCompat.START);
+//            return true;
+//        }else{
         if (id == R.id.nav_search) {
             intent = new Intent(NavActivity.this, SearchActivity.class);
             intent.putExtra("scan", " ");
@@ -224,7 +279,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         } else if (id == R.id.aboutus) {
             intent = new Intent(NavActivity.this, AboutusActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_buy_history) {
             intent = new Intent(NavActivity.this, PrefactorActivity.class);
             startActivity(intent);
@@ -233,10 +287,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             intent.putExtra("fac", 1);
             startActivity(intent);
         } else if (id == R.id.nav_rep) {
-
             action.app_info();
             replication.replicateCentralChange();
-
         } else if (id == R.id.nav_buy) {
             if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
                 intent = new Intent(NavActivity.this, BuyActivity.class);
@@ -256,6 +308,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         DrawerLayout drawer = findViewById(R.id.NavActivity_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+//        }
+
+
     }
 
     @Override

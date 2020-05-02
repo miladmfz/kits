@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -93,6 +94,8 @@ public class DetailActivity extends AppCompatActivity {
         TextView gcode = findViewById(R.id.DetailActivity_code);
         TextView gname = findViewById(R.id.DetailActivity_tv1);
         TextView amount = findViewById(R.id.DetailActivity_amount);
+        TextView Reserveamount = findViewById(R.id.DetailActivity_Reserveamount);
+        LinearLayoutCompat Reserveamount_line = findViewById(R.id.DetailActivity_Reserveamount_line);
         TextView ex1 = findViewById(R.id.DetailActivity_ex1);
         TextView isbn = findViewById(R.id.DetailActivity_isbn);
         TextView date2 = findViewById(R.id.DetailActivity_date2);
@@ -106,7 +109,6 @@ public class DetailActivity extends AppCompatActivity {
         TextView grp = findViewById(R.id.DetailActivity_grp);
         img = findViewById(R.id.DetailActivity_img);
         Button btnbuy = findViewById(R.id.DetailActivity_btnbuy);
-
 
         code = gd.getGoodCode();
         setSupportActionBar(toolbar);
@@ -140,8 +142,9 @@ public class DetailActivity extends AppCompatActivity {
             amount.setText(Farsi_number.PerisanNumber("" + (gd.getAmount() - gd.getReservedAmount())));
 
         } else {
+            Reserveamount_line.setVisibility(View.VISIBLE);
             amount.setText(Farsi_number.PerisanNumber("" + gd.getAmount()));
-
+            Reserveamount.setText(Farsi_number.PerisanNumber("" + gd.getReservedAmount()));
         }
 
 
