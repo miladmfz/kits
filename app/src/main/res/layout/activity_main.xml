@@ -140,6 +140,21 @@
                 android:visibility="visible">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mainactivity_test"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="10dp"
+                    android:text="تستی نرم افزار"
+                    android:textColor="#ffffff"
+                    app:rippleColor="@color/deep_purple_300"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="@color/red_900"
+                    android:textSize="42sp"
+                    android:visibility="gone" />
+
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mainactivity_create_factor"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"

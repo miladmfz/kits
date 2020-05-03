@@ -35,6 +35,7 @@
 
         <item
             android:id="@+id/nav_buy"
+
             android:icon="@drawable/ic_ww"
             android:title="@string/good_bag"
 

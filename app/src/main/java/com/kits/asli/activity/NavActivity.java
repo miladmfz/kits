@@ -1,20 +1,30 @@
 package com.kits.asli.activity;
 
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +32,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -32,7 +44,18 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -43,8 +66,11 @@ import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
 import com.kits.asli.webService.Wmanager;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -68,6 +94,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private SharedPreferences shPref;
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private Replication replication;
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     WorkManager workManager;
 //    ArrayList<Good> goods;
 //    RecyclerView rc_test;
@@ -132,6 +160,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         Button good_search = findViewById(R.id.mainactivity_good_search);
         Button open_factor = findViewById(R.id.mainactivity_open_factor);
         Button all_factor = findViewById(R.id.mainactivity_all_factor);
+        Button test = findViewById(R.id.mainactivity_test);
 
         final DatabaseHelper dbh = new DatabaseHelper(NavActivity.this);
 
@@ -146,7 +175,16 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         }
 
 
+        if (getString(R.string.app_name).equals("اصلی")) {
+            test.setVisibility(View.VISIBLE);
+        }
 
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test_fun();
+            }
+        });
 
 
 
@@ -414,6 +452,33 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+
+    private void test_fun() {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NavActivity.this);
+        if (ActivityCompat.checkSelfPermission(NavActivity.this
+                , Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Log.e("locate_getLatitude", "" + location.getLatitude());
+                        Log.e("locate_getLongitude", "" + location.getLongitude());
+                    }
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(NavActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    44);
+        }
+
+    }
+
+
 
 }
 
