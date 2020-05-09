@@ -485,7 +485,6 @@ public class Replication {
                                                     if (qUpd.toString().equals("")) {
                                                         qUpd = new StringBuilder("Update Good Set " + key + "='" + value + "'");
                                                     }
-//                                                   else{qUpd = qUpd+","+key+"='" + value + "'";}
                                                     else {
                                                         qUpd.append(",").append(key).append("='").append(value).append("'");
                                                     }

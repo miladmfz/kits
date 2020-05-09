@@ -454,7 +454,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                             List<Address> addresses;
                             geocoder = new Geocoder(NavActivity.this, Locale.getDefault());
 
-
                             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
 
