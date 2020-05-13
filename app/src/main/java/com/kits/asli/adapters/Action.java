@@ -676,7 +676,7 @@ public class Action {
         UserInfo auser = dbh.LoadPersonalInfo();
 
         APIInterface apiInterface = APIClient_kowsar.getCleint_log().create(APIInterface.class);
-        Call<String> cl = apiInterface.Kowsar_log("Log_report", android_id, mContext.getString(R.string.SERVERIP), mContext.getString(R.string.app_name), shPref.getString("prefactor_code", null), strDate + "--" + Date, auser.getBrokerCode(), "");
+        Call<String> cl = apiInterface.Kowsar_log("Log_report", android_id, mContext.getString(R.string.SERVERIP), mContext.getString(R.string.app_name), shPref.getString("prefactor_code", null), Date + "--" + strDate, auser.getBrokerCode(), "");
         cl.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
