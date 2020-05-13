@@ -59,7 +59,12 @@ public class SplashActivity extends AppCompatActivity {
         sEdit = shPref.edit();
         sEdit.putString("prefactor_code", "0");
         sEdit.putString("prefactor_good", "0");
+        try {
+            database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
+        } catch (Exception e) {
+            Log.e("catch_Alter_Reserve", "" + e.getMessage());
+        }
 
         sEdit.apply();
 
