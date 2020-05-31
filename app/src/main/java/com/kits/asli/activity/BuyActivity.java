@@ -215,7 +215,7 @@ public class BuyActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("response = ", response + "");
+                    Log.e("asli_response = ", response + "");
                     JSONArray object = new JSONArray(response);
                     JSONObject jo = object.getJSONObject(0);
                     il = object.length();
@@ -227,8 +227,8 @@ public class BuyActivity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 10, 10);
                             toast.show();
                             String factorDate = jo.getString("PreFactorDate");
-                            Log.e("factorcode  ", kowsarcode.toString());
-                            Log.e("factordate  ", factorDate);
+                            Log.e("asli_factorcode  ", kowsarcode.toString());
+                            Log.e("asli_factordate  ", factorDate);
                             dbh.UpdatePreFactor(factor_code, kowsarcode, factorDate);
                             SharedPreferences.Editor sEdit = shPref.edit();
                             sEdit.putString("prefactor_code", "0");
@@ -265,7 +265,7 @@ public class BuyActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(BuyActivity.this, "بروز خطا در اطلاعات", Toast.LENGTH_SHORT).show();
-                    Log.e("printStackTrace", e.toString());
+                    Log.e("asli_printStackTrace", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -273,7 +273,7 @@ public class BuyActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 Toast.makeText(BuyActivity.this, "ارتباط با سرور میسر نمی باشد.", Toast.LENGTH_SHORT).show();
-                Log.e("printStackTrace", volleyError.toString());
+                Log.e("asli_printStackTrace", volleyError.toString());
             }
         }) {
             @Override
@@ -292,7 +292,7 @@ public class BuyActivity extends AppCompatActivity {
                 pc.close();
 
 
-                Log.e("reqqqq", pr1);
+                Log.e("asli_reqqqq", pr1);
                 params.put("PFHDQASW", pr1);
                 Cursor c = dtb.rawQuery("Select GoodRef, Amount, Price From PreFactor Where  GoodRef>0 and  Prefactorcode = " + factor_code, null);
 
@@ -300,14 +300,14 @@ public class BuyActivity extends AppCompatActivity {
                 //pr2 = CursorToJson(c);
                 c.close();
 
-                Log.e("reqqqq", pr2);
+                Log.e("asli_reqqqq", pr2);
                 params.put("PFDTQASW", pr2);
                 return params;
             }
 
         };
         queue.add(stringrequste);
-        Log.e("stringrequste =", stringrequste.toString() + "");
+        Log.e("asli_stringrequste =", stringrequste.toString() + "");
     }
 
 

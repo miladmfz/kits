@@ -11,6 +11,7 @@
     app:strokeWidth="1dp"
     app:strokeColor="@color/grey_1000"
     app:cardElevation="4dp"
+    android:checkable="true"
     android:layoutDirection="rtl">
 
 

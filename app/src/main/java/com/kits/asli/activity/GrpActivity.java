@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.appcompat.widget.Toolbar;
 
@@ -52,14 +53,14 @@ public class GrpActivity extends AppCompatActivity {
     private Intent intent;
     private SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
-
+    ArrayList<String> intList = new ArrayList<>();
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private DatabaseHelper dbh = new DatabaseHelper(GrpActivity.this);
     private ArrayList<Good> goods = new ArrayList<>();
     private ArrayList<GoodGroup> GoodGroups = new ArrayList<>();
     private String title = "گروه ها";
     private RecyclerView rc_grp, rc_good;
-
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +122,7 @@ public class GrpActivity extends AppCompatActivity {
         final EditText edtsearch = findViewById(R.id.GrpActivity_edtsearch);
         final Handler handler = new Handler();
         rc_good = findViewById(R.id.GrpActivity_good);
+        fab = findViewById(R.id.GrpActivity_fab);
 
 
         toolbar.setTitle(title);
@@ -223,14 +225,14 @@ public class GrpActivity extends AppCompatActivity {
                     line.setVisibility(View.GONE);
                     change_search.setText("جستجوی عادی");
                     conter = conter + 1;
-                    Log.e("conter", "" + conter);
+                    Log.e("asli_conter", "" + conter);
                 } else {
                     line_pro.setVisibility(View.GONE);
                     filter_active.setVisibility(View.GONE);
                     line.setVisibility(View.VISIBLE);
                     change_search.setText("جستجوی پیشرفته");
                     conter = conter - 1;
-                    Log.e("conter", "" + conter);
+                    Log.e("asli_conter", "" + conter);
                 }
             }
         });
@@ -403,6 +405,21 @@ public class GrpActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void good_select_function(int price_fun, int code_fun, int flag) {
+        if (flag == 1) {
+            fab.setVisibility(View.VISIBLE);
+            intList.add(String.valueOf(code_fun));
+
+        } else {
+            intList.remove(String.valueOf(code_fun));
+            if (intList.size() < 1) {
+                fab.setVisibility(View.GONE);
+
+            }
+        }
+
     }
 
 }

@@ -385,7 +385,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                         }
-                        Log.e("msg=", "" + msg);
+                        Log.e("asli_msg=", "" + msg);
                     }
                 });
 
@@ -397,7 +397,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                         }
-                        Log.e("msg=", "" + msg);
+                        Log.e("asli_msg=", "" + msg);
                     }
                 });
 
@@ -446,8 +446,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 public void onComplete(@NonNull Task<Location> task) {
                     location = task.getResult();
                     if (location != null) {
-                        Log.e("locate_getLatitude", "" + location.getLatitude());
-                        Log.e("locate_getLongitude", "" + location.getLongitude());
+                        Log.e("asli_getLatitude", "" + location.getLatitude());
+                        Log.e("asli_getLongitude", "" + location.getLongitude());
 
                         try {
                             Geocoder geocoder;
@@ -464,18 +464,18 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                             String postalCode = addresses.get(0).getPostalCode();
                             String knownName = addresses.get(0).getFeatureName();
 
-                            Log.e("locate_address", "" + address);
-                            Log.e("locate_city", "" + city);
-                            Log.e("locate_state", "" + state);
-                            Log.e("locate_country", "" + country);
-                            Log.e("locate_postalCode", "" + postalCode);
-                            Log.e("locate_knownName", "" + knownName);
+                            Log.e("asli_locate_address", "" + address);
+                            Log.e("asli_locate_city", "" + city);
+                            Log.e("asli_locate_state", "" + state);
+                            Log.e("asli_locate_country", "" + country);
+                            Log.e("asli_locate_postalCode", "" + postalCode);
+                            Log.e("asli_locate_knownName", "" + knownName);
 
 
                         } catch (Exception e) {
-                            Log.e("locate_Exception", "" + e.getMessage());
-                            Log.e("locate_Exception", "" + e.getLocalizedMessage());
-                            Log.e("locate_Exception", "" + e.toString());
+                            Log.e("asli_locate_Exception", "" + e.getMessage());
+                            Log.e("asli_locate_Exception", "" + e.getLocalizedMessage());
+                            Log.e("asli_locate_Exception", "" + e.toString());
 
                         }
 

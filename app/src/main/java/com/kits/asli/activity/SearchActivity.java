@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.appcompat.widget.Toolbar;
 
@@ -47,6 +48,7 @@ import com.kits.asli.model.GoodGroup;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -62,14 +64,13 @@ public class SearchActivity extends AppCompatActivity {
     public static String scan = "";
     private RecyclerView re;
     private EditText edtsearch;
-
     Intent intent;
     SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
-
     DatabaseHelper dbh = new DatabaseHelper(SearchActivity.this);
-
+    ArrayList<String> intList = new ArrayList<>();
     DecimalFormat decimalFormat = new DecimalFormat("0,000");
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,20 @@ public class SearchActivity extends AppCompatActivity {
         scan = data.getString("scan");
     }
 
+    public void good_select_function(int price_fun, int code_fun, int flag) {
+        if (flag == 1) {
+            fab.setVisibility(View.VISIBLE);
+            intList.add(String.valueOf(code_fun));
+
+        } else {
+            intList.remove(String.valueOf(code_fun));
+            if (intList.size() < 1) {
+                fab.setVisibility(View.GONE);
+
+            }
+        }
+    }
+
 
     public void init() {
 
@@ -143,6 +158,7 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.SearchActivity_toolbar);
         re = findViewById(R.id.SearchActivity_R1);
         final RecyclerView gsre = findViewById(R.id.SearchActivity_grp_recy);
+        fab = findViewById(R.id.SearchActivity_fab);
 
         edtsearch = findViewById(R.id.SearchActivity_edtsearch);
         final Button btn_scan = findViewById(R.id.SearchActivity_scan);
@@ -227,14 +243,14 @@ public class SearchActivity extends AppCompatActivity {
                     line.setVisibility(View.GONE);
                     change_search.setText("جستجوی عادی");
                     conter = conter + 1;
-                    Log.e("conter", "" + conter);
+                    Log.e("asli_conter", "" + conter);
                 } else {
                     line_pro.setVisibility(View.GONE);
                     filter_active.setVisibility(View.GONE);
                     line.setVisibility(View.VISIBLE);
                     change_search.setText("جستجوی پیشرفته");
                     conter = conter - 1;
-                    Log.e("conter", "" + conter);
+                    Log.e("asli_conter", "" + conter);
                 }
             }
         });
@@ -410,6 +426,12 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 

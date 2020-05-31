@@ -45,7 +45,7 @@ public class Image_info {
     public Boolean Imgae_exist(String code) {
         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
         File imagefile = new File(root + "/Kowsar/" + app_img_name + "/" + code + ".jpg");
-        Log.e("kowsar_imagefile.exists", imagefile.exists() + "");
+        Log.e("asli_exists", imagefile.exists() + "");
         return imagefile.exists();
 
     }

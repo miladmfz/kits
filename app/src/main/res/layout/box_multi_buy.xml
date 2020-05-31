@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:id="@+id/box_multi_buy"
+    android:background="@color/grey_10"
+    android:layoutDirection="rtl">
+
+
+    <TextView
+        android:id="@+id/box_multi_buy_factor"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+
+        android:text="@string/customerfactorheader"
+        android:textSize="20sp"
+
+        android:textColor="@color/grey_1000"
+        android:focusable="true">
+
+
+    </TextView>
+
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.5"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/amount"
+                android:gravity="center"
+                android:layout_weight="0.8" />
+
+            <EditText
+                android:id="@+id/box_multi_buy_amount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:hint="@string/amount"
+                android:maxLength="4"
+                android:inputType="number"
+                android:layout_weight="0.4"
+                android:focusable="true"
+                android:autofillHints="" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.5"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/off_for_sale"
+
+            android:gravity="center"
+            android:layout_weight="0.4" />
+
+        <EditText
+            android:id="@+id/box_multi_buy_percent"
+            android:layout_weight="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:hint="@string/off_for_sale"
+            android:maxLength="5"
+            android:inputType="number"
+            android:autofillHints="" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <Button
+        android:id="@+id/box_multi_buy_btn"
+        android:layout_width="250dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_height="50dp"
+        android:text="@string/detail_buy"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+
+        app:backgroundTint="@color/green_600"
+        app:strokeColor="@color/grey_1000"
+        app:strokeWidth="1dp"
+        app:icon="@drawable/ic_add_shopping_black"
+        app:iconTint="@color/white"
+        style="?attr/materialButtonOutlinedStyle"
+
+
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

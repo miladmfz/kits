@@ -73,6 +73,17 @@ public class Good implements Serializable {
     @SerializedName("Itam_Show")
     private String Itam_Show;
 
+    @SerializedName("Check")
+    private boolean Check;
+
+
+    public boolean isCheck() {
+        return Check;
+    }
+
+    public void setCheck(boolean check) {
+        Check = check;
+    }
 
     public String getItam_Show() {
         return Itam_Show;
@@ -264,9 +275,10 @@ public class Good implements Serializable {
         return GoodCode;
     }
 
-    void setGoodCode(Integer goodCode) {
+    public void setGoodCode(Integer goodCode) {
         GoodCode = goodCode;
     }
+
 
     public String getImageName() {
         if (isEmpty(ImageName)) {

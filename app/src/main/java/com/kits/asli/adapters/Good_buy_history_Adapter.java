@@ -115,7 +115,7 @@ public class Good_buy_history_Adapter extends RecyclerView.Adapter<Good_buy_hist
 
                 @Override
                 public void onFailure(Call<String> call2, Throwable t) {
-                    Log.e("onFailure", "" + t.toString());
+                    Log.e("asli_onFailure", "" + t.toString());
                 }
             });
 

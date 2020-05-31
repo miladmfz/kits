@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -41,10 +43,11 @@ public class Search_date_detailActivity extends AppCompatActivity {
     private Integer date, grid;
     private SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
-
+    ArrayList<String> intList = new ArrayList<>();
     private ArrayList<Good> goods = new ArrayList<>();
     private DatabaseHelper dbh = new DatabaseHelper(Search_date_detailActivity.this);
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
         final TextView sumfac = findViewById(R.id.Search_date_detailActivity_sum_factor);
         final TextView customer_code = findViewById(R.id.Search_date_detailActivity_customer_code);
         Button ref_fac = findViewById(R.id.Search_date_detailActivity_refresh_fac);
+        fab = findViewById(R.id.search_date_fab);
 
         shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
         grid = Integer.parseInt(Objects.requireNonNull(shPref.getString("grid", null)));
@@ -234,6 +238,20 @@ public class Search_date_detailActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void good_select_function(int price_fun, int code_fun, int flag) {
+        if (flag == 1) {
+            fab.setVisibility(View.VISIBLE);
+            intList.add(String.valueOf(code_fun));
+
+        } else {
+            intList.remove(String.valueOf(code_fun));
+            if (intList.size() < 1) {
+                fab.setVisibility(View.GONE);
+
+            }
+        }
     }
 
 }

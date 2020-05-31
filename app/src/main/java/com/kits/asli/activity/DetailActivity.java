@@ -189,7 +189,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
-                    Log.e("onFailure", "" + t.toString());
+                    Log.e("asli_onFailure", "" + t.toString());
 
                 }
             });

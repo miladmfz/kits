@@ -113,7 +113,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -203,7 +203,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -304,7 +304,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -397,7 +397,7 @@ public class Replication {
                                         d.close();
                                         break;
                                 }
-                                Log.e("repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -444,13 +444,13 @@ public class Replication {
             c.close();
         }
 
-        Log.e("10.01.LastRepCode=", LastRepCode);
+        Log.e("asli_10.01.LastRepCode=", LastRepCode);
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("10.1.onResponse=", response);
+                Log.e("asli_10.1.onResponse=", response);
                 int il = 0;
                 try {
                     JSONArray object = new JSONArray(response);
@@ -513,7 +513,7 @@ public class Replication {
                                         database.execSQL("delete from good where goodcode = " + code + " and not exists (select 1 From PreFactor Where GoodRef =" + code + ")");
                                         break;
                                 }
-                                Log.e("repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -534,7 +534,7 @@ public class Replication {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("volleyError", volleyError + "");
+                Log.e("asli_volleyError", volleyError + "");
                 volleyError.printStackTrace();
             }
         }) {
@@ -545,7 +545,6 @@ public class Replication {
                 params.put("code", LastRepCode);
                 params.put("table", RepTable);
                 params.put("reptype", RepType);
-                Log.e("55", 55 + "");
                 return params;
             }
         };
@@ -608,7 +607,7 @@ public class Replication {
                                 }
 
 
-                                Log.e("repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -703,7 +702,7 @@ public class Replication {
                                         database.execSQL(qCol.toString());
                                         break;
                                 }
-                                Log.e("repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -796,7 +795,7 @@ public class Replication {
                                         database.execSQL("delete from GoodGroup where GoodGroupCode = " + code);
                                         break;
                                 }
-                                Log.e("repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -889,11 +888,11 @@ public class Replication {
                                         }
                                         qCol = new StringBuilder("Update Good Set " + qCol + " Where GoodCode=" + code);
 //                                        qCol = "INSERT OR REPLACE INTO Good( GoodCode " + qCol + ") VALUES(" + code + qVal + ")";
-                                        Log.e("repstrQuery", qCol.toString());
+                                        Log.e("asli_repstrQuery", qCol.toString());
                                         database.execSQL(qCol.toString());
                                         break;
                                 }
-                                Log.e("repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }

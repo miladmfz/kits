@@ -26,7 +26,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.kits.asli.R;
 import com.kits.asli.activity.DetailActivity;
+import com.kits.asli.activity.GrpActivity;
 import com.kits.asli.activity.PrefactoropenActivity;
+import com.kits.asli.activity.SearchActivity;
+import com.kits.asli.activity.Search_date_detailActivity;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
 import com.kits.asli.model.Good;
@@ -56,6 +59,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
     private APIInterface apiInterface = APIClient.getCleint().create(APIInterface.class);
     private Image_info image_info;
     private byte[] imageByteArray;
+    int flag = 1;
 
 
     public Good_ProSearch_Adapter(ArrayList<Good> goods, Context context) {
@@ -128,7 +132,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
 
                 @Override
                 public void onFailure(Call<String> call2, Throwable t) {
-                    Log.e("onFailure", "" + t.toString());
+                    Log.e("asli_onFailure", "" + t.toString());
 
                 }
             });
@@ -139,9 +143,6 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         holder.rltv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Log.e("", "1");
                 Good goodView = goods.get(position);
                 intent = new Intent(mContext, DetailActivity.class);
                 intent.putExtra("id", goodView.getGoodCode());
@@ -152,20 +153,55 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
 
         });
 
+        holder.rltv.setChecked(goodView.isCheck());
+
 
         holder.rltv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
 
-                holder.rltv.getVerticalScrollbarPosition();
-
                 holder.rltv.setChecked(!holder.rltv.isChecked());
+                goods.get(position).setCheck(!goods.get(position).isCheck());
+
+                if (goods.get(position).isCheck()) {
+                    if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
+                        SearchActivity activity = (SearchActivity) mContext;
+                        activity.good_select_function(goodView.getPrice(), goodView.getGoodCode(), 1);
+
+                    }
+
+                    if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
+                        Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
+                        activity.good_select_function(goodView.getPrice(), goodView.getGoodCode(), 1);
+
+                    }
+
+                    if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
+                        GrpActivity activity = (GrpActivity) mContext;
+                        activity.good_select_function(goodView.getPrice(), goodView.getGoodCode(), 1);
+                    }
+                } else {
+                    if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
+                        SearchActivity activity = (SearchActivity) mContext;
+                        activity.good_select_function(goodView.getPrice(), goodView.getGoodCode(), 0);
+                    }
+
+                    if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
+                        Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
+                        activity.good_select_function(goodView.getPrice(), goodView.getGoodCode(), 0);
+                    }
+
+                    if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
+                        GrpActivity activity = (GrpActivity) mContext;
+                        activity.good_select_function(goodView.getPrice(), goodView.getGoodCode(), 0);
+                    }
+
+                }
                 return true;
             }
 
 
         });
-
 
 
 

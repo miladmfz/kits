@@ -30,9 +30,11 @@ import com.android.volley.toolbox.Volley;
 import com.kits.asli.R;
 import com.kits.asli.activity.BuyActivity;
 import com.kits.asli.activity.CustomerActivity;
+import com.kits.asli.activity.GrpActivity;
 import com.kits.asli.activity.NavActivity;
 import com.kits.asli.activity.PrefactorActivity;
 import com.kits.asli.activity.SearchActivity;
+import com.kits.asli.activity.Search_date_detailActivity;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.UserInfo;
 import com.kits.asli.model.Utilities;
@@ -71,6 +73,198 @@ public class Action {
         this.il = 0;
         SERVER_IP_ADDRESS = mContext.getString(R.string.SERVERIP);
         shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+
+    }
+
+
+    public void Buy_good(int goodcode, final int maxprice, final int customer_price, int facamount, String UnitName) {
+        SharedPreferences shPref;
+        shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+        final String pfcode = shPref.getString("prefactor_code", null);
+        final String selloff = shPref.getString("selloff", null);
+
+        code = goodcode;
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);//title laye nadashte bashim
+        dialog.setContentView(R.layout.box_buy);
+        Button boxbuy = dialog.findViewById(R.id.box_buy_btn);
+
+        final EditText amount = dialog.findViewById(R.id.box_buy_amount);
+        amount.setHint(UnitName);
+        final TextView tv = dialog.findViewById(R.id.box_buy_factor);
+        final TextView xpr = dialog.findViewById(R.id.box_buy_maxprice);
+
+
+        tv.setVisibility(View.GONE);
+        xpr.setVisibility(View.GONE);
+
+
+        final EditText percent = dialog.findViewById(R.id.box_buy_percent);
+        final EditText price = dialog.findViewById(R.id.box_buy_price);
+        final TextView sumprice = dialog.findViewById(R.id.box_buy_sumprice);
+        final TextView factoramount = dialog.findViewById(R.id.box_buy_facamount);
+
+        if (Integer.parseInt(selloff) == 0) {
+            percent.setEnabled(false);
+            price.setEnabled(false);
+        } else {
+            percent.setEnabled(true);
+            price.setEnabled(true);
+        }
+
+        factoramount.setText("");
+        price.setText("" + customer_price);
+        if (maxprice > 0) {
+            percent.setText("" + (100 - (100 * customer_price / maxprice)));
+        } else percent.setText("");
+
+        amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    Integer iPrice = Integer.valueOf(price.getText().toString());
+                    Integer iAmount = Integer.valueOf(amount.getText().toString());
+                    sumprice.setText("" + iPrice * iAmount);
+                } catch (Exception e) {
+                    sumprice.setText("");
+                }
+            }
+        });
+
+        percent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (percent.hasFocus()) {
+                    Integer iPercent;
+                    Integer iAmount;
+                    try {
+                        iPercent = Integer.valueOf(percent.getText().toString());
+                        if (maxprice > 0) {
+                            if (iPercent > 100) {
+                                iPercent = 100;
+                                percent.setText(iPercent + "");
+                                percent.setError("حداکثر تخفیف");
+                            }
+                            price.setText("" + (maxprice - (maxprice * iPercent / 100)));
+                        }
+
+                    } catch (Exception e) {
+                        price.setText("" + maxprice);
+                    }
+
+                    try {
+                        iAmount = Integer.valueOf(amount.getText().toString());
+                        sumprice.setText("" + (iAmount * Integer.valueOf(price.getText().toString())));
+                    } catch (Exception e) {
+                        sumprice.setText("");
+                    }
+                }
+
+            }
+        });
+
+        price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (price.hasFocus()) {
+                    try {
+                        Integer iPrice = Integer.valueOf(price.getText().toString());
+                        if (maxprice > 0) {
+                            percent.setText("" + (100 - (100 * iPrice / maxprice)));
+                        } else
+                            percent.setText("");
+
+                        Integer iAmount = Integer.valueOf(amount.getText().toString());
+                        sumprice.setText("" + iPrice * iAmount);
+                    } catch (Exception e) {
+                        sumprice.setText("");
+                    }
+                }
+            }
+        });
+
+        dialog.show();
+        amount.requestFocus();
+        amount.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager inputMethodManager = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(amount, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }, 500);
+
+        boxbuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String amo = amount.getText().toString();
+                String pr = price.getText().toString();
+                if (pr == "") pr = "-1";
+
+                if (!amo.equals("")) {
+                    if (Integer.parseInt(amo) != 0) {
+                        if (Integer.parseInt(pfcode) != 0) {
+
+                            SharedPreferences shPref;
+                            shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+                            int pfcode = Integer.parseInt(shPref.getString("prefactor_code", null));
+                            dbh.InsertPreFactor(pfcode, code, Integer.parseInt(amo), Integer.parseInt(pr), 0);
+                            Toast toast = Toast.makeText(mContext, "به سبد خرید اضافه شد", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 10, 10);
+                            toast.show();
+                            dialog.dismiss();
+
+                        } else {
+
+                            intent = new Intent(mContext, CustomerActivity.class);
+                            intent.putExtra("edit", "0");
+                            intent.putExtra("factor_code", 0);
+                            mContext.startActivity(intent);
+                            dialog.dismiss();
+
+                        }
+                    } else {
+                        Toast.makeText(mContext, "تعداد مورد نظر صحیح نمی باشد.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(mContext, "تعداد مورد نظر صحیح نمی باشد.", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            }
+        });
+
 
     }
 
@@ -234,7 +428,6 @@ public class Action {
 
                             SharedPreferences shPref;
                             shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
-                            final String prefactor_code = "prefactor_code";
                             int pfcode = Integer.parseInt(shPref.getString("prefactor_code", null));
                             dbh.InsertPreFactor(pfcode, code, Integer.parseInt(amo), Integer.parseInt(pr), 0);
                             Toast toast = Toast.makeText(mContext, "به سبد خرید اضافه شد", Toast.LENGTH_SHORT);
@@ -482,7 +675,7 @@ public class Action {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("response = ", response + "");
+                    Log.e("asli_response = ", response + "");
                     JSONArray object = new JSONArray(response);
                     JSONObject jo = object.getJSONObject(0);
                     il = object.length();
@@ -494,8 +687,8 @@ public class Action {
                             toast.setGravity(Gravity.CENTER, 10, 10);
                             toast.show();
                             String factorDate = jo.getString("PreFactorDate");
-                            Log.e("factorcode  ", kowsarcode.toString());
-                            Log.e("factordate  ", factorDate);
+                            Log.e("asli_factorcode  ", kowsarcode.toString());
+                            Log.e("asli_factordate  ", factorDate);
                             dbh.UpdatePreFactor(factor_code, kowsarcode, factorDate);
                             shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
                             SharedPreferences.Editor sEdit = shPref.edit();
@@ -533,7 +726,7 @@ public class Action {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(mContext, "بروز خطا در اطلاعات", Toast.LENGTH_SHORT).show();
-                    Log.e("printStackTrace", e.toString());
+                    Log.e("asli_printStackTrace", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -541,7 +734,7 @@ public class Action {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 Toast.makeText(mContext, "ارتباط با سرور میسر نمی باشد.", Toast.LENGTH_SHORT).show();
-                Log.e("printStackTrace", volleyError.toString());
+                Log.e("asli_printStackTrace", volleyError.toString());
             }
         }) {
             @Override
@@ -557,7 +750,7 @@ public class Action {
                 pc.close();
 
 
-                Log.e("reqqqq", pr1);
+                Log.e("asli_reqqqq", pr1);
                 params.put("PFHDQASW", pr1);
                 Cursor c = dtb.rawQuery("Select GoodRef, Amount, Price From PreFactor Where  GoodRef>0 and  Prefactorcode = " + factor_code, null);
 
@@ -565,14 +758,14 @@ public class Action {
                 //pr2 = CursorToJson(c);
                 c.close();
 
-                Log.e("reqqqq", pr2);
+                Log.e("asli_reqqqq", pr2);
                 params.put("PFDTQASW", pr2);
                 return params;
             }
 
         };
         queue.add(stringrequste);
-        Log.e("stringrequste =", stringrequste.toString() + "");
+        Log.e("asli_stringrequste =", stringrequste.toString() + "");
     }
 
 
@@ -634,7 +827,7 @@ public class Action {
                 DatabaseHelper dbh = new DatabaseHelper(mContext);
 
                 String detail = pf_detail_detail.getText().toString();
-                //Log.e("",""+detail+customer_code);
+                //  ,""+detail+customer_code);
                 dbh.InsertPreFactorHeader(detail, customer_code);
                 SharedPreferences shPref;
                 shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
@@ -667,12 +860,12 @@ public class Action {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String strDate = sdf.format(c.getTime());
 
-        Log.e("device_Id", android_id);
-        Log.e("address_ip", mContext.getString(R.string.SERVERIP));
-        Log.e("server_name", mContext.getString(R.string.app_name));
-        Log.e("factor_code", Objects.requireNonNull(shPref.getString("prefactor_code", null)));
-        Log.e("Date", Date);
-        Log.e("strDate", strDate);
+        Log.e("asli_device_Id", android_id);
+        Log.e("asli_address_ip", mContext.getString(R.string.SERVERIP));
+        Log.e("asli_server_name", mContext.getString(R.string.app_name));
+        Log.e("asli_factor_code", Objects.requireNonNull(shPref.getString("prefactor_code", null)));
+        Log.e("asli_Date", Date);
+        Log.e("asli_strDate", strDate);
         UserInfo auser = dbh.LoadPersonalInfo();
 
         APIInterface apiInterface = APIClient_kowsar.getCleint_log().create(APIInterface.class);
@@ -680,12 +873,12 @@ public class Action {
         cl.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                Log.e("onResponse", "" + response.body());
+                Log.e("asli_onResponse", "" + response.body());
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("onFailure", "" + t.toString());
+                Log.e("asli_onFailure", "" + t.toString());
             }
         });
 

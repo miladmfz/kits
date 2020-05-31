@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
             database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
         } catch (Exception e) {
-            Log.e("catch_Alter_Reserve", "" + e.getMessage());
+            Log.e("asli_Alter_Reserve", "" + e.getMessage());
         }
 
         sEdit.apply();
@@ -74,7 +74,7 @@ public class SplashActivity extends AppCompatActivity {
                 database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
             } catch (Exception e) {
-                Log.e("catch_Alter_Reserve", "" + e.getMessage());
+                Log.e("asli_Alter_Reserve", "" + e.getMessage());
             }
             sEdit.putBoolean("firstStart", false);
             sEdit.putString("selloff", "1");

@@ -166,6 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+                gooddetail.setCheck(false);
 
                 goods.add(gooddetail);
             }
@@ -221,6 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+                gooddetail.setCheck(false);
 
                 goods.add(gooddetail);
             }
@@ -316,6 +318,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
                 //gooddetail.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+                gooddetail.setCheck(false);
 
                 goods.add(gooddetail);
             }
@@ -350,7 +353,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Good> goods = new ArrayList<Good>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
-        Log.e("getAllGood_pfcode", query);
+        Log.e("asli_getAllGood_pfcode", query);
         if (c != null) {
             while (c.moveToNext()) {
                 Good gooddetail = new Good();
@@ -371,6 +374,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+                gooddetail.setCheck(false);
 
                 goods.add(gooddetail);
             }
@@ -428,6 +432,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             gd.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
             gd.setUnitName(c.getString(c.getColumnIndex("UnitName")));
             gd.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+            gd.setCheck(false);
 
         }
         c.close();
@@ -736,7 +741,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void UpdatePreFactorHeader_Customer(int pfcode, int Customer) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("Update PrefactorHeader set CustomerRef='" + Customer + "' where PreFactorCode = " + pfcode + "; ");
-        Log.e("1", "1");
         Cursor c = db.rawQuery("Select * From(Select Case PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 When 3 Then SellPrice3 \n" +
                 "       When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 End \n" +
                 "   * Case When SellPriceType = 1 Then MaxSellPrice/100 Else 1 End as NewPrice, Price, GoodCode From PreFactor p \n" +
@@ -744,15 +748,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "Join Customer on CustomerCode = CustomerRef Join Good g on GoodRef = GoodCode\n" +
                 "Where h.PreFactorCode = " + pfcode + ") ss Where Price<> NewPrice", null);
 
-        Log.e("1", "2");
+
         if (c != null) {
             while (c.moveToNext()) {
-                Log.e("1", "3");
+
                 db.execSQL("Update PreFactor set Price=" + c.getString(c.getColumnIndex("NewPrice"))
                         + " Where PreFactorCode =" + pfcode + " And GoodRef =" + c.getString(c.getColumnIndex("GoodCode")));
             }
         }
-        Log.e("1", "4");
+
 
         c.close();
     }
@@ -775,7 +779,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void update_explain(int pfcode, String explain) {
         SQLiteDatabase db = getWritableDatabase();
         String query = "Update PreFactorHeader set PreFactorExplain = '" + explain + "' Where IfNull(PreFactorCode,0)=" + pfcode;
-        Log.e("query", query);
+        Log.e("asli_query", query);
         db.execSQL(query);
     }
 
@@ -800,7 +804,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void UpdatePreFactor(Integer PreFactorCode, Integer PreFactorKowsarCode, String PreFactorDate) {
         SQLiteDatabase db = getWritableDatabase();
         String query = "Update PreFactorHeader Set PreFactorKowsarCode = " + PreFactorKowsarCode + ", PreFactorKowsarDate = '" + PreFactorDate + "' Where ifnull(PreFactorCode ,0)= " + PreFactorCode + ";";
-        Log.e("query", query);
+        Log.e("asli_query", query);
         db.execSQL(query);
     }
 
@@ -825,25 +829,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public String getFactorCustomer(Integer pfcode) {
-        Log.e("", "222");
         SQLiteDatabase db = getReadableDatabase();
         String sm;
 
         String query = "SELECT n.CentralName CustomerName  FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef "
                 + " join Central n on c.CentralRef=n.CentralCode "
                 + " Where IfNull(PreFactorCode,0)= " + pfcode;
-        Log.e("", "333");
         //String query = "select n.CentralName CustomerName as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)="+pfcode;
         Cursor c = db.rawQuery(query, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
             sm = c.getString(c.getColumnIndex("CustomerName"));
-            Log.e("", "1111" + sm);
             c.close();
         } else {
             sm = "فاکتوری انتخاب نشده";
         }
-        Log.e("", "444");
         return sm;
     }
 

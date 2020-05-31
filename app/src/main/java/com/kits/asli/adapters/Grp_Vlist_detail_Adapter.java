@@ -52,8 +52,8 @@ public class Grp_Vlist_detail_Adapter extends RecyclerView.Adapter<Grp_Vlist_det
 
 
         holder.grpname.setText(GoodGroupView.getName());
-        Log.e("id", "" + GoodGroupView.getGoodGroupCode());
-        Log.e("id", "" + GoodGroupView.getName());
+        Log.e("asli_id", "" + GoodGroupView.getGoodGroupCode());
+        Log.e("asli_id", "" + GoodGroupView.getName());
 
 
         if (dbh.getAllGroups("", GoodGroupView.getGoodGroupCode()).size() == 0) {

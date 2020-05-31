@@ -135,7 +135,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                     kd = kd.replaceAll("/", "");
                     goodsbd = dbh.getAllGood_pfcode(facView.getPreFactorCode(), "", 0, 2, 0, false);
                     J = goodsbd.size();
-                    Log.e("PreFactorRows: Size : ", "" + J);
+                    Log.e("asli_PreFactorRSize : ", "" + J);
                     Good b;
                     for (I = 0; I < J; I++) {
                         b = goodsbd.get(I);
@@ -146,7 +146,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                                 + b.getFactorAmount() + ","
                                 + b.getPrice() + ","
                                 + b.getMaxSellPrice() + "\n";
-                        Log.e("PreFactorRows", "" + I + ":" + filebody);
+                        Log.e("asli_PreFactorRows", "" + I + ":" + filebody);
                     }
                     Toast.makeText(mContext, filebody, Toast.LENGTH_SHORT).show();
                     File myFile;
@@ -199,7 +199,6 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                                 .setPositiveButton("بله", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        Log.e("", "بله");
                                         Intent intent = new Intent(mContext, BuyActivity.class);
                                         intent.putExtra("PreFac", facView.getPreFactorCode());
                                         intent.putExtra("showflag", 2);

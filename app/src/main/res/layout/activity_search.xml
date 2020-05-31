@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,6 @@
     android:background="@drawable/kowsar_back"
     tools:context=".activity.SearchActivity"
     android:layoutDirection="rtl">
-
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -501,6 +500,7 @@
         </com.google.android.material.card.MaterialCardView>
 
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/SearchActivity_R1"
             android:layout_width="match_parent"
@@ -511,7 +511,16 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/SearchActivity_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="30dp"
+        android:src="@drawable/ic_add_shopping_white"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 
