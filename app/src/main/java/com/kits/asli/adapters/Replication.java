@@ -94,6 +94,8 @@ public class Replication {
                                     case "i":
                                         String CentralPrivateCode = jo.getString("CentralPrivateCode");
                                         String CentralName = (jo.getString("Title") + jo.getString("FName") + jo.getString("Name")).trim();
+                                        CentralName = CentralName.replaceAll("'", "''");
+
                                         String Manager = jo.getString("Manager");
                                         String Delegacy = jo.getString("Delegacy");
 
@@ -278,6 +280,8 @@ public class Replication {
                                         String CentralRef = jo.getString("CentralRef");
                                         String CityCode = jo.getString("CityCode");
                                         String Address = jo.getString("Address");
+                                        Address = Address.replaceAll("'", "''");
+
                                         String Phone = jo.getString("Phone");
                                         String Mobile = jo.getString("Mobile");
                                         String MobileName = jo.getString("MobileName");
@@ -480,6 +484,7 @@ public class Replication {
 //                                                    qCol = qCol + "," + key;
 //                                                    qVal = qVal + ",'" + value + "'";
 
+                                                    value = value.toString().replaceAll("'", "''");
                                                     qCol.append(",").append(key);
                                                     qVal.append(",'").append(value).append("'");
                                                     if (qUpd.toString().equals("")) {
@@ -686,6 +691,8 @@ public class Replication {
                                                     Object value = jo.get(key);
 //                                                    qCol = qCol + "," + key;
 //                                                    qVal = qVal + ",'" + value + "'";
+                                                    value = value.toString().replaceAll("'", "''");
+
                                                     qCol.append(",").append(key);
                                                     qVal.append(",'").append(value).append("'");
                                                 } catch (JSONException ignored) {
@@ -869,6 +876,8 @@ public class Replication {
                                             if ((!key.equals("RLOpType")) & (!key.equals("RepLogDataCode")) & (!key.equals("ObjectRef"))) {
                                                 try {
                                                     Object value = jo.get(key);
+                                                    value = value.toString().replaceAll("'", "''");
+
                                                     if (qCol.toString().equals("")) {
                                                         qCol = new StringBuilder(key + "='" + value + "'");
                                                     } else {
