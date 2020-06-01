@@ -12,10 +12,12 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -50,6 +52,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -68,9 +71,13 @@ public class SearchActivity extends AppCompatActivity {
     SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
     DatabaseHelper dbh = new DatabaseHelper(SearchActivity.this);
-    ArrayList<String> intList = new ArrayList<>();
+    ArrayList<String[]> intList = new ArrayList<>();
     DecimalFormat decimalFormat = new DecimalFormat("0,000");
     FloatingActionButton fab;
+    Good_ProSearch_Adapter adapter;
+    GridLayoutManager gridLayoutManager;
+    int pastVisiblesItems = 0, visibleItemCount, totalItemCount, PageNo = 0;
+    Menu item_multi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,15 +126,22 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void good_select_function(int price_fun, int code_fun, int flag) {
+
         if (flag == 1) {
             fab.setVisibility(View.VISIBLE);
-            intList.add(String.valueOf(code_fun));
+            intList.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
+            item_multi.findItem(R.id.menu_multi).setVisible(true);
 
         } else {
-            intList.remove(String.valueOf(code_fun));
+            int b = 0, c = 0;
+            for (String[] s : intList) {
+                if (s[0].equals(String.valueOf(code_fun))) b = c;
+                c++;
+            }
+            intList.remove(b);
             if (intList.size() < 1) {
                 fab.setVisibility(View.GONE);
-
+                item_multi.findItem(R.id.menu_multi).setVisible(false);
             }
         }
     }
@@ -207,9 +221,9 @@ public class SearchActivity extends AppCompatActivity {
 
 
                                 String srch = action.arabicToenglish(editable.toString());
-                                ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
-                                Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
-                                GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
+                                goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                                adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                                gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                                 re.setLayoutManager(gridLayoutManager);
                                 re.setAdapter(adapter);
                                 re.setItemAnimator(new DefaultItemAnimator());
@@ -228,8 +242,8 @@ public class SearchActivity extends AppCompatActivity {
 
 
         goods = dbh.getAllGood(scan, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
-        Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
+        adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+        gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
         re.setLayoutManager(gridLayoutManager);
         re.setAdapter(adapter);
         re.setItemAnimator(new DefaultItemAnimator());
@@ -278,8 +292,8 @@ public class SearchActivity extends AppCompatActivity {
                     aperiod = 0;
                 }
                 goods = dbh.getAllGood_Extended("", "", 0, agoodname, awriter, adragoman, anasher, aperiod, aprintyear, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true));
-                Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
+                adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
                 re.setLayoutManager(gridLayoutManager);
                 re.setAdapter(adapter);
                 re.setItemAnimator(new DefaultItemAnimator());
@@ -358,9 +372,9 @@ public class SearchActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
-                        Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
+                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                        gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
                         re.setAdapter(adapter);
                         re.setItemAnimator(new DefaultItemAnimator());
@@ -374,9 +388,9 @@ public class SearchActivity extends AppCompatActivity {
 
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
-                        Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
+                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                        gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
                         re.setAdapter(adapter);
                         re.setItemAnimator(new DefaultItemAnimator());
@@ -398,9 +412,9 @@ public class SearchActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
-                        Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
+                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                        gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
                         re.setAdapter(adapter);
                         re.setItemAnimator(new DefaultItemAnimator());
@@ -413,9 +427,9 @@ public class SearchActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        ArrayList<Good> sgoods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
-                        Good_ProSearch_Adapter adapter = new Good_ProSearch_Adapter(sgoods, SearchActivity.this);
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
+                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                        gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
                         re.setAdapter(adapter);
                         re.setItemAnimator(new DefaultItemAnimator());
@@ -430,8 +444,79 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                final Dialog dialog = new Dialog(SearchActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);//title laye nadashte bashim
+                dialog.setContentView(R.layout.box_multi_buy);
+                Button boxbuy = dialog.findViewById(R.id.box_multi_buy_btn);
+                final EditText amount_mlti = dialog.findViewById(R.id.box_multi_buy_amount);
+                final TextView tv = dialog.findViewById(R.id.box_multi_buy_factor);
+                tv.setText(dbh.getFactorCustomer(Integer.valueOf(shPref.getString("prefactor_code", null))));
+                dialog.show();
+                amount_mlti.requestFocus();
+                amount_mlti.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.showSoftInput(amount_mlti, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                }, 500);
+
+                boxbuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String amo = amount_mlti.getText().toString();
+                        if (!amo.equals("")) {
+                            if (Integer.parseInt(amo) != 0) {
+                                for (String[] s : intList) {
+                                    if (s[1].equals("")) s[1] = "-1";
+                                    DatabaseHelper dbh = new DatabaseHelper(SearchActivity.this);
+                                    String pf = shPref.getString("prefactor_code", null);
+                                    dbh.InsertPreFactor(Integer.parseInt(pf),
+                                            Integer.parseInt(s[0]),
+                                            Integer.parseInt(amo),
+                                            Integer.parseInt(s[1]),
+                                            0);
+                                }
+                                Toast toast = Toast.makeText(SearchActivity.this, "به سبد خرید اضافه شد", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 10, 10);
+                                toast.show();
+                                dialog.dismiss();
+                                item_multi.findItem(R.id.menu_multi).setVisible(false);
+                                for (Good good : goods) {
+                                    good.setCheck(false);
+                                }
+                                intList.clear();
+                                adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                                gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
+                                gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
+                                re.setLayoutManager(gridLayoutManager);
+                                re.setAdapter(adapter);
+                                re.setItemAnimator(new DefaultItemAnimator());
+                                fab.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(SearchActivity.this, "تعداد مورد نظر صحیح نمی باشد.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(SearchActivity.this, "تعداد مورد نظر صحیح نمی باشد.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
             }
         });
+
+        re.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) { //check for scroll down
+                    visibleItemCount = gridLayoutManager.getChildCount();
+                    totalItemCount = gridLayoutManager.getItemCount();
+                    pastVisiblesItems = gridLayoutManager.findFirstVisibleItemPosition();
+                }
+            }
+        });
+
 
     }
 
@@ -439,7 +524,9 @@ public class SearchActivity extends AppCompatActivity {
     //
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        item_multi = menu;
         getMenuInflater().inflate(R.menu.options_menu, menu);
+
 
         return true;
     }
@@ -459,6 +546,21 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(this, "فاکتوری انتخاب نشده است", Toast.LENGTH_SHORT).show();
 
             }
+            return true;
+        }
+        if (item.getItemId() == R.id.menu_multi) {
+            item_multi.findItem(R.id.menu_multi).setVisible(false);
+            for (Good good : goods) {
+                good.setCheck(false);
+            }
+            intList.clear();
+            adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+            gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
+            gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
+            re.setLayoutManager(gridLayoutManager);
+            re.setAdapter(adapter);
+            re.setItemAnimator(new DefaultItemAnimator());
+            fab.setVisibility(View.GONE);
             return true;
         }
         return super.onOptionsItemSelected(item);

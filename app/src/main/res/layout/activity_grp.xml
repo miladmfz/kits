@@ -455,6 +455,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="30dp"
+        app:backgroundTint="@color/red_800"
         android:src="@drawable/ic_add_shopping_white"
         android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
