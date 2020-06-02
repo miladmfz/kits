@@ -55,7 +55,7 @@ public class GrpActivity extends AppCompatActivity {
     private Intent intent;
     private SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
-    ArrayList<String[]> intList = new ArrayList<>();
+    ArrayList<String[]> Multi_buy = new ArrayList<>();
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private DatabaseHelper dbh = new DatabaseHelper(GrpActivity.this);
     private ArrayList<Good> goods = new ArrayList<>();
@@ -398,7 +398,7 @@ public class GrpActivity extends AppCompatActivity {
                         String amo = amount_mlti.getText().toString();
                         if (!amo.equals("")) {
                             if (Integer.parseInt(amo) != 0) {
-                                for (String[] s : intList) {
+                                for (String[] s : Multi_buy) {
                                     if (s[1].equals("")) s[1] = "-1";
                                     DatabaseHelper dbh = new DatabaseHelper(GrpActivity.this);
                                     String pf = shPref.getString("prefactor_code", null);
@@ -416,7 +416,7 @@ public class GrpActivity extends AppCompatActivity {
                                 for (Good good : goods) {
                                     good.setCheck(false);
                                 }
-                                intList.clear();
+                                Multi_buy.clear();
                                 adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
                                 gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);
                                 gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
@@ -475,7 +475,7 @@ public class GrpActivity extends AppCompatActivity {
             for (Good good : goods) {
                 good.setCheck(false);
             }
-            intList.clear();
+            Multi_buy.clear();
             adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
             gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);
             gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
@@ -496,17 +496,17 @@ public class GrpActivity extends AppCompatActivity {
     public void good_select_function(int price_fun, int code_fun, int flag) {
         if (flag == 1) {
             fab.setVisibility(View.VISIBLE);
-            intList.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
+            Multi_buy.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
             item_multi.findItem(R.id.menu_multi).setVisible(true);
 
         } else {
             int b = 0, c = 0;
-            for (String[] s : intList) {
+            for (String[] s : Multi_buy) {
                 if (s[0].equals(String.valueOf(code_fun))) b = c;
                 c++;
             }
-            intList.remove(b);
-            if (intList.size() < 1) {
+            Multi_buy.remove(b);
+            if (Multi_buy.size() < 1) {
                 fab.setVisibility(View.GONE);
                 item_multi.findItem(R.id.menu_multi).setVisible(false);
             }

@@ -71,7 +71,7 @@ public class SearchActivity extends AppCompatActivity {
     SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
     DatabaseHelper dbh = new DatabaseHelper(SearchActivity.this);
-    ArrayList<String[]> intList = new ArrayList<>();
+    ArrayList<String[]> Multi_buy = new ArrayList<>();
     DecimalFormat decimalFormat = new DecimalFormat("0,000");
     FloatingActionButton fab;
     Good_ProSearch_Adapter adapter;
@@ -129,17 +129,17 @@ public class SearchActivity extends AppCompatActivity {
 
         if (flag == 1) {
             fab.setVisibility(View.VISIBLE);
-            intList.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
+            Multi_buy.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
             item_multi.findItem(R.id.menu_multi).setVisible(true);
 
         } else {
             int b = 0, c = 0;
-            for (String[] s : intList) {
+            for (String[] s : Multi_buy) {
                 if (s[0].equals(String.valueOf(code_fun))) b = c;
                 c++;
             }
-            intList.remove(b);
-            if (intList.size() < 1) {
+            Multi_buy.remove(b);
+            if (Multi_buy.size() < 1) {
                 fab.setVisibility(View.GONE);
                 item_multi.findItem(R.id.menu_multi).setVisible(false);
             }
@@ -467,7 +467,7 @@ public class SearchActivity extends AppCompatActivity {
                         String amo = amount_mlti.getText().toString();
                         if (!amo.equals("")) {
                             if (Integer.parseInt(amo) != 0) {
-                                for (String[] s : intList) {
+                                for (String[] s : Multi_buy) {
                                     if (s[1].equals("")) s[1] = "-1";
                                     DatabaseHelper dbh = new DatabaseHelper(SearchActivity.this);
                                     String pf = shPref.getString("prefactor_code", null);
@@ -485,7 +485,7 @@ public class SearchActivity extends AppCompatActivity {
                                 for (Good good : goods) {
                                     good.setCheck(false);
                                 }
-                                intList.clear();
+                                Multi_buy.clear();
                                 adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                                 gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
                                 gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
@@ -553,7 +553,7 @@ public class SearchActivity extends AppCompatActivity {
             for (Good good : goods) {
                 good.setCheck(false);
             }
-            intList.clear();
+            Multi_buy.clear();
             adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
             gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
             gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);

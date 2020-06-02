@@ -46,7 +46,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
     private Integer date, grid;
     private SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
-    ArrayList<String[]> intList = new ArrayList<>();
+    ArrayList<String[]> Multi_buy = new ArrayList<>();
     private ArrayList<Good> goods = new ArrayList<>();
     private DatabaseHelper dbh = new DatabaseHelper(Search_date_detailActivity.this);
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
@@ -238,7 +238,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
                         String amo = amount_mlti.getText().toString();
                         if (!amo.equals("")) {
                             if (Integer.parseInt(amo) != 0) {
-                                for (String[] s : intList) {
+                                for (String[] s : Multi_buy) {
                                     if (s[1].equals("")) s[1] = "-1";
                                     DatabaseHelper dbh = new DatabaseHelper(Search_date_detailActivity.this);
                                     String pf = shPref.getString("prefactor_code", null);
@@ -256,7 +256,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
                                 for (Good good : goods) {
                                     good.setCheck(false);
                                 }
-                                intList.clear();
+                                Multi_buy.clear();
                                 adapter = new Good_ProSearch_Adapter(goods, Search_date_detailActivity.this);
                                 gridLayoutManager = new GridLayoutManager(Search_date_detailActivity.this, grid);
                                 gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
@@ -308,7 +308,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
             for (Good good : goods) {
                 good.setCheck(false);
             }
-            intList.clear();
+            Multi_buy.clear();
             adapter = new Good_ProSearch_Adapter(goods, Search_date_detailActivity.this);
             gridLayoutManager = new GridLayoutManager(Search_date_detailActivity.this, grid);
             gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
@@ -330,17 +330,17 @@ public class Search_date_detailActivity extends AppCompatActivity {
     public void good_select_function(int price_fun, int code_fun, int flag) {
         if (flag == 1) {
             fab.setVisibility(View.VISIBLE);
-            intList.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
+            Multi_buy.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
             item_multi.findItem(R.id.menu_multi).setVisible(true);
 
         } else {
             int b = 0, c = 0;
-            for (String[] s : intList) {
+            for (String[] s : Multi_buy) {
                 if (s[0].equals(String.valueOf(code_fun))) b = c;
                 c++;
             }
-            intList.remove(b);
-            if (intList.size() < 1) {
+            Multi_buy.remove(b);
+            if (Multi_buy.size() < 1) {
                 fab.setVisibility(View.GONE);
                 item_multi.findItem(R.id.menu_multi).setVisible(false);
             }
