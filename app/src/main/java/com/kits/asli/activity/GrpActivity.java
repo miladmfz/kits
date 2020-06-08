@@ -418,6 +418,8 @@ public class GrpActivity extends AppCompatActivity {
                                 }
                                 Multi_buy.clear();
                                 adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
+                                adapter.multi_select = false;
+
                                 gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);
                                 gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
                                 rc_good.setLayoutManager(gridLayoutManager);
@@ -477,6 +479,8 @@ public class GrpActivity extends AppCompatActivity {
             }
             Multi_buy.clear();
             adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
+            adapter.multi_select = false;
+
             gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);
             gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
             rc_good.setLayoutManager(gridLayoutManager);
@@ -508,6 +512,7 @@ public class GrpActivity extends AppCompatActivity {
             Multi_buy.remove(b);
             if (Multi_buy.size() < 1) {
                 fab.setVisibility(View.GONE);
+                adapter.multi_select = false;
                 item_multi.findItem(R.id.menu_multi).setVisible(false);
             }
         }

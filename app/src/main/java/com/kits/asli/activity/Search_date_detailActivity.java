@@ -258,6 +258,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
                                 }
                                 Multi_buy.clear();
                                 adapter = new Good_ProSearch_Adapter(goods, Search_date_detailActivity.this);
+                                adapter.multi_select = false;
                                 gridLayoutManager = new GridLayoutManager(Search_date_detailActivity.this, grid);
                                 gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
                                 re.setLayoutManager(gridLayoutManager);
@@ -310,6 +311,8 @@ public class Search_date_detailActivity extends AppCompatActivity {
             }
             Multi_buy.clear();
             adapter = new Good_ProSearch_Adapter(goods, Search_date_detailActivity.this);
+            adapter.multi_select = false;
+
             gridLayoutManager = new GridLayoutManager(Search_date_detailActivity.this, grid);
             gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
             re.setLayoutManager(gridLayoutManager);
@@ -342,6 +345,8 @@ public class Search_date_detailActivity extends AppCompatActivity {
             Multi_buy.remove(b);
             if (Multi_buy.size() < 1) {
                 fab.setVisibility(View.GONE);
+                adapter.multi_select = false;
+
                 item_multi.findItem(R.id.menu_multi).setVisible(false);
             }
         }

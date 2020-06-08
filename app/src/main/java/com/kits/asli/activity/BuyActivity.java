@@ -71,14 +71,6 @@ public class BuyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy);
 
 
-//        final Dialog dialog1 ;
-//        dialog1 = new Dialog(this);
-//        dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        Objects.requireNonNull(dialog1.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-//        dialog1.setContentView(R.layout.rep_prog);
-//        TextView repw = dialog1.findViewById(R.id.rep_prog_text);
-//        repw.setText("در حال خواندن اطلاعات");
-//        dialog1.show();
         intent();
 
         Handler handler = new Handler();
@@ -89,14 +81,6 @@ public class BuyActivity extends AppCompatActivity {
 
             }
         }, 100);
-//
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                dialog1.dismiss();
-//
-//            }
-//        },1000);
 
 
     }
@@ -205,109 +189,6 @@ public class BuyActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         assert data != null;
         PreFac = data.getInt("PreFac");
-    }
-
-
-    public void sendfactor(final int factor_code) {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
-        RequestQueue queue = Volley.newRequestQueue(BuyActivity.this);
-        StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    Log.e("asli_response = ", response + "");
-                    JSONArray object = new JSONArray(response);
-                    JSONObject jo = object.getJSONObject(0);
-                    il = object.length();
-                    int code = jo.getInt("GoodCode");
-                    if (code == 0) {
-                        Integer kowsarcode = jo.getInt("PreFactorCode");
-                        if (kowsarcode > 0) {
-                            Toast toast = Toast.makeText(BuyActivity.this, "پیش فاکتور با موفقیت ارسال شد", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 10, 10);
-                            toast.show();
-                            String factorDate = jo.getString("PreFactorDate");
-                            Log.e("asli_factorcode  ", kowsarcode.toString());
-                            Log.e("asli_factordate  ", factorDate);
-                            dbh.UpdatePreFactor(factor_code, kowsarcode, factorDate);
-                            SharedPreferences.Editor sEdit = shPref.edit();
-                            sEdit.putString("prefactor_code", "0");
-                            sEdit.apply();
-                            intent = new Intent(BuyActivity.this, NavActivity.class);
-                            intent.putExtra("showflag", 2);
-                            finish();
-                            overridePendingTransition(0, 0);
-                            startActivity(intent);
-                            overridePendingTransition(0, 0);
-                        } else {
-                            Toast toast = Toast.makeText(BuyActivity.this, "خطا در ارتباط با سرور", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 10, 10);
-                            toast.show();
-                        }
-
-                    } else {
-                        SQLiteDatabase dtb = openOrCreateDatabase("KowsarDb.sqlite", MODE_PRIVATE, null);
-                        for (int i = 0; i < il; i++) {
-                            jo = object.getJSONObject(i);
-                            code = jo.getInt("GoodCode");
-                            int flag = jo.getInt("Flag");
-                            dtb.execSQL("Update PreFactor set Shortage = " + flag + " Where IfNull(PreFactorCode,0)=" + factor_code + " And GoodRef = " + code);
-                        }
-                        Toast.makeText(BuyActivity.this, "کالاهای مورد نظر کسر موجودی دارند!", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(BuyActivity.this, BuyActivity.class);
-                        intent.putExtra("PreFac", Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))));
-                        intent.putExtra("showflag", 2);
-                        finish();
-                        overridePendingTransition(0, 0);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(BuyActivity.this, "بروز خطا در اطلاعات", Toast.LENGTH_SHORT).show();
-                    Log.e("asli_printStackTrace", e.toString());
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-                Toast.makeText(BuyActivity.this, "ارتباط با سرور میسر نمی باشد.", Toast.LENGTH_SHORT).show();
-                Log.e("asli_printStackTrace", volleyError.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("tag", "PFQASWED");
-
-                SQLiteDatabase dtb = BuyActivity.this.openOrCreateDatabase("KowsarDb.sqlite", Context.MODE_PRIVATE, null);
-
-                Action action = new Action(getApplicationContext());
-
-
-                Cursor pc = dtb.rawQuery("Select PreFactorCode, PreFactorDate, PreFactorExplain, CustomerRef, BrokerRef From PreFactorHeader Where PreFactorCode = " + factor_code, null);
-                // pr1 = CursorToJson(pc);
-                String pr1 = action.CursorToJson(pc);
-                pc.close();
-
-
-                Log.e("asli_reqqqq", pr1);
-                params.put("PFHDQASW", pr1);
-                Cursor c = dtb.rawQuery("Select GoodRef, Amount, Price From PreFactor Where  GoodRef>0 and  Prefactorcode = " + factor_code, null);
-
-                String pr2 = action.CursorToJson(c);
-                //pr2 = CursorToJson(c);
-                c.close();
-
-                Log.e("asli_reqqqq", pr2);
-                params.put("PFDTQASW", pr2);
-                return params;
-            }
-
-        };
-        queue.add(stringrequste);
-        Log.e("asli_stringrequste =", stringrequste.toString() + "");
     }
 
 

@@ -125,26 +125,6 @@ public class SearchActivity extends AppCompatActivity {
         scan = data.getString("scan");
     }
 
-    public void good_select_function(int price_fun, int code_fun, int flag) {
-
-        if (flag == 1) {
-            fab.setVisibility(View.VISIBLE);
-            Multi_buy.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
-            item_multi.findItem(R.id.menu_multi).setVisible(true);
-
-        } else {
-            int b = 0, c = 0;
-            for (String[] s : Multi_buy) {
-                if (s[0].equals(String.valueOf(code_fun))) b = c;
-                c++;
-            }
-            Multi_buy.remove(b);
-            if (Multi_buy.size() < 1) {
-                fab.setVisibility(View.GONE);
-                item_multi.findItem(R.id.menu_multi).setVisible(false);
-            }
-        }
-    }
 
 
     public void init() {
@@ -487,6 +467,7 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                                 Multi_buy.clear();
                                 adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
+                                adapter.multi_select = false;
                                 gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
                                 gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
                                 re.setLayoutManager(gridLayoutManager);
@@ -554,6 +535,8 @@ public class SearchActivity extends AppCompatActivity {
                 good.setCheck(false);
             }
             Multi_buy.clear();
+            adapter.multi_select = false;
+
             adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
             gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);
             gridLayoutManager.scrollToPosition(pastVisiblesItems + 2);
@@ -602,6 +585,29 @@ public class SearchActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void good_select_function(int price_fun, int code_fun, int flag) {
+
+        if (flag == 1) {
+            fab.setVisibility(View.VISIBLE);
+            Multi_buy.add(new String[]{String.valueOf(code_fun), String.valueOf(price_fun)});
+            item_multi.findItem(R.id.menu_multi).setVisible(true);
+
+        } else {
+            int b = 0, c = 0;
+            for (String[] s : Multi_buy) {
+                if (s[0].equals(String.valueOf(code_fun))) b = c;
+                c++;
+            }
+            Multi_buy.remove(b);
+            if (Multi_buy.size() < 1) {
+                fab.setVisibility(View.GONE);
+                adapter.multi_select = false;
+
+                item_multi.findItem(R.id.menu_multi).setVisible(false);
+            }
+        }
     }
 
     @Override

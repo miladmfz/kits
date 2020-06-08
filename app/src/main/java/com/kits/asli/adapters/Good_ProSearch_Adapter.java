@@ -60,6 +60,8 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
     private Image_info image_info;
     private byte[] imageByteArray;
     int flag = 1;
+    public boolean multi_select;
+
 
 
     public Good_ProSearch_Adapter(ArrayList<Good> goods, Context context) {
@@ -143,23 +145,68 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         holder.rltv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Good goodView = goods.get(position);
-                intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra("id", goodView.getGoodCode());
-                intent.putExtra("ws", goodView.getShortage());
-                intent.putExtra("ws", goodView.getShortage());
-                mContext.startActivity(intent);
+                if (multi_select) {
+                    holder.rltv.setChecked(!holder.rltv.isChecked());
+                    goods.get(position).setCheck(!goods.get(position).isCheck());
+                    final DatabaseHelper dbh = new DatabaseHelper(mContext);
+                    int pri_multi = dbh.getCustomerGoodSellPrice(Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))), goodView.getGoodCode());
+                    if (pri_multi == 0) {
+                        pri_multi = goodView.getMaxSellPrice();
+                    }
+                    if (goods.get(position).isCheck()) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
+                            SearchActivity activity = (SearchActivity) mContext;
+                            activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
+                        }
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
+                            Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
+                            activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
+                        }
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
+                            GrpActivity activity = (GrpActivity) mContext;
+                            activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
+                        }
+                    } else {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
+                            SearchActivity activity = (SearchActivity) mContext;
+                            activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
+                        }
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
+                            Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
+                            activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
+                        }
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
+                            GrpActivity activity = (GrpActivity) mContext;
+                            activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
+                        }
+
+                    }
+
+                } else {
+                    Good goodView = goods.get(position);
+                    intent = new Intent(mContext, DetailActivity.class);
+                    intent.putExtra("id", goodView.getGoodCode());
+                    intent.putExtra("ws", goodView.getShortage());
+                    intent.putExtra("ws", goodView.getShortage());
+                    mContext.startActivity(intent);
+                }
+
             }
 
         });
 
-        holder.rltv.setChecked(goodView.isCheck());
 
+        if (goods.get(position).isCheck()) {
+            holder.rltv.setChecked(true);
+        } else {
+            holder.rltv.setChecked(false);
+        }
 
         holder.rltv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) != 0) {
+                    multi_select = true;
 
                     holder.rltv.setChecked(!holder.rltv.isChecked());
                     goods.get(position).setCheck(!goods.get(position).isCheck());
