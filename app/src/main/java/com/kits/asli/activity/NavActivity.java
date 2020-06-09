@@ -430,12 +430,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-
     private void test_fun() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NavActivity.this);
