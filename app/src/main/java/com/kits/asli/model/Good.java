@@ -60,6 +60,8 @@ public class Good implements Serializable {
     private String Nvarchar20;
     @SerializedName("Date2")
     private String Date2;
+    @SerializedName("Date1")
+    private String Date1;
     @SerializedName("RowCode")
     private Integer RowCode;
     @SerializedName("Isbn")
@@ -73,6 +75,13 @@ public class Good implements Serializable {
     @SerializedName("Check")
     private boolean Check;
 
+    public String getDate1() {
+        return Date1;
+    }
+
+    public void setDate1(String date1) {
+        Date1 = date1;
+    }
 
     public boolean isCheck() {
         return Check;

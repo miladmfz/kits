@@ -136,7 +136,10 @@ public class DetailActivity extends AppCompatActivity {
         grp.setText(Farsi_number.PerisanNumber("" + dbh.getgoodgroups(id)));
         price.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + gd.getMaxSellPrice()))));
         ImageName = gd.getImageName();
+        if (getString(R.string.app_name).equals("آسیم")) {
 
+            date2.setText(Farsi_number.PerisanNumber(gd.getDate1() + ""));
+        }
 
         if (shPref.getBoolean("real_amount", true)) {
             amount.setText(Farsi_number.PerisanNumber("" + (gd.getAmount() - gd.getReservedAmount())));

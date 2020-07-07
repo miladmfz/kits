@@ -232,6 +232,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public ArrayList<Good> getAllGood_ByDate1() throws ParseException {
+
+        SQLiteDatabase database = getReadableDatabase();
+        String query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode FROM Good Join Units on UnitCode = GoodUnitRef  order by Date1 DESC , GoodCode DESC ";
+        ArrayList<Good> goods = new ArrayList<Good>();
+        Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
+
+        if (c != null) {
+            while (c.moveToNext()) {
+                Good gooddetail = new Good();
+                gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
+                gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
+                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+                gooddetail.setCheck(false);
+
+                goods.add(gooddetail);
+            }
+        }
+        c.close();
+        return goods;
+    }
+
+
     public ArrayList<Good> getAllGood(String name, Integer aGroupCode, Integer aShowFlag, Integer LikeGoodRef, Boolean aOnlyActive, Boolean aOnlyAvailable, Integer itemamount) {
         String cond;
         String order = " order by ";
@@ -432,6 +467,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             gd.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
             gd.setUnitName(c.getString(c.getColumnIndex("UnitName")));
             gd.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+            try {
+                gd.setDate1(c.getString(c.getColumnIndex("Date1")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             gd.setCheck(false);
 
         }

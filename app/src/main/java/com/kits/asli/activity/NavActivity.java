@@ -129,6 +129,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             navigationView.getMenu().findItem(R.id.nav_porforosh).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_pazel).setVisible(true);
         }
+        if (getString(R.string.app_name).equals("آسیم")) {
+            navigationView.getMenu().findItem(R.id.nav_tajdid).setVisible(true);
+        }
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -169,11 +172,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         });
 
 
-
         create_factor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 intent = new Intent(NavActivity.this, CustomerActivity.class);
@@ -187,7 +188,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         good_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 intent = new Intent(NavActivity.this, SearchActivity.class);
@@ -326,7 +326,14 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             }
         } else if (id == R.id.nav_search_date) {
             intent = new Intent(NavActivity.this, Search_dateActivity.class);
+            intent.putExtra("id", 1);
             startActivity(intent);
+        } else if (id == R.id.nav_tajdid) {
+            if (getString(R.string.app_name).equals("آسیم")) {
+                intent = new Intent(NavActivity.this, Search_date_detailActivity.class);
+                intent.putExtra("id", 0);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_cfg) {
             intent = new Intent(NavActivity.this, ConfigActivity.class);
             startActivity(intent);

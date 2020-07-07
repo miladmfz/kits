@@ -60,6 +60,7 @@
     <string name="Reserveamount">تعداد رزرو</string>
     <string name="detail_isbn">شابک</string>
     <string name="detail_tahvildate">تاریخ تحویل</string>
+    <string name="detail_tajdiddate">تاریخ تجدید</string>
     <string name="detail_nvarchar1">مولف</string>
     <string name="detail_nvarchar2">مترجم</string>
     <string name="detail_float1">نوبت چاپ</string>
