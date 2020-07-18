@@ -492,10 +492,6 @@ public class GrpActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     public void good_select_function(int price_fun, int code_fun, int flag) {
         if (flag == 1) {

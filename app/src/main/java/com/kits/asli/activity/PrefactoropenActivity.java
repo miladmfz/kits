@@ -143,9 +143,5 @@ public class PrefactoropenActivity extends AppCompatActivity {
         fac = data.getInt("fac");
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
 }

@@ -342,11 +342,6 @@ public class Search_date_detailActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
     public void good_select_function(int price_fun, int code_fun, int flag) {
         if (flag == 1) {
             fab.setVisibility(View.VISIBLE);
