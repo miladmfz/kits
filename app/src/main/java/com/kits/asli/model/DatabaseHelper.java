@@ -232,7 +232,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Good> getAllGood_ByDate1() throws ParseException {
+    public ArrayList<Good> getAllGood_ByDate_asim() throws ParseException {
 
         SQLiteDatabase database = getReadableDatabase();
         String query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode FROM Good Join Units on UnitCode = GoodUnitRef  order by Date1 DESC , GoodCode DESC ";
@@ -341,7 +341,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
                 gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
                 gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
@@ -351,7 +351,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
                 gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
-                //gooddetail.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
                 gooddetail.setCheck(false);
 
@@ -473,6 +472,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 e.printStackTrace();
             }
             gd.setCheck(false);
+
+            if (mContext.getString(R.string.app_name).equals("چشمه")) {
+                gd.setGoodSubCode(c.getString(c.getColumnIndex("GoodSubCode")));
+                gd.setAmount1(c.getInt(c.getColumnIndex("StackAmount2")));
+                gd.setAmount2(c.getInt(c.getColumnIndex("StackAmount3")));
+            }
 
         }
         c.close();

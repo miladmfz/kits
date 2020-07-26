@@ -2,16 +2,13 @@ package com.kits.asli.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
+
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -27,12 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.kits.asli.R;
 import com.kits.asli.adapters.Action;
 import com.kits.asli.adapters.Good_buy_Adapter;
@@ -40,28 +32,16 @@ import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
 import com.kits.asli.model.Good;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class BuyActivity extends AppCompatActivity {
 
     private Action action;
     private int Internet = 1, il = 0;
-    private String SERVER_IP_ADDRESS;
     private Integer PreFac = 0;
-    private Intent intent;
     private DatabaseHelper dbh = new DatabaseHelper(BuyActivity.this);
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
-    private SharedPreferences shPref;
 
 
     @SuppressLint("SetTextI18n")
@@ -90,10 +70,8 @@ public class BuyActivity extends AppCompatActivity {
 
         action = new Action(BuyActivity.this);
 
-        shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
 
 
-        SERVER_IP_ADDRESS = getString(R.string.SERVERIP);
         Toolbar toolbar = findViewById(R.id.BuyActivity_toolbar);
         TextView row = findViewById(R.id.BuyActivity_total_row_buy);
         TextView price = findViewById(R.id.BuyActivity_total_price_buy);

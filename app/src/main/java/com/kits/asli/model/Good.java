@@ -11,23 +11,29 @@ import static android.text.TextUtils.isEmpty;
 public class Good implements Serializable {
 
 
-
     @SerializedName("GoodCode")
     private Integer GoodCode;
     @SerializedName("state")
     private Integer state;
     @SerializedName("GoodMainCode")
     private Integer GoodMainCode;
+    @SerializedName("GoodSubCode")
+    private String GoodSubCode;
     @SerializedName("MaxSellPrice")
     private Integer MaxSellPrice;
     @SerializedName("DefaultUnitValue")
     private Integer DefaultUnitValue;
     @SerializedName("Amount")
     private Integer Amount;
+    @SerializedName("Amount1")
+    private Integer Amount1;
+    @SerializedName("Amount2")
+    private Integer Amount2;
+
     @SerializedName("ReservedAmount")
     private Integer ReservedAmount;
-
-
+    @SerializedName("SellPrice1")
+    private Integer SellPrice1;
     @SerializedName("FactorAmount")
     private Integer FactorAmount;
     @SerializedName("Shortage")
@@ -81,6 +87,38 @@ public class Good implements Serializable {
 
     public void setDate1(String date1) {
         Date1 = date1;
+    }
+
+    public Integer getAmount1() {
+        return Amount1;
+    }
+
+    public String getGoodSubCode() {
+        return GoodSubCode;
+    }
+
+    public Integer getSellPrice1() {
+        return SellPrice1;
+    }
+
+    public void setSellPrice1(Integer sellPrice1) {
+        SellPrice1 = sellPrice1;
+    }
+
+    public void setGoodSubCode(String goodSubCode) {
+        GoodSubCode = goodSubCode;
+    }
+
+    public void setAmount1(Integer amount1) {
+        Amount1 = amount1;
+    }
+
+    public Integer getAmount2() {
+        return Amount2;
+    }
+
+    public void setAmount2(Integer amount2) {
+        Amount2 = amount2;
     }
 
     public boolean isCheck() {

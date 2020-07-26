@@ -92,10 +92,22 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         }
 
         holder.goodnameTextView.setText(Farsi_number.PerisanNumber(goodView.getGoodName()));
+
+
         holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getMaxSellPrice()))));
-        //Picasso.with(mContext).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+img).centerInside().resize(1000, 1000).into(holder.img);
+        if (mContext.getString(R.string.app_name).equals("چشمه")) {
 
+            holder.test_view.setText(Farsi_number.PerisanNumber(goodView.getGoodExplain1()));
+            holder.test_view.setVisibility(View.VISIBLE);
+        }
 
+        if (mContext.getString(R.string.app_name).equals("چشمه غیر کتابی")) {
+
+            holder.test_view.setText(Farsi_number.PerisanNumber(goodView.getGoodExplain1()));
+            holder.test_view.setVisibility(View.VISIBLE);
+            holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getSellPrice1()))));
+
+        }
         image_info = new Image_info(mContext);
 
         if (image_info.Imgae_exist(goodView.getGoodCode().toString())) {
@@ -298,6 +310,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
         private TextView goodnameTextView;
         private TextView maxsellpriceTextView;
         private TextView good_prosearch_amount;
+        private TextView test_view;
         private Button btnadd;
         private ImageView img;
         private LinearLayout ggg;
@@ -308,6 +321,7 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
             goodnameTextView = itemView.findViewById(R.id.good_prosearch_name);
             maxsellpriceTextView = itemView.findViewById(R.id.good_prosearch_price);
             good_prosearch_amount = itemView.findViewById(R.id.good_prosearch_amount);
+            test_view = itemView.findViewById(R.id.good_prosearch_test);
             img = itemView.findViewById(R.id.good_prosearch_img);
             rltv = itemView.findViewById(R.id.good_prosearch);
             btnadd = itemView.findViewById(R.id.good_prosearch_btn);

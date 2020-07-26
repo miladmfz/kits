@@ -5,7 +5,7 @@
     android:id="@+id/good_prosearch"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="400dp"
     android:layout_margin="3dp"
     app:cardCornerRadius="8dp"
     app:strokeWidth="1dp"
@@ -68,7 +68,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -107,6 +106,20 @@
                 android:layout_weight="0.5" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/good_prosearch_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:textStyle="bold"
+            android:text="test"
+            android:textColor="#E61243"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/good_prosearch_btn"

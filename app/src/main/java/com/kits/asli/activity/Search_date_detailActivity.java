@@ -156,7 +156,7 @@ public class Search_date_detailActivity extends AppCompatActivity {
         } else {
             mySwitch_goodamount.setVisibility(View.GONE);
             try {
-                goods = dbh.getAllGood_ByDate1();
+                goods = dbh.getAllGood_ByDate_asim();
             } catch (ParseException e) {
                 e.printStackTrace();
             }

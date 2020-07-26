@@ -55,19 +55,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-//import com.kits.asli.model.Good;
-//import java.util.ArrayList;
-//import com.kits.asli.webService.APIInterface;
-//import androidx.recyclerview.widget.GridLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
-//import android.widget.ProgressBar;
-//import retrofit2.Call;
-//import retrofit2.Callback;
-//import retrofit2.Response;
-//import com.kits.asli.model.GoodResponse;
-//import com.kits.asli.webService.APIClient;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Action action;
@@ -78,17 +65,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private Replication replication;
     FusedLocationProviderClient fusedLocationProviderClient;
     Location location;
-    WorkManager workManager;
-//    ArrayList<Good> goods;
-//    RecyclerView rc_test;
-//    GridLayoutManager gridLayoutManager = new GridLayoutManager(NavActivity.this, 2, GridLayoutManager.VERTICAL, false);
-//    APIInterface apiInterface;
-//    ProgressBar progressBar;
-//    private int page = 1;
-//    private int recorde = 14;
-//    private boolean isloading = true;
-//    private int past_visible, visible_item_show, total_item, last_total = 0;
-//    private int view_thesshold = 14;
 
 
     @Override

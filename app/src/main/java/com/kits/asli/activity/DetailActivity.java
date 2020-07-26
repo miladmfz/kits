@@ -110,6 +110,7 @@ public class DetailActivity extends AppCompatActivity {
         img = findViewById(R.id.DetailActivity_img);
         Button btnbuy = findViewById(R.id.DetailActivity_btnbuy);
 
+
         code = gd.getGoodCode();
         setSupportActionBar(toolbar);
 
@@ -139,6 +140,17 @@ public class DetailActivity extends AppCompatActivity {
         if (getString(R.string.app_name).equals("آسیم")) {
 
             date2.setText(Farsi_number.PerisanNumber(gd.getDate1() + ""));
+        }
+
+        if (getString(R.string.app_name).equals("چشمه")) {
+            LinearLayoutCompat line1 = findViewById(R.id.DetailActivity_line_amount1);
+            LinearLayoutCompat line2 = findViewById(R.id.DetailActivity_line_amount2);
+            line1.setVisibility(View.VISIBLE);
+            line2.setVisibility(View.VISIBLE);
+            TextView amount1 = findViewById(R.id.DetailActivity_amount1);
+            TextView amount2 = findViewById(R.id.DetailActivity_amount2);
+            amount1.setText(Farsi_number.PerisanNumber(String.valueOf(gd.getAmount1())));
+            amount2.setText(Farsi_number.PerisanNumber(String.valueOf(gd.getAmount2())));
         }
 
         if (shPref.getBoolean("real_amount", true)) {
