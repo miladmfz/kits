@@ -50,6 +50,10 @@ public class Good implements Serializable {
     private String GoodExplain1;
     @SerializedName("GoodExplain2")
     private String GoodExplain2;
+    @SerializedName("GoodExplain3")
+    private String GoodExplain3;
+    @SerializedName("GoodExplain4")
+    private String GoodExplain4;
     @SerializedName("FirstBarCode")
     private String FirstBarCode;
     @SerializedName("ImageName")
@@ -60,6 +64,8 @@ public class Good implements Serializable {
     private String Nvarchar1;
     @SerializedName("Nvarchar2")
     private String Nvarchar2;
+    @SerializedName("Nvarchar10")
+    private String Nvarchar10;
     @SerializedName("Nvarchar13")
     private String Nvarchar13;
     @SerializedName("Nvarchar20")
@@ -97,8 +103,32 @@ public class Good implements Serializable {
         return GoodSubCode;
     }
 
+    public String getNvarchar10() {
+        return Nvarchar10;
+    }
+
+    public void setNvarchar10(String nvarchar10) {
+        Nvarchar10 = nvarchar10;
+    }
+
     public Integer getSellPrice1() {
         return SellPrice1;
+    }
+
+    public String getGoodExplain3() {
+        return GoodExplain3;
+    }
+
+    public void setGoodExplain3(String goodExplain3) {
+        GoodExplain3 = goodExplain3;
+    }
+
+    public String getGoodExplain4() {
+        return GoodExplain4;
+    }
+
+    public void setGoodExplain4(String goodExplain4) {
+        GoodExplain4 = goodExplain4;
     }
 
     public void setSellPrice1(Integer sellPrice1) {

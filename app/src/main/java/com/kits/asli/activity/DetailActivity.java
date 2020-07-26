@@ -153,6 +153,18 @@ public class DetailActivity extends AppCompatActivity {
             amount2.setText(Farsi_number.PerisanNumber(String.valueOf(gd.getAmount2())));
         }
 
+        if (getString(R.string.app_name).equals("چشمه غیر کتابی")) {
+//            TextView ex2 = findViewById(R.id.DetailActivity_ex2);
+//            TextView ex3 = findViewById(R.id.DetailActivity_ex3);
+//            TextView ex4 = findViewById(R.id.DetailActivity_ex4);
+//            TextView nvar10 = findViewById(R.id.DetailActivity_nvarchar10);
+//            TextView sellprice1 = findViewById(R.id.DetailActivity_sellprice1);
+//            ex2.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain2()));
+//            ex3.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain3()));
+//            ex4.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain4()));
+
+        }
+
         if (shPref.getBoolean("real_amount", true)) {
             amount.setText(Farsi_number.PerisanNumber("" + (gd.getAmount() - gd.getReservedAmount())));
 

@@ -159,6 +159,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
@@ -215,6 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
@@ -250,6 +253,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
@@ -345,6 +349,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
@@ -400,6 +405,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
@@ -477,6 +483,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gd.setGoodSubCode(c.getString(c.getColumnIndex("GoodSubCode")));
                 gd.setAmount1(c.getInt(c.getColumnIndex("StackAmount2")));
                 gd.setAmount2(c.getInt(c.getColumnIndex("StackAmount3")));
+            }
+            if (mContext.getString(R.string.app_name).equals("چشمه غیر کتابی")) {
+                gd.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
+                gd.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gd.setGoodExplain3(c.getString(c.getColumnIndex("GoodExplain3")));
+                gd.setGoodExplain4(c.getString(c.getColumnIndex("GoodExplain4")));
+                gd.setNvarchar10(c.getString(c.getColumnIndex("Nvarchar13")));
+
             }
 
         }
@@ -695,6 +709,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
+
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
@@ -725,6 +741,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
                 gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
                 gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
+
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
                 gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
                 gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
