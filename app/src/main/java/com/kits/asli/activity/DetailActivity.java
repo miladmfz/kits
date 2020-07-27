@@ -154,14 +154,27 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         if (getString(R.string.app_name).equals("چشمه غیر کتابی")) {
-//            TextView ex2 = findViewById(R.id.DetailActivity_ex2);
-//            TextView ex3 = findViewById(R.id.DetailActivity_ex3);
-//            TextView ex4 = findViewById(R.id.DetailActivity_ex4);
-//            TextView nvar10 = findViewById(R.id.DetailActivity_nvarchar10);
-//            TextView sellprice1 = findViewById(R.id.DetailActivity_sellprice1);
-//            ex2.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain2()));
-//            ex3.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain3()));
-//            ex4.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain4()));
+
+            LinearLayoutCompat line_sell = findViewById(R.id.DetailActivity_line_sell_cheshme);
+            LinearLayoutCompat line_ex = findViewById(R.id.DetailActivity_line_ex);
+            line_sell.setVisibility(View.VISIBLE);
+            line_ex.setVisibility(View.VISIBLE);
+            TextView ex2 = findViewById(R.id.DetailActivity_ex2);
+            TextView ex3 = findViewById(R.id.DetailActivity_ex3);
+            TextView ex4 = findViewById(R.id.DetailActivity_ex4);
+            TextView nvar10 = findViewById(R.id.DetailActivity_nvarchar10);
+            TextView sellprice1 = findViewById(R.id.DetailActivity_Sellprice1_cheshme);
+            ex2.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain2()));
+            ex3.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain3()));
+            ex4.setText(Farsi_number.PerisanNumber("" + gd.getGoodExplain4()));
+            nvar10.setText(Farsi_number.PerisanNumber("" + gd.getNvarchar10()));
+            sellprice1.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf(gd.getSellPrice1()))));
+            date2.setVisibility(View.VISIBLE);
+            float1.setVisibility(View.VISIBLE);
+            nvar1.setVisibility(View.VISIBLE);
+            float5.setVisibility(View.VISIBLE);
+            nvar13.setVisibility(View.VISIBLE);
+            nvar20.setVisibility(View.VISIBLE);
 
         }
 
