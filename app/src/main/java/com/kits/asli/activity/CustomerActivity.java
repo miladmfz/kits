@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,7 +37,16 @@ public class CustomerActivity extends AppCompatActivity {
     private String edit = "0";
     private Action action;
     private DatabaseHelper dbh = new DatabaseHelper(CustomerActivity.this);
-    private RecyclerView re;
+    private RecyclerView rc_customer;
+    ArrayList<Customer> customers = new ArrayList<Customer>();
+    Customer_Adapter adapter;
+    GridLayoutManager gridLayoutManager;
+
+    String srch = "";
+    Integer id = 0;
+
+    EditText edtsearch;
+    Button Customer_new;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +91,29 @@ public class CustomerActivity extends AppCompatActivity {
         action = new Action(CustomerActivity.this);
         Toolbar toolbar = findViewById(R.id.CustomerActivity_toolbar);
         setSupportActionBar(toolbar);
-        re = findViewById(R.id.Customer_R1);
+        rc_customer = findViewById(R.id.Customer_R1);
+        edtsearch = findViewById(R.id.Customer_edtsearch);
+        Customer_new = findViewById(R.id.Customer_new);
 
-        final EditText edtsearch = findViewById(R.id.Customer_edtsearch);
+        if (id == 0) {
+            Customer_search();
+        }
 
+        if (id == 1) {
+            Customer_new();
+        }
+
+    }
+
+    public void intent() {
+        Bundle data = getIntent().getExtras();
+        assert data != null;
+        edit = data.getString("edit");
+        factor_target = data.getInt("factor_code");
+
+    }
+
+    public void Customer_search() {
         edtsearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -94,29 +125,32 @@ public class CustomerActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String srch = action.arabicToenglish(editable.toString());
-                ArrayList<Customer> scustomers = dbh.AllCustomer(srch);
-                Customer_Adapter adapter = new Customer_Adapter(scustomers, CustomerActivity.this, edit, factor_target);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(CustomerActivity.this, 1);//grid
-                re.setLayoutManager(gridLayoutManager);
-                re.setAdapter(adapter);
-                re.setItemAnimator(new DefaultItemAnimator());
+                srch = action.arabicToenglish(editable.toString());
+                allCustomer();
             }
         });
-
-        ArrayList<Customer> customers = dbh.AllCustomer("");
-        Customer_Adapter adapter = new Customer_Adapter(customers, CustomerActivity.this, edit, factor_target);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(CustomerActivity.this, 1);//grid
-        re.setLayoutManager(gridLayoutManager);
-        re.setAdapter(adapter);
-        re.setItemAnimator(new DefaultItemAnimator());
+        allCustomer();
     }
 
-    public void intent() {
-        Bundle data = getIntent().getExtras();
-        assert data != null;
-        edit = data.getString("edit");
-        factor_target = data.getInt("factor_code");
+    public void Customer_new() {
+
+
+    }
+
+    public void allCustomer() {
+        customers = dbh.AllCustomer(srch);
+        adapter = new Customer_Adapter(customers, CustomerActivity.this, edit, factor_target);
+        gridLayoutManager = new GridLayoutManager(CustomerActivity.this, 1);//grid
+        rc_customer.setLayoutManager(gridLayoutManager);
+        rc_customer.setAdapter(adapter);
+        rc_customer.setItemAnimator(new DefaultItemAnimator());
+
+        Customer_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 

@@ -17,6 +17,10 @@ public class Image_info {
     private final Context mContext;
     private String app_img_name;
 
+    //2 ta table bayad be database img ezafe shavad
+    //replog
+    //replogcol
+
     public Image_info(Context mContext) {
         this.mContext = mContext;
         this.app_img_name = mContext.getString(R.string.app_img_name);
@@ -36,6 +40,21 @@ public class Image_info {
             out.flush();
             out.close();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void DeleteImage(Integer code) {
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        File myDir = new File(root + "/Kowsar/" + app_img_name + "/");
+        myDir.mkdirs();
+
+        String fname = code + ".jpg";
+        File file = new File(myDir, fname);
+        try {
+            file.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

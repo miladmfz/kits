@@ -32,40 +32,57 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <EditText
-        android:id="@+id/Customer_edtsearch"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="2dp"
-        android:hint="@string/search_et"
-        android:textSize="30sp"
-        android:singleLine="true"
-        android:paddingStart="5dp"
-        android:layout_margin="5dp"
-        android:textColorHint="@color/grey_40"
-        android:autofillHints=""
-        android:inputType="text"
-        android:background="@drawable/bg_round_selected"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-        />
+            <EditText
+                android:id="@+id/Customer_edtsearch"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="2dp"
+                android:hint="@string/search_et"
+                android:textSize="30sp"
+                android:singleLine="true"
+                android:paddingStart="5dp"
+                android:layout_margin="5dp"
+                android:textColorHint="@color/grey_40"
+                android:autofillHints=""
+                android:inputType="text"
+                android:background="@drawable/bg_round_selected"
+                android:layout_weight="0.3" />
 
-
-    <ScrollView
-        android:paddingTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/Customer_new"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="center"
+                android:text="@string/Customer_new"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/green_600"
+                app:strokeColor="@color/grey_1000"
+                app:strokeWidth="1dp"
+                style="?attr/materialButtonOutlinedStyle" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Customer_R1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="5dp"
             android:background="#ffffff" />
 
-
-    </ScrollView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

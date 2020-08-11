@@ -59,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
         sEdit = shPref.edit();
         sEdit.putString("prefactor_code", "0");
         sEdit.putString("prefactor_good", "0");
+
         try {
             database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
@@ -66,16 +67,19 @@ public class SplashActivity extends AppCompatActivity {
             Log.e("asli_Alter_Reserve", "" + e.getMessage());
         }
 
+        try {
+            database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'KsrImage_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'KsrImage_LastRepCode')");
+
+        } catch (Exception e) {
+            Log.e("asli_Alter_Reserve", "" + e.getMessage());
+        }
+
+
         sEdit.apply();
 
         if (firstStart) {
             Registration();
-            try {
-                database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
 
-            } catch (Exception e) {
-                Log.e("asli_Alter_Reserve", "" + e.getMessage());
-            }
             sEdit.putBoolean("firstStart", false);
             sEdit.putString("selloff", "1");
             sEdit.putString("grid", "3");
@@ -180,6 +184,7 @@ public class SplashActivity extends AppCompatActivity {
         database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'Central_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'Central_LastRepCode')");
         database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'Customer_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'Customer_LastRepCode')");
         database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'BrokerCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'BrokerCode')");
+        database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'KsrImage_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'KsrImage_LastRepCode')");
 
 
         database.execSQL("Create Index IF Not Exists IX_GoodGroup_GoodRef on GoodGroup (GoodRef)");

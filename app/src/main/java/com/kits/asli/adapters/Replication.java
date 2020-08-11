@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -444,13 +443,11 @@ public class Replication {
             c.close();
         }
 
-        Log.e("asli_10.01.LastRepCode=", LastRepCode);
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("asli_10.1.onResponse=", response);
                 int il = 0;
                 try {
                     JSONArray object = new JSONArray(response);
@@ -481,8 +478,6 @@ public class Replication {
                                             if ((!key.equals("RLOpType")) & (!key.equals("RepLogDataCode")) & (!key.equals("GoodCode"))) {
                                                 try {
                                                     Object value = jo.get(key);
-//                                                    qCol = qCol + "," + key;
-//                                                    qVal = qVal + ",'" + value + "'";
 
                                                     value = value.toString().replaceAll("'", "''");
                                                     qCol.append(",").append(key);
@@ -594,6 +589,7 @@ public class Replication {
                                         String ReservedAmount = String.valueOf((jo.getDouble("ReservedAmount")));
                                         String ActiveStack = jo.getString("ActiveStack");
 
+                                        //TODO
                                         Cursor d = database.rawQuery("Select Count(*) AS cntRec From Good Where GoodCode =" + code, null);
                                         d.moveToFirst();
 
@@ -753,6 +749,7 @@ public class Replication {
             @Override
             public void onResponse(String response) {
                 int il = 0;
+
                 try {
                     JSONArray object = new JSONArray(response);
                     JSONObject jo = object.getJSONObject(0);
@@ -809,7 +806,8 @@ public class Replication {
                     replicateGoodGroupChange();
                 } else {
                     LastRepCode = "0";
-                    replicateGoodPropertyValueChange();
+                    replicateGoodImageChange();
+
                 }
 
             }
@@ -826,6 +824,92 @@ public class Replication {
                 params.put("code", LastRepCode);
                 params.put("table", RepTable);
                 params.put("reptype", RepType);
+                return params;
+            }
+        };
+        queue.add(stringrequste);
+    }
+
+    public void replicateGoodImageChange() {
+
+        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+        RepTable = "KsrImage";
+
+        if (LastRepCode.equals("0")) {
+
+            Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='KsrImage_LastRepCode'", null);
+            c.moveToFirst();
+
+            LastRepCode = c.getString(0);
+            c.close();
+
+        }
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+                int il = 0;
+                try {
+                    JSONArray object = new JSONArray(response);
+                    JSONObject jo = object.getJSONObject(0);
+                    il = object.length();
+                    String state = jo.getString("RLOpType");
+
+                    switch (state) {
+                        case "n":
+                        case "N":
+                            break;
+                        default:
+                            for (int i = 0; i < il; i++) {
+
+                                jo = object.getJSONObject(i);
+                                String optype = jo.getString("RLOpType");
+                                String repcode = jo.getString("RepLogDataCode");
+                                switch (optype) {
+                                    case "U":
+                                    case "u":
+                                    case "I":
+                                    case "i":
+                                    case "d":
+                                    case "D":
+                                        String aGoodRef = jo.getString("ObjectRef");
+                                        if (!aGoodRef.equals("null")) {
+                                            Image_info image_info = new Image_info(mContext);
+                                            image_info.DeleteImage(Integer.parseInt(aGoodRef));
+                                        }
+                                        break;
+                                }
+                                LastRepCode = repcode;
+                                database.execSQL("Update Config Set DataValue = " + LastRepCode + " Where KeyValue = 'KsrImage_LastRepCode'");
+                            }
+                            break;
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (il >= RepRowCount) {
+                    replicateGoodImageChange();
+                } else {
+                    LastRepCode = "0";
+                    replicateGoodPropertyValueChange();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                volleyError.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("tag", "getImageInfo");
+                params.put("code", LastRepCode);
                 return params;
             }
         };
