@@ -51,6 +51,15 @@ public class Replication {
         dialog.show();
     }
 
+    public void replicate_all() {
+        replicateCentralChange();
+    }
+
+
+    public void replicate_customer() {
+        replicateCentralChange_customer();
+    }
+
     public void replicateCentralChange() {
 
         dialog();
@@ -58,28 +67,34 @@ public class Replication {
         String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
         RepTable = "Central";
         if (LastRepCode.equals("0")) {
+
             Cursor cd = database.rawQuery("Select DataValue From Config Where KeyValue = 'Central_LastRepCode'", null);
             cd.moveToFirst();
             LastRepCode = cd.getString(0);
             cd.close();
         }
+
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 int il = 0;
                 try {
                     JSONArray object = new JSONArray(response);
                     JSONObject jo = object.getJSONObject(0);
                     il = object.length();
                     String state = jo.getString("RLOpType");
+
                     switch (state) {
                         case "n":
                         case "N":
                             break;
                         default:
+
                             for (int i = 0; i < il; i++) {
+
                                 jo = object.getJSONObject(i);
                                 String optype = jo.getString("RLOpType");
                                 String repcode = jo.getString("RepLogDataCode");
@@ -91,20 +106,22 @@ public class Replication {
                                     case "u":
                                     case "I":
                                     case "i":
+
                                         String CentralPrivateCode = jo.getString("CentralPrivateCode");
                                         String CentralName = (jo.getString("Title") + jo.getString("FName") + jo.getString("Name")).trim();
                                         CentralName = CentralName.replaceAll("'", "''");
 
                                         String Manager = jo.getString("Manager");
                                         String Delegacy = jo.getString("Delegacy");
+                                        String D_CodeMelli = jo.getString("D_CodeMelli");
 
                                         Cursor d = database.rawQuery("Select Count(*) AS cntRec From Central Where CentralCode =" + code, null);
                                         d.moveToFirst();
                                         int nc = d.getInt(d.getColumnIndex("cntRec"));
                                         if (nc == 0) {
-                                            qCol = "INSERT INTO Central(CentralCode, CentralPrivateCode, CentralName, Manager, Delegacy) Select " + code + "," + CentralPrivateCode + ",'" + CentralName + "','" + Manager + "','" + Delegacy + "'";
+                                            qCol = "INSERT INTO Central(CentralCode, CentralPrivateCode, CentralName, Manager, Delegacy,D_CodeMelli) Select " + code + "," + CentralPrivateCode + ",'" + CentralName + "','" + Manager + "','" + Delegacy + "','" + D_CodeMelli + "'";
                                         } else {
-                                            qCol = "Update Central Set CentralPrivateCode=" + CentralPrivateCode + ", CentralName='" + CentralName + "', Manager='" + Manager + "', Delegacy='" + Delegacy + "' Where CentralCode=" + code;
+                                            qCol = "Update Central Set CentralPrivateCode=" + CentralPrivateCode + ", CentralName='" + CentralName + "', Manager='" + Manager + "', Delegacy='" + Delegacy + "', D_CodeMelli='" + D_CodeMelli + "' Where CentralCode=" + code;
                                         }
 
                                         database.execSQL(qCol);
@@ -112,10 +129,12 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("farhang_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
+
                             }
+
                             database.execSQL("Update Config Set DataValue = " + LastRepCode + " Where KeyValue = 'Central_LastRepCode'");
                             break;
                     }
@@ -132,6 +151,8 @@ public class Replication {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                Log.e("qy", "6");
+
                 volleyError.printStackTrace();
             }
         }) {
@@ -1012,5 +1033,385 @@ public class Replication {
         queue.add(stringrequste);
     }
 
+
+    public void replicateCentralChange_customer() {
+
+        dialog();
+        database = mContext.openOrCreateDatabase("KowsarDb.sqlite", Context.MODE_PRIVATE, null);
+        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+        RepTable = "Central";
+        if (LastRepCode.equals("0")) {
+            Cursor cd = database.rawQuery("Select DataValue From Config Where KeyValue = 'Central_LastRepCode'", null);
+            cd.moveToFirst();
+            LastRepCode = cd.getString(0);
+            cd.close();
+        }
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int il = 0;
+                try {
+                    JSONArray object = new JSONArray(response);
+                    JSONObject jo = object.getJSONObject(0);
+                    il = object.length();
+                    String state = jo.getString("RLOpType");
+                    switch (state) {
+                        case "n":
+                        case "N":
+                            break;
+                        default:
+                            for (int i = 0; i < il; i++) {
+                                jo = object.getJSONObject(i);
+                                String optype = jo.getString("RLOpType");
+                                String repcode = jo.getString("RepLogDataCode");
+                                String code = jo.getString("CentralCode");
+                                String qCol = "";
+
+                                switch (optype) {
+                                    case "U":
+                                    case "u":
+                                    case "I":
+                                    case "i":
+                                        String CentralPrivateCode = jo.getString("CentralPrivateCode");
+                                        String CentralName = (jo.getString("Title") + jo.getString("FName") + jo.getString("Name")).trim();
+                                        CentralName = CentralName.replaceAll("'", "''");
+
+                                        String Manager = jo.getString("Manager");
+                                        String Delegacy = jo.getString("Delegacy");
+
+                                        Cursor d = database.rawQuery("Select Count(*) AS cntRec From Central Where CentralCode =" + code, null);
+                                        d.moveToFirst();
+                                        int nc = d.getInt(d.getColumnIndex("cntRec"));
+                                        if (nc == 0) {
+                                            qCol = "INSERT INTO Central(CentralCode, CentralPrivateCode, CentralName, Manager, Delegacy) Select " + code + "," + CentralPrivateCode + ",'" + CentralName + "','" + Manager + "','" + Delegacy + "'";
+                                        } else {
+                                            qCol = "Update Central Set CentralPrivateCode=" + CentralPrivateCode + ", CentralName='" + CentralName + "', Manager='" + Manager + "', Delegacy='" + Delegacy + "' Where CentralCode=" + code;
+                                        }
+
+                                        database.execSQL(qCol);
+                                        d.close();
+                                        break;
+                                }
+
+                                Log.e("asli_repstrQuery", qCol);
+                                xCode = code;
+                                LastRepCode = repcode;
+                            }
+                            database.execSQL("Update Config Set DataValue = " + LastRepCode + " Where KeyValue = 'Central_LastRepCode'");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (il >= RepRowCount) {
+                    replicateCentralChange_customer();
+                } else {
+                    LastRepCode = "0";
+                    replicateCityChange_customer();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("tag", "repinfo");
+                params.put("code", LastRepCode);
+                params.put("table", RepTable);
+                params.put("reptype", RepType);
+                return params;
+            }
+        };
+        queue.add(stringrequste);
+
+    }
+
+    public void replicateCityChange_customer() {
+        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+        RepTable = "City";
+        if (LastRepCode.equals("0")) {
+            Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='City_LastRepCode'", null);
+            c.moveToFirst();
+            LastRepCode = c.getString(0);
+            c.close();
+        }
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int il = 0;
+                try {
+                    JSONArray object = new JSONArray(response);
+                    JSONObject jo = object.getJSONObject(0);
+                    il = object.length();
+                    String state = jo.getString("RLOpType");
+                    switch (state) {
+                        case "n":
+                        case "N":
+                            break;
+                        default:
+                            for (int i = 0; i < il; i++) {
+                                jo = object.getJSONObject(i);
+                                String optype = jo.getString("RLOpType");
+                                String repcode = jo.getString("RepLogDataCode");
+                                String code = jo.getString("CityCode");
+                                String qCol = "";
+
+                                switch (optype) {
+                                    case "U":
+                                    case "u":
+                                    case "I":
+                                    case "i":
+                                        String CityName = jo.getString("Name");
+
+                                        Cursor d = database.rawQuery("Select Count(*) AS cntRec From City Where CityCode =" + code, null);
+                                        d.moveToFirst();
+                                        int nc = d.getInt(d.getColumnIndex("cntRec"));
+                                        if (nc == 0) {
+                                            qCol = "INSERT INTO City(CityCode, CityName) Select " + code + ",'" + CityName + "'";
+                                        } else {
+                                            qCol = "Update City Set CityName='" + CityName + "' Where CityCode=" + code;
+                                        }
+
+                                        database.execSQL(qCol);
+                                        d.close();
+                                        break;
+                                }
+
+                                Log.e("asli_repstrQuery", qCol);
+                                xCode = code;
+                                LastRepCode = repcode;
+                            }
+                            database.execSQL("Update Config Set DataValue = " + LastRepCode + " Where KeyValue = 'City_LastRepCode'");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (il >= RepRowCount) {
+                    replicateCityChange_customer();
+                } else {
+                    LastRepCode = "0";
+                    replicateAddressChange_customer();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("tag", "repinfo");
+                params.put("code", LastRepCode);
+                params.put("table", RepTable);
+                params.put("reptype", RepType);
+                return params;
+            }
+        };
+        queue.add(stringrequste);
+
+    }
+
+    public void replicateAddressChange_customer() {
+        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+        RepTable = "Address";
+        if (LastRepCode.equals("0")) {
+            Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='Address_LastRepCode'", null);
+            c.moveToFirst();
+            LastRepCode = c.getString(0);
+            c.close();
+        }
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int il = 0;
+                try {
+                    JSONArray object = new JSONArray(response);
+                    JSONObject jo = object.getJSONObject(0);
+                    il = object.length();
+                    String state = jo.getString("RLOpType");
+                    switch (state) {
+                        case "n":
+                        case "N":
+                            break;
+                        default:
+                            for (int i = 0; i < il; i++) {
+                                jo = object.getJSONObject(i);
+                                String optype = jo.getString("RLOpType");
+                                String repcode = jo.getString("RepLogDataCode");
+                                String code = jo.getString("AddressCode");
+                                String qCol = "";
+
+                                switch (optype) {
+                                    case "U":
+                                    case "u":
+                                    case "I":
+                                    case "i":
+                                        String CentralRef = jo.getString("CentralRef");
+                                        String CityCode = jo.getString("CityCode");
+                                        String Address = jo.getString("Address");
+                                        Address = Address.replaceAll("'", "''");
+
+                                        String Phone = jo.getString("Phone");
+                                        String Mobile = jo.getString("Mobile");
+                                        String MobileName = jo.getString("MobileName");
+                                        String Email = jo.getString("Email");
+                                        String Fax = jo.getString("Fax");
+                                        String ZipCode = jo.getString("ZipCode");
+                                        String PostCode = jo.getString("PostCode");
+
+                                        Cursor d = database.rawQuery("Select Count(*) AS cntRec From Address Where AddressCode =" + code, null);
+                                        d.moveToFirst();
+                                        int nc = d.getInt(d.getColumnIndex("cntRec"));
+                                        if (nc == 0) {
+                                            qCol = "INSERT INTO Address(AddressCode, CentralRef, CityCode, Address, Phone, Mobile, MobileName, Email, Fax, ZipCode, PostCode) Select " + code + "," + CentralRef + "," + CityCode + ",'" + Address + "','" + Phone + "','" + Mobile + "','" + MobileName + "','" + Email + "','" + Fax + "','" + ZipCode + "','" + PostCode + "'";
+                                        } else {
+                                            qCol = "Update Address Set CentralRef=" + CentralRef + ", CityCode=" + CityCode + ", Address='" + Address + "', Phone='" + Phone + "', Mobile='" + Mobile + "', MobileName='" + MobileName + "', Email='" + Email + "', Fax='" + Fax + "', ZipCode='" + ZipCode + "', PostCode='" + PostCode + "' Where AddressCode=" + code;
+                                        }
+
+                                        database.execSQL(qCol);
+                                        d.close();
+                                        break;
+                                }
+
+                                Log.e("asli_repstrQuery", qCol);
+                                xCode = code;
+                                LastRepCode = repcode;
+                            }
+                            database.execSQL("Update Config Set DataValue = " + LastRepCode + " Where KeyValue = 'Address_LastRepCode'");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (il >= RepRowCount) {
+                    replicateAddressChange_customer();
+                } else {
+                    LastRepCode = "0";
+                    replicateCustomerChange_customer();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("tag", "repinfo");
+                params.put("code", LastRepCode);
+                params.put("table", RepTable);
+                params.put("reptype", RepType);
+                return params;
+            }
+        };
+        queue.add(stringrequste);
+    }
+
+    public void replicateCustomerChange_customer() {
+        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+        RepTable = "Customer";
+        if (LastRepCode.equals("0")) {
+            Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='Customer_LastRepCode'", null);
+            c.moveToFirst();
+            LastRepCode = c.getString(0);
+            c.close();
+        }
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        StringRequest stringrequste = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int il = 0;
+                try {
+                    JSONArray object = new JSONArray(response);
+                    JSONObject jo = object.getJSONObject(0);
+                    il = object.length();
+                    String state = jo.getString("RLOpType");
+                    switch (state) {
+                        case "n":
+                        case "N":
+                            break;
+                        default:
+                            for (int i = 0; i < il; i++) {
+                                jo = object.getJSONObject(i);
+                                String optype = jo.getString("RLOpType");
+                                String repcode = jo.getString("RepLogDataCode");
+                                String code = jo.getString("CustomerCode");
+                                String qCol = "";
+
+                                switch (optype) {
+                                    case "U":
+                                    case "u":
+                                    case "I":
+                                    case "i":
+                                        String CentralRef = jo.getString("CentralRef");
+                                        String AddressRef = jo.getString("AddressRef");
+                                        String Bestankar = String.valueOf((jo.getDouble("CustomerBestankar") - jo.getDouble("CustomerBedehkar")));
+                                        String Active = jo.getString("Active");
+                                        String EtebarNaghd = jo.getString("EtebarNaghd");
+                                        String EtebarCheck = jo.getString("EtebarCheck");
+                                        String Takhfif = jo.getString("Takhfif");
+                                        String PriceTip = jo.getString("PriceTip");
+                                        Cursor d = database.rawQuery("Select Count(*) AS cntRec From Customer Where CustomerCode =" + code, null);
+                                        d.moveToFirst();
+                                        int nc = d.getInt(d.getColumnIndex("cntRec"));
+                                        if (nc == 0) {
+                                            qCol = "INSERT INTO Customer(CustomerCode, CentralRef, AddressRef, Bestankar, Active, EtebarNaghd, EtebarCheck, Takhfif, PriceTip) Select " + code + "," + CentralRef + "," + AddressRef + "," + Bestankar + "," + Active + "," + EtebarNaghd + "," + EtebarCheck + "," + Takhfif + "," + PriceTip;
+                                        } else {
+                                            qCol = "Update Customer Set CentralRef=" + CentralRef + ", AddressRef=" + AddressRef + ", Bestankar=" + Bestankar + ", Active=" + Active + ", EtebarNaghd=" + EtebarNaghd + ", EtebarCheck=" + EtebarCheck + ", Takhfif=" + Takhfif + ", PriceTip=" + PriceTip + " Where CustomerCode=" + code;
+                                        }
+                                        database.execSQL(qCol);
+                                        d.close();
+                                        break;
+                                }
+                                Log.e("asli_repstrQuery", qCol);
+                                xCode = code;
+                                LastRepCode = repcode;
+                            }
+                            database.execSQL("Update Config Set DataValue = " + LastRepCode + " Where KeyValue = 'Customer_LastRepCode'");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (il >= RepRowCount) {
+                    replicateCustomerChange_customer();
+                } else {
+                    dialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                volleyError.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("tag", "repinfo");
+                params.put("code", LastRepCode);
+                params.put("table", RepTable);
+                params.put("reptype", RepType);
+                return params;
+            }
+        };
+        queue.add(stringrequste);
+    }
 
 }

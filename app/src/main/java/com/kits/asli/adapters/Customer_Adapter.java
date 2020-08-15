@@ -93,7 +93,7 @@ public class Customer_Adapter extends RecyclerView.Adapter<Customer_Adapter.facV
 
             @Override
             public void onClick(View v) {
-                if (edit.equals("0")) {
+                if (edit.equals("0")) {//baraye eslahe moshtari dar factor
 
                     DatabaseHelper dbh = new DatabaseHelper(mContext);
                     UserInfo auser = dbh.LoadPersonalInfo();

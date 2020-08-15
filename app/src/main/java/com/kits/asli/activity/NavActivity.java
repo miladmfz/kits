@@ -156,6 +156,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 intent = new Intent(NavActivity.this, CustomerActivity.class);
                 intent.putExtra("edit", "0");
                 intent.putExtra("factor_code", 0);
+                intent.putExtra("id", 0);
                 startActivity(intent);
             }
         });
@@ -253,7 +254,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 startActivity(intent);
             } else if (id == R.id.nav_rep) {
                 action.app_info();
-                replication.replicateCentralChange();
+                replication.replicate_all();
             } else if (id == R.id.nav_buy) {
                 if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
                     intent = new Intent(NavActivity.this, BuyActivity.class);
@@ -290,7 +291,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             startActivity(intent);
         } else if (id == R.id.nav_rep) {
             action.app_info();
-            replication.replicateCentralChange();
+            replication.replicate_all();
         } else if (id == R.id.nav_buy) {
             if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
                 intent = new Intent(NavActivity.this, BuyActivity.class);

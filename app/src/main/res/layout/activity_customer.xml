@@ -33,10 +33,12 @@
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/customer_search_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:visibility="gone">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -61,7 +63,7 @@
                 android:layout_weight="0.3" />
 
             <Button
-                android:id="@+id/Customer_new"
+                android:id="@+id/Customer_new_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -72,7 +74,8 @@
                 app:backgroundTint="@color/green_600"
                 app:strokeColor="@color/grey_1000"
                 app:strokeWidth="1dp"
-                style="?attr/materialButtonOutlinedStyle" />
+                style="?attr/materialButtonOutlinedStyle"
+                android:visibility="visible" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -84,5 +87,343 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/customer_new_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" کد ملی :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_kodemelli"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="numberDecimal"
+                    android:maxLength="11"
+
+
+                    />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/customer_new_kodemelli_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تایید کد ملی"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/green_600"
+                    app:strokeColor="@color/grey_1000"
+                    app:strokeWidth="1dp"
+                    style="?attr/materialButtonOutlinedStyle" />
+
+                <TextView
+                    android:id="@+id/customer_new_kodemelli_status"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:gravity="center" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+
+                    android:text="شهر"
+                    android:textSize="22dp" />
+
+                <Spinner
+                    android:id="@+id/customer_city_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" نام :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="textImeMultiLine" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" نام خانوادگی :"
+                    android:gravity="center"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="textImeMultiLine" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" آدرس :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="textImeMultiLine" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" تلفن ثابت :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="numberDecimal"
+
+                    />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" تلفن همراه :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="numberDecimal" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" ایمیل :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="textImeMultiLine" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=" کد پستی :"
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_postcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp"
+                    android:inputType="textImeMultiLine" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="2dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text=": ZipCode "
+                    android:gravity="center"
+                    android:textSize="22dp" />
+
+                <EditText
+                    android:id="@+id/customer_new_zipcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:scrollbarSize="20sp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Button
+                android:id="@+id/customer_new_register_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ثبت مشتری جدید"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/green_600"
+                app:strokeColor="@color/grey_1000"
+                app:strokeWidth="1dp"
+                style="?attr/materialButtonOutlinedStyle" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -13,34 +13,37 @@ public interface APIInterface {
 
     @POST("index.php")
     @FormUrlEncoded
-    Call<String> XUserCreate(@Field("tag") String tag, @Field("UName") String user, @Field("UPass") String pass, @Field("FName") String fname, @Field("LName") String lname, @Field("mobile") String mobile, @Field("address") String address, @Field("email") String email);
+    Call<String> GetImage(@Field("tag") String tag
+            , @Field("GoodCode") String GoodCode
+            , @Field("IX") Integer IX);
 
 
     @POST("index.php")
     @FormUrlEncoded
-    Call<String> info(@Field("tag") String tag, @Field("Where") Integer Where);
-
-    @POST("index.php")
-    @FormUrlEncoded
-    Call<String> GetImage(@Field("tag") String tag, @Field("GoodCode") String GoodCode, @Field("IX") Integer IX);
-
-
-    @POST("index.php")
-    @FormUrlEncoded
-    Call<String> Kowsar_log(@Field("tag") String tag, @Field("Device_Id") String Device_Id, @Field("Address_Ip") String Address_Ip, @Field("Server_Name") String Server_Name, @Field("Factor_Code") String Factor_Code, @Field("StrDate") String StrDate, @Field("Broker") String Broker, @Field("Explain") String Explain);
+    Call<String> Kowsar_log(@Field("tag") String tag
+            , @Field("Device_Id") String Device_Id
+            , @Field("Address_Ip") String Address_Ip
+            , @Field("Server_Name") String Server_Name
+            , @Field("Factor_Code") String Factor_Code
+            , @Field("StrDate") String StrDate
+            , @Field("Broker") String Broker
+            , @Field("Explain") String Explain);
 
 
     @POST("index.php")
     @FormUrlEncoded
-    Call<GoodResponse> check(@Field("tag") String tag);
-
-    @POST("index.php")
-    @FormUrlEncoded
-    Call<GoodResponse> check_page(@Field("tag") String tag, @Field("page") Integer page, @Field("recorde") Integer recorde);
-
-    @POST("index.php")
-    @FormUrlEncoded
-    Call<Good> GetGood(@Field("tag") String tag, @Field("Where") String Where);
+    Call<GoodResponse> customer_insert(@Field("tag") String tag
+            , @Field("BrokerRef") String BrokerRef
+            , @Field("CityCode") String CityCode
+            , @Field("KodeMelli") String KodeMelli
+            , @Field("FName") String FName
+            , @Field("LName") String LName
+            , @Field("Address") String Address
+            , @Field("Phone") String Phone
+            , @Field("Mobile") String Mobile
+            , @Field("EMail") String EMail
+            , @Field("PostCode") String PostCode
+            , @Field("ZipCode") String ZipCode);
 
 
 }

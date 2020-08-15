@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kits.asli.R;
 
@@ -799,6 +800,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
         return Customers;
+    }
+
+    public int Customer_check(String name) {
+        Integer res = 0;
+        String query = "select centralcode from central where d_codemelli ='" + name + "'";
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor c = database.rawQuery(query, null);
+
+        if (c != null) {
+            while (c.moveToNext()) {
+                res = c.getInt(c.getColumnIndex("CentralCode"));
+            }
+        }
+        c.close();
+        return res;
+    }
+
+    public ArrayList<Customer> city() {
+
+        String query = "SELECT * from city";
+        ArrayList<Customer> city = new ArrayList<Customer>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor c = database.rawQuery(query, null);
+
+        if (c != null) {
+            while (c.moveToNext()) {
+                Customer customerdetail = new Customer();
+                customerdetail.setCityName(c.getString(c.getColumnIndex("CityName")));
+                customerdetail.setCityCode(c.getString(c.getColumnIndex("CityCode")));
+                city.add(customerdetail);
+            }
+        }
+        c.close();
+        return city;
     }
 
     public void UpdatePreFactorHeader_Customer(int pfcode, int Customer) {

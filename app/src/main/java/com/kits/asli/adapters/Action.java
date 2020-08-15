@@ -249,6 +249,7 @@ public class Action {
                             intent = new Intent(mContext, CustomerActivity.class);
                             intent.putExtra("edit", "0");
                             intent.putExtra("factor_code", 0);
+                            intent.putExtra("id", 0);
                             mContext.startActivity(intent);
                             dialog.dismiss();
 
@@ -450,10 +451,11 @@ public class Action {
                             ((Activity) mContext).overridePendingTransition(0, 0);
                         } else {
 
-                            Intent Customer = new Intent(mContext, CustomerActivity.class);
-                            Customer.putExtra("edit", "0");
-                            Customer.putExtra("factor_code", 0);
-                            mContext.startActivity(Customer);
+                            intent = new Intent(mContext, CustomerActivity.class);
+                            intent.putExtra("edit", "0");
+                            intent.putExtra("factor_code", 0);
+                            intent.putExtra("id", 0);
+                            mContext.startActivity(intent);
                             dialog.dismiss();
 
                         }

@@ -22,6 +22,8 @@ public class Customer {
     private String Delegacy;
     @SerializedName("CityName")
     private String CityName;
+    @SerializedName("CityCode")
+    private String CityCode;
     @SerializedName("Bestankar")
     private Integer Bestankar;
     @SerializedName("Active")
@@ -44,7 +46,55 @@ public class Customer {
     private String ZipCode;
     @SerializedName("PostCode")
     private String PostCode;
+    @SerializedName("ErrCode")
+    private String ErrCode;
+    @SerializedName("ErrDesc")
+    private String ErrDesc;
+    @SerializedName("IsExist")
+    private String IsExist;
+    @SerializedName("KodeMelli")
+    private String KodeMelli;
 
+
+    public String getErrDesc() {
+        return ErrDesc;
+    }
+
+    public void setErrDesc(String errDesc) {
+        ErrDesc = errDesc;
+    }
+
+    public String getIsExist() {
+        return IsExist;
+    }
+
+    public void setIsExist(String isExist) {
+        IsExist = isExist;
+    }
+
+    public String getKodeMelli() {
+        return KodeMelli;
+    }
+
+    public void setKodeMelli(String kodeMelli) {
+        KodeMelli = kodeMelli;
+    }
+
+    public String getErrCode() {
+        return ErrCode;
+    }
+
+    public void setErrCode(String errCode) {
+        ErrCode = errCode;
+    }
+
+    public String getCityCode() {
+        return CityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        CityCode = cityCode;
+    }
 
     public String getMobileName() {
         return MobileName;
