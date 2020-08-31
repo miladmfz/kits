@@ -627,7 +627,6 @@ public class Replication {
                                         String ReservedAmount = String.valueOf((jo.getDouble("ReservedAmount")));
                                         String ActiveStack = jo.getString("ActiveStack");
 
-                                        //TODO
                                         Cursor d = database.rawQuery("Select Count(*) AS cntRec From Good Where GoodCode =" + code, null);
                                         d.moveToFirst();
 
