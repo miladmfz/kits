@@ -44,7 +44,7 @@
     <string name="config_real_amount">نمایش موجودی رزرو نشده:</string>
     <string name="config_delay">وقفه برای جستجو کردن:</string>
     <string name="config_totalprice">جمع مبلغ فروش به ریال :</string>
-    <string name="customer_toolbarname">لیست مشتریان</string>
+    <string name="customer_toolbarname">مشتریان</string>
     <string name="detail_toolbarname">خصوصیات کالا</string>
     <string name="totalfactorheader">مبلغ :</string>
     <string name="customerfactorheader">مشتری :</string>

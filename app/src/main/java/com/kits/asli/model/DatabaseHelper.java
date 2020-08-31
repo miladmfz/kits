@@ -757,7 +757,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return goods;
     }
 
-    public ArrayList<Customer> AllCustomer(String name) {
+    public ArrayList<Customer> AllCustomer(String name, boolean aOnlyActive) {
 
         name = name.replaceAll(" ", "%");
         String query = "SELECT u.CustomerCode,u.PriceTip,CentralName,Address,Manager,Mobile,Phone,Delegacy, CityName, Bestankar, Active, CentralPrivateCode, EtebarNaghd" +
@@ -765,8 +765,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "join Central c on u.CentralRef= c.CentralCode " +
                 "Left join Address d on u.AddressRef=d.AddressCode " +
                 "Left join City y on d.CityCode=y.CityCode" +
-                " Where (CentralName Like '%" + name + "%' or CustomerCode Like '%" + name + "%' or  Manager Like '%" + name + "%')" +
-                " order by CustomerCode DESC  LIMIT 30";
+                " Where (CentralName Like '%" + name + "%' or CustomerCode Like '%" + name + "%' or  Manager Like '%" + name + "%')";
+        if (aOnlyActive) {
+            query = query + " And Active = 0";
+        }
+        query = query + " order by CustomerCode DESC  LIMIT 30";
         ArrayList<Customer> Customers = new ArrayList<Customer>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);

@@ -60,6 +60,7 @@ public class Replication {
         replicateCentralChange_customer();
     }
 
+
     public void replicateCentralChange() {
 
         dialog();
@@ -126,6 +127,10 @@ public class Replication {
 
                                         database.execSQL(qCol);
                                         d.close();
+                                        break;
+                                    case "D":
+                                    case "d":
+                                        database.execSQL("delete from Central Where CentralCode=" + code);
                                         break;
                                 }
 
@@ -220,6 +225,10 @@ public class Replication {
 
                                         database.execSQL(qCol);
                                         d.close();
+                                        break;
+                                    case "D":
+                                    case "d":
+                                        database.execSQL("delete from City Where CityCode=" + code);
                                         break;
                                 }
 
@@ -322,6 +331,10 @@ public class Replication {
                                         database.execSQL(qCol);
                                         d.close();
                                         break;
+                                    case "D":
+                                    case "d":
+                                        database.execSQL("delete from Address Where AddressCode=" + code);
+                                        break;
                                 }
 
                                 Log.e("asli_repstrQuery", qCol);
@@ -415,6 +428,10 @@ public class Replication {
                                         }
                                         database.execSQL(qCol);
                                         d.close();
+                                        break;
+                                    case "D":
+                                    case "d":
+                                        database.execSQL("delete from Customer Where CustomerCode=" + code);
                                         break;
                                 }
                                 Log.e("asli_repstrQuery", qCol);

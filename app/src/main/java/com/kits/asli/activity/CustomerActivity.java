@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.kits.asli.R;
 import com.kits.asli.adapters.Action;
 import com.kits.asli.adapters.Customer_Adapter;
@@ -63,6 +65,7 @@ public class CustomerActivity extends AppCompatActivity {
     TextView kodemeli_statu;
     EditText ekodemelli, ecitycode, ename, efamily, eaddress, ephone, emobile, eemail, epostcode, ezipcode;
     String kodemelli, citycode = "", name, family, address, phone, mobile, email, postcode, zipcode;
+    boolean activecustomer = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +163,24 @@ public class CustomerActivity extends AppCompatActivity {
             }
         });
 
+        final SwitchMaterial mySwitch_activestack = findViewById(R.id.customerActivityswitch);
 
+
+        mySwitch_activestack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    activecustomer = b;
+                    mySwitch_activestack.setText("فعال");
+                    allCustomer();
+
+                } else {
+                    activecustomer = b;
+                    mySwitch_activestack.setText("فعال -غیرفعال");
+                    allCustomer();
+                }
+            }
+        });
         allCustomer();
 
     }
@@ -274,7 +294,7 @@ public class CustomerActivity extends AppCompatActivity {
 
 
     public void allCustomer() {
-        customers = dbh.AllCustomer(srch);
+        customers = dbh.AllCustomer(srch, activecustomer);
         adapter = new Customer_Adapter(customers, CustomerActivity.this, edit, factor_target);
         gridLayoutManager = new GridLayoutManager(CustomerActivity.this, 1);//grid
         rc_customer.setLayoutManager(gridLayoutManager);
