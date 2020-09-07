@@ -92,7 +92,7 @@ public class BuyActivity extends AppCompatActivity {
         re.setAdapter(adapter);
 
 
-        price.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + dbh.getFactorSum(PreFac)))));
+        price.setText(Farsi_number.PerisanNumber(String.valueOf(dbh.getFactorSum(PreFac))));
         amount.setText(Farsi_number.PerisanNumber("" + dbh.getFactorSumAmount(PreFac)));
         customer.setText(Farsi_number.PerisanNumber("" + dbh.getFactorCustomer(PreFac)));
         row.setText(Farsi_number.PerisanNumber("" + goods.size()));

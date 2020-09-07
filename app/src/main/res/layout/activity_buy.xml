@@ -25,14 +25,15 @@
             >
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/DetailActivity_toolbar"
+                android:id="@+id/BuyActivity_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
 
-                android:background="?attr/colorPrimary"
 
-                >
+                android:background="?attr/colorPrimary"
+                app:titleTextColor="@color/white"
+                app:title="@string/buy_tollbarname">
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -208,29 +209,6 @@
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/BuyActivity_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/BuyActivity_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
-
-            android:background="?attr/colorPrimary"
-            app:titleTextColor="@color/white"
-
-            app:title="@string/buy_tollbarname">
-
-        </androidx.appcompat.widget.Toolbar>
-
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

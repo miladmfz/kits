@@ -92,8 +92,8 @@ public class Good_buy_Adapter extends RecyclerView.Adapter<Good_buy_Adapter.Good
 
         holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getMaxSellPrice()))));
         holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getPrice()))));
-        holder.total.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + price))));
-        holder.maxtotal.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + maxprice))));
+        holder.total.setText(Farsi_number.PerisanNumber(decimalFormat.format(price)));
+        holder.maxtotal.setText(Farsi_number.PerisanNumber(decimalFormat.format(maxprice)));
         holder.offer.setText(Farsi_number.PerisanNumber((100 - ((sellprice * 100) / maxsellprice)) + " درصد تخفیف "));
         //Picasso.with(mContext).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+goodView.getImageName()).into(holder.img);
 
