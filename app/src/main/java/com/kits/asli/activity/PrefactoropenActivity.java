@@ -129,7 +129,6 @@ public class PrefactoropenActivity extends AppCompatActivity {
                 intent = new Intent(PrefactoropenActivity.this, CustomerActivity.class);
                 intent.putExtra("edit", "0");
                 intent.putExtra("factor_code", 0);
-                intent.putExtra("id", 0);
                 startActivity(intent);
             }
         });

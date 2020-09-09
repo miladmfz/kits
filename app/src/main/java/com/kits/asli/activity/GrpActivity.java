@@ -196,7 +196,7 @@ public class GrpActivity extends AppCompatActivity {
                     public void run() {
 
                         String srch = action.arabicToenglish(editable.toString());
-                        goods = dbh.getAllGood(srch, id, 0, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
                         gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);//grid
                         rc_good.setLayoutManager(gridLayoutManager);
@@ -215,7 +215,7 @@ public class GrpActivity extends AppCompatActivity {
             }
         });
 
-        goods = dbh.getAllGood("", id, 0, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+        goods = dbh.getAllGood("", id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
         adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
         gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);//grid
         rc_good.setLayoutManager(gridLayoutManager);
@@ -231,14 +231,14 @@ public class GrpActivity extends AppCompatActivity {
                     line.setVisibility(View.GONE);
                     change_search.setText("جستجوی عادی");
                     conter = conter + 1;
-                    Log.e("asli_conter", "" + conter);
+                    Log.e("testanbar_conter", "" + conter);
                 } else {
                     line_pro.setVisibility(View.GONE);
                     filter_active.setVisibility(View.GONE);
                     line.setVisibility(View.VISIBLE);
                     change_search.setText("جستجوی پیشرفته");
                     conter = conter - 1;
-                    Log.e("asli_conter", "" + conter);
+                    Log.e("testanbar_conter", "" + conter);
                 }
             }
         });
@@ -306,7 +306,7 @@ public class GrpActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, 0, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
                         gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);//grid
                         rc_good.setLayoutManager(gridLayoutManager);
@@ -321,7 +321,7 @@ public class GrpActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, 0, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
                         gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);//grid
                         rc_good.setLayoutManager(gridLayoutManager);
@@ -345,7 +345,7 @@ public class GrpActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, 0, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
                         gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);//grid
                         rc_good.setLayoutManager(gridLayoutManager);
@@ -361,7 +361,7 @@ public class GrpActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, 0, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, GrpActivity.this);
                         gridLayoutManager = new GridLayoutManager(GrpActivity.this, grid);//grid
                         rc_good.setLayoutManager(gridLayoutManager);
@@ -464,7 +464,7 @@ public class GrpActivity extends AppCompatActivity {
             if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) != 0) {
                 intent = new Intent(GrpActivity.this, BuyActivity.class);
                 intent.putExtra("PreFac", Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))));
-                intent.putExtra("showflag", 2);
+
                 startActivity(intent);
             } else {
                 Intent home = new Intent(GrpActivity.this, NavActivity.class);
@@ -502,8 +502,10 @@ public class GrpActivity extends AppCompatActivity {
         } else {
             int b = 0, c = 0;
             for (String[] s : Multi_buy) {
+
                 if (s[0].equals(String.valueOf(code_fun))) b = c;
                 c++;
+
             }
             Multi_buy.remove(b);
             if (Multi_buy.size() < 1) {

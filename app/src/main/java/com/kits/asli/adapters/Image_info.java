@@ -17,9 +17,6 @@ public class Image_info {
     private final Context mContext;
     private String app_img_name;
 
-    //2 ta table bayad be database img ezafe shavad
-    //replog
-    //replogcol
 
     public Image_info(Context mContext) {
         this.mContext = mContext;

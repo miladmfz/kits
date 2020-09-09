@@ -65,6 +65,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private Replication replication;
     FusedLocationProviderClient fusedLocationProviderClient;
     Location location;
+    WorkManager workManager;
 
 
     @Override
@@ -104,9 +105,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             navigationView.getMenu().findItem(R.id.nav_tajdid).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_porforosh).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_pazel).setVisible(true);
-        }
-        if (getString(R.string.app_name).equals("آسیم")) {
-            navigationView.getMenu().findItem(R.id.nav_tajdid).setVisible(true);
         }
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -148,15 +146,16 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         });
 
 
+
         create_factor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
+
                 intent = new Intent(NavActivity.this, CustomerActivity.class);
                 intent.putExtra("edit", "0");
                 intent.putExtra("factor_code", 0);
-                intent.putExtra("id", 0);
                 startActivity(intent);
             }
         });
@@ -165,6 +164,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         good_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
 
                 intent = new Intent(NavActivity.this, SearchActivity.class);
@@ -254,7 +254,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 startActivity(intent);
             } else if (id == R.id.nav_rep) {
                 action.app_info();
-                replication.replicate_all();
+                replication.replicateCentralChange();
             } else if (id == R.id.nav_buy) {
                 if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
                     intent = new Intent(NavActivity.this, BuyActivity.class);
@@ -275,49 +275,43 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             drawer.closeDrawer(GravityCompat.START);
             return true;
         } else {
-        if (id == R.id.nav_search) {
-            intent = new Intent(NavActivity.this, SearchActivity.class);
-            intent.putExtra("scan", " ");
-            startActivity(intent);
-        } else if (id == R.id.aboutus) {
-            intent = new Intent(NavActivity.this, AboutusActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_buy_history) {
-            intent = new Intent(NavActivity.this, PrefactorActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_open_fac) {
-            intent = new Intent(NavActivity.this, PrefactoropenActivity.class);
-            intent.putExtra("fac", 1);
-            startActivity(intent);
-        } else if (id == R.id.nav_rep) {
-            action.app_info();
-            replication.replicate_all();
-        } else if (id == R.id.nav_buy) {
-            if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
-                intent = new Intent(NavActivity.this, BuyActivity.class);
-                intent.putExtra("PreFac", Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))));
-                intent.putExtra("showflag", 2);
+            if (id == R.id.nav_search) {
+                intent = new Intent(NavActivity.this, SearchActivity.class);
+                intent.putExtra("scan", " ");
                 startActivity(intent);
-            } else {
-                Toast.makeText(this, "سبد خرید خالی است.", Toast.LENGTH_SHORT).show();
-            }
-        } else if (id == R.id.nav_search_date) {
-            intent = new Intent(NavActivity.this, Search_dateActivity.class);
-            intent.putExtra("id", 1);
-            startActivity(intent);
-        } else if (id == R.id.nav_tajdid) {
-            if (getString(R.string.app_name).equals("آسیم")) {
-                intent = new Intent(NavActivity.this, Search_date_detailActivity.class);
-                intent.putExtra("id", 0);
+            } else if (id == R.id.aboutus) {
+                intent = new Intent(NavActivity.this, AboutusActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_buy_history) {
+                intent = new Intent(NavActivity.this, PrefactorActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_open_fac) {
+                intent = new Intent(NavActivity.this, PrefactoropenActivity.class);
+                intent.putExtra("fac", 1);
+                startActivity(intent);
+            } else if (id == R.id.nav_rep) {
+                action.app_info();
+                replication.BrokerStack();
+                replication.replicate_all();
+            } else if (id == R.id.nav_buy) {
+                if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) > 0) {
+                    intent = new Intent(NavActivity.this, BuyActivity.class);
+                    intent.putExtra("PreFac", Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))));
+                    intent.putExtra("showflag", 2);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "سبد خرید خالی است.", Toast.LENGTH_SHORT).show();
+                }
+            } else if (id == R.id.nav_search_date) {
+                intent = new Intent(NavActivity.this, Search_dateActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_cfg) {
+                intent = new Intent(NavActivity.this, ConfigActivity.class);
                 startActivity(intent);
             }
-        } else if (id == R.id.nav_cfg) {
-            intent = new Intent(NavActivity.this, ConfigActivity.class);
-            startActivity(intent);
-        }
-        DrawerLayout drawer = findViewById(R.id.NavActivity_drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+            DrawerLayout drawer = findViewById(R.id.NavActivity_drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
         }
 
 

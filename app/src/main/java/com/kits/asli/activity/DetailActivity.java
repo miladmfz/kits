@@ -188,8 +188,6 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-        //Picasso.with(DetailActivity.this).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+gd.getImageName()).centerInside().resize(700, 1000).into(img);
-
 
         img.setBackground(ContextCompat.getDrawable(DetailActivity.this, R.drawable.no_photo));
 
@@ -253,8 +251,6 @@ public class DetailActivity extends AppCompatActivity {
                     if (pri == 0) {
                         pri = gd.getMaxSellPrice();
                     }
-
-
                     Action ac = new Action(DetailActivity.this);
                     ac.buydialog(code, gd.getMaxSellPrice(), pri, gdd.getFactorAmount(), gd.getUnitName());
 
@@ -313,7 +309,6 @@ public class DetailActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.image_zoom);
         final ImageView imageView = dialog.findViewById(R.id.image_zoom_view);
 
-        //Picasso.with(DetailActivity.this).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+ImageName).centerInside().resize(2000, 2000).into(imageView);
 
         if (image_info.Imgae_exist(code.toString())) {
 

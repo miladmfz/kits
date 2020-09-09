@@ -90,8 +90,8 @@ public class Good_buy_Adapter extends RecyclerView.Adapter<Good_buy_Adapter.Good
         holder.amount.setText(Farsi_number.PerisanNumber(goodView.getAmount().toString()));
 
 
-        holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getMaxSellPrice()))));
-        holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getPrice()))));
+        holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(goodView.getMaxSellPrice())));
+        holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(goodView.getPrice())));
         holder.total.setText(Farsi_number.PerisanNumber(decimalFormat.format(price)));
         holder.maxtotal.setText(Farsi_number.PerisanNumber(decimalFormat.format(maxprice)));
         holder.offer.setText(Farsi_number.PerisanNumber((100 - ((sellprice * 100) / maxsellprice)) + " درصد تخفیف "));
@@ -131,7 +131,7 @@ public class Good_buy_Adapter extends RecyclerView.Adapter<Good_buy_Adapter.Good
 
                 @Override
                 public void onFailure(Call<String> call2, Throwable t) {
-                    Log.e("asli_onFailure", "" + t.toString());
+                    Log.e("testanbar_onFailure", "" + t.toString());
                 }
             });
 

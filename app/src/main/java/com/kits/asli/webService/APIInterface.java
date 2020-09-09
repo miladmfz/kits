@@ -10,12 +10,16 @@ import retrofit2.http.POST;
 
 public interface APIInterface {
 
-
     @POST("index.php")
     @FormUrlEncoded
     Call<String> GetImage(@Field("tag") String tag
             , @Field("GoodCode") String GoodCode
             , @Field("IX") Integer IX);
+
+    @POST("index.php")
+    @FormUrlEncoded
+    Call<String> BrokerStack(@Field("tag") String tag
+            , @Field("BrokerRef") String BrokerRef);
 
 
     @POST("index.php")

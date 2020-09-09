@@ -10,7 +10,6 @@ import static android.text.TextUtils.isEmpty;
 
 public class Good implements Serializable {
 
-
     @SerializedName("GoodCode")
     private Integer GoodCode;
     @SerializedName("state")

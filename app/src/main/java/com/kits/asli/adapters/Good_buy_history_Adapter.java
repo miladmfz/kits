@@ -74,13 +74,12 @@ public class Good_buy_history_Adapter extends RecyclerView.Adapter<Good_buy_hist
 
 
         holder.goodnameTextView.setText(Farsi_number.PerisanNumber(goodView.getGoodName()));
-        holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getMaxSellPrice()))));
-        holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getPrice()))));
+        holder.maxsellpriceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(goodView.getMaxSellPrice())));
+        holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(goodView.getPrice())));
         holder.amount.setText(Farsi_number.PerisanNumber(goodView.getAmount().toString()));
         holder.code.setText(Farsi_number.PerisanNumber(goodView.getGoodCode().toString()));
         holder.maxtotal.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + maxprice))));
         holder.total.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + price))));
-        //Picasso.with(mContext).load("http://"+SERVER_IP_ADDRESS+"/login/img/"+goodView.getImageName()).resize(100,100).centerInside().into(holder.img);
 
 
         image_info = new Image_info(mContext);

@@ -20,103 +20,125 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private SharedPreferences shPref;
     private Context mContext;
     @SuppressLint("SdCardPath")
     private static final String DATABASE_NAME = "/data/data/com.kits.asli/databases/KowsarDb.sqlite";
-    private static final String KEY_CODE = "GoodCode";
-    private static final String KEY_NAME = "GoodName";
-    private static final String KEY3 = "GoodExplain1";
-    private static final String KEY4 = "GoodExplain2";
-    private static final String KEY5 = "FirstBarCode";
-    private static final String KEY6 = "MaxSellPrice";
-    private static final String KEY7 = "GoodExplain6";
-    private static final String KEY8 = "HasAmount";
-    private static final String KEY9 = "Writer";
-    private static final String KEY10 = "TahvilDate";
-    private static final String KEY11 = "Dragoman";
-    private static final String KEY12 = "PrintPeriod";
-    private static final String KEY13 = "PrintYear";
-    private static final String KEY14 = "Size";
-    private static final String KEY15 = "CoverType";
-    private static final String KEY16 = "Tiraj";
-    private static final String KEY17 = "PageNo";
-    private static final String KEY18 = "Weight";
-    private static final String KEY19 = "GroupsWhitoutCode";
-    private static final String KEY20 = "StackAmount";
-    private static final String KEY21 = "SellPrice1";
-    private static final String KEY22 = "SellPrice2";
-    private static final String KEY23 = "SellPrice3";
-    private static final String KEY24 = "SellPrice4";
-    private static final String KEY25 = "SellPrice5";
-    private static final String KEY26 = "SellPrice6";
-    private static final String KEY27 = "GoodType";
-    private static final String KEY28 = "MinSellPrice";
-    private static final String KEY29 = "UnitName";
-    private static final String KEY30 = "DefaultUnitValue";
-
-
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         this.mContext = context;
-
     }
 
 
-    public ArrayList<GoodGroup> getAllGroups(String GName, Integer GL) {
-        String gs = GL.toString();
+    public ArrayList<Good> getAllGood(String search, Integer aGroupCode, Boolean aOnlyActive, Boolean aOnlyAvailable, Integer itemamount) {
+        SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+        String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
 
-        // Exists(Select GoodRef From GoodGroup Where GoodGroupRef in(s.GroupCode, s.L1, s.L2, s.L3, s.L4, s.L5)) And
-        String query = "SELECT * FROM GoodsGrp s WHERE Name like '%" + GName + "%'";
-        if (GL > 0) {
-            query = query + " And ((L1=" + gs + " And L2=0) or (L2=" + gs + " And L3=0) or (L3=" + gs + " And L4=0) or (L4=" + gs + " And L5=0) or (L5=" + gs + "))";
-        } else {
-            query = query + " And L1>0 and L2=0 order by 1 desc";
+        search = search.replaceAll(" ", "%");
+        String cond;
+        String order = " Order By ";
+
+
+        if (aOnlyActive) {
+            stkCond = stkCond + " And ActiveStack = 1";
         }
 
-        ArrayList<GoodGroup> groups = new ArrayList<GoodGroup>();
+        String query = "SELECT ss.*,u.*,g.*,0 FactorAmount, 0 Shortage, 0 Price, 0 RowCode FROM Good as g " +
+                "Join Units as u on UnitCode = GoodUnitRef Join" +
+                "(Select  goodref, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack " +
+                "From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=ss.GoodRef ";
+
+
+        if (search.equals("")) {
+            cond = "Where 1=1";
+        } else {
+            cond = "Where (GoodName Like '%" + search + "%' or GoodMainCode Like '%" + search + "%' or GoodCode Like '%" + search + "%' or FirstBarCode Like '%" + search + "%' or Isbn Like '%" + search + "%' or GoodExplain1 Like '%" + search + "%' or GoodExplain2 Like '%" + search + "%')";
+        }
+
+        if (aOnlyAvailable) {
+            shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+            if (shPref.getBoolean("real_amount", true)) {
+                cond = cond + " And StackAmount-ss.ReservedAmount > 0 ";
+            } else {
+                cond = cond + " And StackAmount > 0 ";
+            }
+        }
+
+
+        if (aGroupCode > 0) {
+            cond = cond + " And GoodCode in(Select GoodRef From GoodGroup p "
+                    + "Join GoodsGrp s on p.GoodGroupRef = s.GroupCode "
+                    + "Where s.GroupCode = " + aGroupCode.toString() + " or s.L1 = " + aGroupCode.toString()
+                    + " or s.L2 = " + aGroupCode.toString() + " or s.L3 = " + aGroupCode.toString()
+                    + " or s.L4 = " + aGroupCode.toString() + " or s.L5 = " + aGroupCode.toString() + ")";
+        }
+
+
+        order = order + "Date2 DESC , GoodCode DESC";
+
+        query = query + cond + order + " LIMIT " + itemamount;
+
+        ArrayList<Good> goods = new ArrayList<Good>();
         SQLiteDatabase database = getReadableDatabase();
+        Log.e("query=", query);
         Cursor c = database.rawQuery(query, null);
 
         if (c != null) {
             while (c.moveToNext()) {
-                GoodGroup grp = new GoodGroup();
-                grp.setGoodGroupCode(c.getInt(c.getColumnIndex("GroupCode")));
-                grp.setName(c.getString(c.getColumnIndex("Name")));
-                grp.setL1(c.getInt(c.getColumnIndex("L1")));
-                grp.setL2(c.getInt(c.getColumnIndex("L2")));
-                grp.setL3(c.getInt(c.getColumnIndex("L3")));
-                grp.setL4(c.getInt(c.getColumnIndex("L4")));
-                grp.setL5(c.getInt(c.getColumnIndex("L5")));
-                groups.add(grp);
+                Good gooddetail = new Good();
+                gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
+                gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
+                gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
+                gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex("StackAmount")));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex("GoodType")));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
+                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+                gooddetail.setCheck(false);
 
+                goods.add(gooddetail);
             }
         }
         c.close();
-        return groups;
+        return goods;
     }
 
     public ArrayList<Good> getAllGood_Extended(String aFromDate, String aToDate, Integer aGroupCode, String name, String aWriter, String aDragoMan, String aNasher, Integer aPrintPeriod, String aPrintYear, Boolean aOnlyActive, Boolean aOnlyAvailable) {
-        String cond = " Where 1=1";
-        String query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode  FROM Good Join Units on UnitCode = GoodUnitRef ";
+        SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+        String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
         if (aOnlyActive) {
-            cond = cond + " And ActiveStack = 1";
+            stkCond = stkCond + " And ActiveStack = 1";
         }
+
+
+        String cond = " Where 1=1";
+        String query = "SELECT *,0 FactorAmount, 0 Shortage, 0 Price, 0 RowCode  FROM Good Join Units on UnitCode = GoodUnitRef Join(Select  goodref, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=GoodRef ";
+
+
         if (aOnlyAvailable) {
-            SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
             if (shPref.getBoolean("real_amount", true)) {
-                cond = cond + " And StackAmount-ReservedAmount > 0 ";
+                cond = cond + " And StackAmount-ss.ReservedAmount > 0 ";
             } else {
                 cond = cond + " And StackAmount > 0 ";
             }
         }
         if (!aFromDate.equals("")) {
             cond = cond + " And Date2 >= '" + aFromDate + "'";
+
         }
+
         if (!aToDate.equals("")) {
             cond = cond + " And Date2 <= '" + aToDate + "'";
         }
+
         if (aGroupCode > 0) {
             cond = cond + " And GoodCode in(Select GoodRef From GoodGroup p "
                     + "Join GoodsGrp s on p.GoodGroupRef = s.GroupCode "
@@ -144,30 +166,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         query = query + cond + " order by Date2 DESC, GoodCode DESC LIMIT 250 ";
+        Log.e("query=", query);
 
         ArrayList<Good> goods = new ArrayList<Good>();
         SQLiteDatabase database = getReadableDatabase();
-        Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
-
+        Cursor c = database.rawQuery(query, null);
         if (c != null) {
             while (c.moveToNext()) {
                 Good gooddetail = new Good();
                 gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
                 gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex("StackAmount")));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex("GoodType")));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
                 gooddetail.setCheck(false);
 
@@ -178,7 +200,73 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return goods;
     }
 
+    public Good getGoodByCode(Integer code, Integer pfcode) {
+        SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+        String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
+
+        String query = "SELECT u.*, g.*, ss.*, sw.FactorAmount FROM Good g Join Units u on UnitCode = GoodUnitRef "
+                + " Join (Select GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack From GoodStack  " + stkCond + " Group By GoodRef) ss on ss.GoodRef = GoodCode "
+                + " Left Join (Select GoodRef, Sum(FactorAmount) FactorAmount From PreFactor Where PreFactorCode =" + pfcode + " Group BY GoodRef) sw on sw.GoodRef = GoodCode "
+                + " WHERE GoodCode = " + code + " or FirstBarCode = '" + code + "' or Isbn ='" + code + "'";
+        Good gooddetail = new Good();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor c = database.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+            gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+            gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
+            gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
+            gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+            gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+            gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
+            gooddetail.setAmount(c.getInt(c.getColumnIndex("StackAmount")));
+            gooddetail.setIsbn(c.getString(c.getColumnIndex("Isbn")));
+            gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+            gooddetail.setDate2(c.getString(c.getColumnIndex("Date2")));
+            gooddetail.setNvarchar1(c.getString(c.getColumnIndex("Nvarchar1")));
+            gooddetail.setNvarchar2(c.getString(c.getColumnIndex("Nvarchar2")));
+            gooddetail.setFloat1(c.getInt(c.getColumnIndex("Float1")));
+            gooddetail.setNvarchar13(c.getString(c.getColumnIndex("Nvarchar13")));
+            gooddetail.setNvarchar20(c.getString(c.getColumnIndex("Nvarchar20")));
+            gooddetail.setFloat5(c.getInt(c.getColumnIndex("Float5")));
+            gooddetail.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
+            gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+            gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
+            try {
+                gooddetail.setDate1(c.getString(c.getColumnIndex("Date1")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            gooddetail.setCheck(false);
+
+            if (mContext.getString(R.string.app_name).equals("چشمه")) {
+                gooddetail.setGoodSubCode(c.getString(c.getColumnIndex("GoodSubCode")));
+                gooddetail.setAmount1(c.getInt(c.getColumnIndex("StackAmount2")));
+                gooddetail.setAmount2(c.getInt(c.getColumnIndex("StackAmount3")));
+            }
+            if (mContext.getString(R.string.app_name).equals("چشمه غیر کتابی")) {
+                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setGoodExplain3(c.getString(c.getColumnIndex("GoodExplain3")));
+                gooddetail.setGoodExplain4(c.getString(c.getColumnIndex("GoodExplain4")));
+                gooddetail.setNvarchar10(c.getString(c.getColumnIndex("Nvarchar13")));
+
+            }
+
+        }
+        c.close();
+        return gooddetail;
+    }
+
     public ArrayList<Good> getAllGood_ByDate(Integer xDayAgo, Boolean aOnlyActive, Boolean aOnlyAvailable) throws ParseException {
+        SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+
+        String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
+        if (aOnlyActive) {
+            stkCond = stkCond + " And ActiveStack = 1";
+        }
+
         String cond = "";
         String query = "SELECT date('now','-" + xDayAgo + " day') As xDay";
         SQLiteDatabase database = getReadableDatabase();
@@ -190,173 +278,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Date mDate = frmt.parse(dc.getString(dc.getColumnIndex("xDay")));
         String xDate = utilities.getShamsidate(mDate);
 
-        query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode FROM Good Join Units on UnitCode = GoodUnitRef ";
+        query = "SELECT u.*,g.*,0 FactorAmount,  0 Shortage, 0 Price, 0 RowCode FROM Good g " +
+                "Join Units u on UnitCode = GoodUnitRef " +
+                "Join(Select  GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack" +
+                " From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=ss.GoodRef ";
+
         cond = "Where Date2>='" + xDate + "'";
-        if (aOnlyActive) {
-            cond = cond + " And ActiveStack = 1";
-        }
+
         if (aOnlyAvailable) {
-            SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
             if (shPref.getBoolean("real_amount", true)) {
-                cond = cond + " And StackAmount-ReservedAmount > 0 ";
+                cond = cond + " And StackAmount-ss.ReservedAmount > 0 ";
             } else {
                 cond = cond + " And StackAmount > 0 ";
             }
         }
         query = query + cond + " order by Date2 DESC , GoodCode DESC ";
         ArrayList<Good> goods = new ArrayList<Good>();
-        Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
-
+        Cursor c = database.rawQuery(query, null);
         if (c != null) {
             while (c.moveToNext()) {
                 Good gooddetail = new Good();
                 gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
                 gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
-                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
-                gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
-                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
-                gooddetail.setCheck(false);
-
-                goods.add(gooddetail);
-            }
-        }
-        c.close();
-        return goods;
-    }
-
-
-    public ArrayList<Good> getAllGood_ByDate_asim() throws ParseException {
-
-        SQLiteDatabase database = getReadableDatabase();
-        String query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode FROM Good Join Units on UnitCode = GoodUnitRef  order by Date1 DESC , GoodCode DESC ";
-        ArrayList<Good> goods = new ArrayList<Good>();
-        Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
-
-        if (c != null) {
-            while (c.moveToNext()) {
-                Good gooddetail = new Good();
-                gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
-                gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
-                gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
-                gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
-                gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
-                gooddetail.setCheck(false);
-
-                goods.add(gooddetail);
-            }
-        }
-        c.close();
-        return goods;
-    }
-
-
-    public ArrayList<Good> getAllGood(String name, Integer aGroupCode, Integer aShowFlag, Integer LikeGoodRef, Boolean aOnlyActive, Boolean aOnlyAvailable, Integer itemamount) {
-        String cond;
-        String order = " order by ";
-        String query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode FROM Good Join Units on UnitCode = GoodUnitRef ";
-
-        name = name.replaceAll(" ", "%");
-
-        if (name.equals("")) {
-            cond = "Where 1=1";
-        } else {
-            cond = "Where (GoodName Like '%" + name + "%' or GoodMainCode Like '%" + name + "%' or GoodCode Like '%" + name + "%' or FirstBarCode Like '%" + name + "%' or Isbn Like '%" + name + "%' or GoodExplain1 Like '%" + name + "%' or GoodExplain2 Like '%" + name + "%')";
-        }
-        if (aOnlyActive) {
-            cond = cond + " And ActiveStack = 1";
-        }
-
-        if (aOnlyAvailable) {
-            SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
-            if (shPref.getBoolean("real_amount", true)) {
-                cond = cond + " And StackAmount-ReservedAmount > 0 ";
-            } else {
-                cond = cond + " And StackAmount > 0 ";
-            }
-        }
-
-
-        if (mContext.getString(R.string.app_name).equals("انتشارات ماهریس")) {
-            if (aGroupCode > 0) {    //baraye farhangee
-                cond = cond + " And GoodCode in(Select GoodRef From GoodGroup Where GoodGroupRef = " + aGroupCode.toString() + ")";
-                if ((aGroupCode == 1255) || (aGroupCode == 1257)) {
-                    order = order + " (Select Max(GoodGroupCode) From GoodGroup Where GoodGroupRef = " + aGroupCode.toString() + " And GoodRef = GoodCode) DESC,";
-                }
-            } else if (aShowFlag == 1) {
-                cond = cond + " And GoodCode in(Select GoodRef From Favorites)";
-            } else if (aShowFlag == 2) {
-                query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef Join PreFactor on GoodRef = GoodCode ";
-                cond = cond + " and ifnull(PreFactorCode,0)=0";
-            } else if (LikeGoodRef > 0) {
-                cond = cond + " And GoodCode in(select p.goodref from GoodGroup p where GoodGroupRef in(select s.GoodGroupRef From GoodGroup s where s.GoodRef = " + LikeGoodRef.toString() + "))";
-            }
-        } else {
-            if (aGroupCode > 0) {
-                cond = cond + " And GoodCode in(Select GoodRef From GoodGroup p "
-                        + "Join GoodsGrp s on p.GoodGroupRef = s.GroupCode "
-                        + "Where s.GroupCode = " + aGroupCode.toString() + " or s.L1 = " + aGroupCode.toString()
-                        + " or s.L2 = " + aGroupCode.toString() + " or s.L3 = " + aGroupCode.toString()
-                        + " or s.L4 = " + aGroupCode.toString() + " or s.L5 = " + aGroupCode.toString() + ")";
-            } else if (aShowFlag == 1) {
-                cond = cond + " And GoodCode in(Select GoodRef From Favorites)";
-            } else if (aShowFlag == 2) {
-                query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef Join PreFactor on GoodRef = GoodCode ";
-                cond = cond + " and ifnull(PreFactorCode,0)=0";
-            } else if (LikeGoodRef > 0) {
-                cond = cond + " And GoodCode in(select p.goodref from GoodGroup p where GoodGroupRef in(select s.GoodGroupRef From GoodGroup s where s.GoodRef = " + LikeGoodRef.toString() + "))";
-            }
-
-        }
-
-
-        order = order + "Date2 DESC , GoodCode DESC";
-
-        query = query + cond + order + " LIMIT " + itemamount;
-
-        ArrayList<Good> goods = new ArrayList<Good>();
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
-
-        if (c != null) {
-            while (c.moveToNext()) {
-                Good gooddetail = new Good();
-                gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
-                gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
                 gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex("StackAmount")));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex("GoodType")));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
                 gooddetail.setCheck(false);
 
@@ -367,56 +323,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return goods;
     }
 
-    public ArrayList<Good> getAllGood_pfcode(Integer pfcode, String name, Integer aGroupCode, Integer aShowFlag, Integer LikeGoodRef, Boolean aOnlyActive) {
-        String cond;
-        String query = "SELECT *, 0 Amount, 0 Shortage, 0 Price, 0 RowCode FROM Good Join Units on UnitCode = GoodUnitRef ";
-        if (name == "") {
-            cond = "Where 1=1";
-        } else {
-            cond = "Where (GoodName Like '%" + name + "%' or GoodMainCode Like '%" + name + "%' or GoodCode Like '%" + name + "%' or FirstBarCode Like '%" + name + "%' or GoodExplain1 Like '%" + name + "%' or GoodExplain2 Like '%" + name + "%')";
-        }
-        if (aOnlyActive) {
-            cond = cond + " And ActiveStack = 1";
-        }
-        if (aGroupCode > 0) {
-            cond = cond + " And GoodCode in(Select GoodRef From GoodGroup Where GoodGroupRef = " + aGroupCode.toString() + ")";
-        } else if (aShowFlag == 1) {
-            cond = cond + " And GoodCode in(Select GoodRef From Favorites)";
-        } else if (aShowFlag == 2) {
-            query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef Join PreFactor on GoodRef = GoodCode ";
-            cond = cond + " and ifnull(PreFactorCode,0)=" + pfcode;
-        } else if (LikeGoodRef > 0) {
-            cond = cond + " And GoodCode in(select p.goodref from GoodGroup p where GoodGroupRef in(select s.GoodGroupRef From GoodGroup s where s.GoodRef = " + LikeGoodRef.toString() + "))";
-        }
-        cond = cond + " order by Date2 DESC , GoodCode DESC ";
-        query = query + cond + " LIMIT 200 ";
-        ArrayList<Good> goods = new ArrayList<Good>();
+    public ArrayList<Good> getAllGood_ByDate_asim() {
+        SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
+        String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
+
         SQLiteDatabase database = getReadableDatabase();
-        Cursor c = database.rawQuery(query, null);// exect vase anjame ye amaliyat ______ rawquery vase gereftane ye etelaatii k az db mikhaym
-        Log.e("asli_getAllGood_pfcode", query);
+        String query = "SELECT u.*,g.*,0 FactorAmount,  0 Shortage, 0 Price, 0 RowCode FROM Good g " +
+                "Join Units u on UnitCode = GoodUnitRef " +
+                "Join(Select  GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack " +
+                "From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=ss.GoodRef " +
+                "order by Date1 DESC , GoodCode DESC ";
+        ArrayList<Good> goods = new ArrayList<Good>();
+        Cursor c = database.rawQuery(query, null);
         if (c != null) {
             while (c.moveToNext()) {
                 Good gooddetail = new Good();
                 gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
                 gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-                gooddetail.setGoodMainCode(c.getInt(c.getColumnIndex("GoodMainCode")));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex(KEY20)));
-                gooddetail.setFactorAmount(c.getInt(c.getColumnIndex("Amount")));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
+                gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex("StackAmount")));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex("GoodType")));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
                 gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
                 gooddetail.setCheck(false);
-
                 goods.add(gooddetail);
             }
         }
@@ -424,133 +362,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return goods;
     }
 
-    public Integer getCustomerGoodSellPrice(int aPreFactorHeaderCode, int aGoodCode) {
-        Integer iResult = 0;
-        String query = "Select MaxSellPrice, Case c.PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 "
-                + " When 3 Then SellPrice3 When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 "
-                + "  Else Case When g.SellPriceType = 0 Then MaxSellPrice Else 100 End End "
-                + " * Case When g.SellPriceType = 0 Then 1 Else MaxSellPrice /100 End As Price "
-                + "From Good g Join PreFactorHeader h on PreFactorCode = " + aPreFactorHeaderCode
-                + " Join Customer c on c.CustomerCode = h.CustomerRef Where GoodCode = " + aGoodCode;
+    public ArrayList<Good> getAllGood_pfcode(Integer pfcode) {
+        String query = "SELECT p.*,g.* FROM Good g Join Units on UnitCode = GoodUnitRef " +
+                "Join PreFactor p on GoodRef = GoodCode " +
+                "Where ifnull(PreFactorCode,0)= " + pfcode + " order by Date2 DESC , GoodCode DESC LIMIT 200 ";
+
+        ArrayList<Good> goods = new ArrayList<Good>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            iResult = c.getInt(c.getColumnIndex("Price"));
-        }
-        c.close();
-        return iResult;
-    }
-
-
-    public Good getGoodByCode(int code, int pfcode) {
-        String query = "SELECT * FROM Good Join Units on UnitCode = GoodUnitRef "
-                + " Left Join (Select GoodRef, Sum(Amount) FactorAmount From PreFactor Where PreFactorCode =" + pfcode + " Group BY GoodRef) ss "
-                + "  on GoodRef = GoodCode "
-                + " WHERE GoodCode = " + code + " or FirstBarCode = '" + code + "' or Isbn ='" + code + "'";
-        Good gd = new Good();
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor c = database.rawQuery(query, null);
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            gd.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-            gd.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-            gd.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-            gd.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
-            gd.setImageName(c.getString(c.getColumnIndex(KEY7)));
-            gd.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-            gd.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
-            gd.setAmount(c.getInt(c.getColumnIndex(KEY20)));
-            gd.setIsbn(c.getString(c.getColumnIndex("Isbn")));
-            gd.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
-            gd.setDate2(c.getString(c.getColumnIndex("Date2")));
-            gd.setNvarchar1(c.getString(c.getColumnIndex("Nvarchar1")));
-            gd.setNvarchar2(c.getString(c.getColumnIndex("Nvarchar2")));
-            gd.setFloat1(c.getInt(c.getColumnIndex("Float1")));
-            gd.setNvarchar13(c.getString(c.getColumnIndex("Nvarchar13")));
-            gd.setNvarchar20(c.getString(c.getColumnIndex("Nvarchar20")));
-            gd.setFloat5(c.getInt(c.getColumnIndex("Float5")));
-            gd.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
-            gd.setUnitName(c.getString(c.getColumnIndex("UnitName")));
-            gd.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
-            try {
-                gd.setDate1(c.getString(c.getColumnIndex("Date1")));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            gd.setCheck(false);
-
-            if (mContext.getString(R.string.app_name).equals("چشمه")) {
-                gd.setGoodSubCode(c.getString(c.getColumnIndex("GoodSubCode")));
-                gd.setAmount1(c.getInt(c.getColumnIndex("StackAmount2")));
-                gd.setAmount2(c.getInt(c.getColumnIndex("StackAmount3")));
-            }
-            if (mContext.getString(R.string.app_name).equals("چشمه غیر کتابی")) {
-                gd.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
-                gd.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
-                gd.setGoodExplain3(c.getString(c.getColumnIndex("GoodExplain3")));
-                gd.setGoodExplain4(c.getString(c.getColumnIndex("GoodExplain4")));
-                gd.setNvarchar10(c.getString(c.getColumnIndex("Nvarchar13")));
-
-            }
-
-        }
-        c.close();
-        return gd;
-    }
-
-
-    public void InsertPreFactor(int pfcode, int goodcode, int amount, int price, int rowcode) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query;
-        if (rowcode > 0) {
-            if (price >= 0) {
-                query = "Update PreFactor set Amount = " + amount + ", Price = " + price + " Where RowCode=" + rowcode;
-            } else {
-                query = "Update PreFactor set Amount = " + amount + " Where RowCode=" + rowcode;
-            }
-            db.execSQL(query);
-        } else {
-            query = " Select * From PreFactor Where IfNull(PreFactorCode,0)=" + pfcode + " And GoodRef =" + goodcode;
-            if (price >= 0) {
-                query = query + " And Price =" + price;
-            }
-
-            Cursor c = db.rawQuery(query, null);
-
-            if (c.getCount() > 0) {
-                c.moveToFirst();
-                db.execSQL("Update PreFactor set Amount = Amount +" + amount + " Where RowCode=" + c.getString(c.getColumnIndex("RowCode")) + ";");
-            } else {
-                db.execSQL("INSERT INTO PreFactor(PreFactorCode, GoodRef, Amount, Price) Select " + pfcode + "," + goodcode + ", " + amount + "," +
-                        "Case When " + price + ">=0 Then " + price + " Else Case PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 When 3 Then SellPrice3 When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 End " +
-                        "* Case When SellPriceType = 1 Then MaxSellPrice/100 Else 1 End End " +
-                        "From Good g Join PreFactorHeader h on 1=1 Join Customer c on h.CustomerRef=c.CustomerCode " +
-                        "Where h.PreFactorCode =" + pfcode + " And GoodCode = " + goodcode);
-            }
-            c.close();
-        }
-    }
-
-    public String getgoodgroups(int code) {
-        String query;
-        query = "Select Name From GoodGroup p join GoodsGrp g on p.GoodGroupRef = g.Groupcode where GoodRef = " + code;
-        SQLiteDatabase database = getReadableDatabase();
-        String Res = "";
-        Cursor c = database.rawQuery(query, null);
-        if (c.getCount() > 0) {
+        if (c != null) {
             while (c.moveToNext()) {
-
-                if (Res.equals("")) {
-                    Res = c.getString(c.getColumnIndex("Name"));
-
-                } else {
-                    Res = Res + " - " + c.getString(c.getColumnIndex("Name"));
-                }
+                Good gooddetail = new Good();
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+                gooddetail.setGoodMainCode(c.getInt(c.getColumnIndex("GoodMainCode")));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
+                gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
+                gooddetail.setFactorAmount(c.getInt(c.getColumnIndex("FactorAmount")));
+                gooddetail.setCheck(false);
+                goods.add(gooddetail);
             }
         }
         c.close();
-        return Res;
+        return goods;
     }
 
     public void InsertPreFactorHeader(String Customer, Integer CustomerRef) {
@@ -561,7 +395,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String strDate = sdf.format(c.getTime());
         SQLiteDatabase db = getWritableDatabase();
-
 
         UserInfo user = new UserInfo();
         String query = "Select * From Config Where KeyValue = 'BrokerCode' ";
@@ -583,118 +416,154 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         }
-        db.execSQL("INSERT INTO PrefactorHeader(PreFactorKowsarCode,PreFactorDate" +
-                ",PreFactorKowsarDate ,PreFactorTime,PreFactorExplain,CustomerRef,BrokerRef) " +
+        db.execSQL("INSERT INTO PrefactorHeader" +
+                "(PreFactorKowsarCode,PreFactorDate ,PreFactorKowsarDate ,PreFactorTime,PreFactorExplain,CustomerRef,BrokerRef) " +
                 "VALUES(0,'" + Date + "','-----','" + strDate + "','" + Customer + "','" + CustomerRef + "','" + val + "'); ");
     }
+
+    public void InsertPreFactor(Integer pfcode, Integer goodcode, Integer FactorAmount, Integer price, Integer rowcode) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query;
+        if (rowcode > 0) {
+            if (price >= 0) {
+                query = "Update PreFactor set FactorAmount = " + FactorAmount + ", Price = " + price + " Where RowCode=" + rowcode;
+            } else {
+                query = "Update PreFactor set FactorAmount = " + FactorAmount + " Where RowCode=" + rowcode;
+            }
+            db.execSQL(query);
+        } else {
+            query = " Select * From PreFactor Where IfNull(PreFactorCode,0)=" + pfcode + " And GoodRef =" + goodcode;
+            if (price >= 0) {
+                query = query + " And Price =" + price;
+            }
+
+            Cursor c = db.rawQuery(query, null);
+
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                db.execSQL("Update PreFactor set FactorAmount = FactorAmount +" + FactorAmount + " Where RowCode=" + c.getString(c.getColumnIndex("RowCode")) + ";");
+            } else {
+                db.execSQL("INSERT INTO PreFactor(PreFactorCode, GoodRef, FactorAmount, Price) Select " + pfcode + "," + goodcode + ", " + FactorAmount + "," +
+                        "Case When " + price + ">=0 Then " + price + " Else Case PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 When 3 Then SellPrice3 When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 End " +
+                        "* Case When SellPriceType = 1 Then MaxSellPrice/100 Else 1 End End " +
+                        "From Good g Join PreFactorHeader h on 1=1 Join Customer c on h.CustomerRef=c.CustomerCode " +
+                        "Where h.PreFactorCode =" + pfcode + " And GoodCode = " + goodcode);
+            }
+            c.close();
+        }
+    }
+
 
     public ArrayList<PreFactor> getAllPrefactorHeaderopen() {
         String query = "SELECT h.*, s.SumAmount , s.SumPrice, s.RowCount ,n.CentralName CustomerName  FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef "
                 + " join Central n on c.CentralRef=n.CentralCode "
-                + "Left Join (SELECT P.PreFactorCode, sum(p.Amount) as SumAmount , sum(p.Amount * p.Price*g.DefaultUnitValue) as SumPrice, count(*) as RowCount "
+                + "Left Join (SELECT P.PreFactorCode, sum(p.FactorAmount) as SumAmount , sum(p.FactorAmount * p.Price*g.DefaultUnitValue) as SumPrice, count(*) as RowCount "
                 + "From Good g Join Units on UnitCode = GoodUnitRef  Join PreFactor p on GoodRef = GoodCode  Where IfNull(PreFactorCode, 0)>0 "
                 + "Group BY PreFactorCode ) s on h.PreFactorCode = s.PreFactorCode Where NOT IfNull(PreFactorKowsarCode, 0)>0 "
                 + "Order By h.PreFactorCode DESC";
 
-        ArrayList<PreFactor> pfh = new ArrayList<PreFactor>();
+        ArrayList<PreFactor> prefactor_header = new ArrayList<PreFactor>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
 
         if (c != null) {
             while (c.moveToNext()) {
-                PreFactor pf = new PreFactor();
-                pf.setPreFactorCode(c.getInt(c.getColumnIndex("PreFactorCode")));
-                pf.setPreFactorDate(c.getString(c.getColumnIndex("PreFactorDate")));
-                pf.setPreFactorTime(c.getString(c.getColumnIndex("PreFactorTime")));
-                pf.setPreFactorkowsarDate(c.getString(c.getColumnIndex("PreFactorKowsarDate")));
-                pf.setPreFactorKowsarCode(c.getInt(c.getColumnIndex("PreFactorKowsarCode")));
-                pf.setPreFactorExplain(c.getString(c.getColumnIndex("PreFactorExplain")));
-                pf.setCustomer(c.getString(c.getColumnIndex("CustomerName")));
-                pf.setSumAmount(c.getInt(c.getColumnIndex("SumAmount")));
-                pf.setSumPrice(c.getInt(c.getColumnIndex("SumPrice")));
-                pf.setRowCount(c.getInt(c.getColumnIndex("RowCount")));
+                PreFactor prefactor = new PreFactor();
+                prefactor.setPreFactorCode(c.getInt(c.getColumnIndex("PreFactorCode")));
+                prefactor.setPreFactorDate(c.getString(c.getColumnIndex("PreFactorDate")));
+                prefactor.setPreFactorTime(c.getString(c.getColumnIndex("PreFactorTime")));
+                prefactor.setPreFactorkowsarDate(c.getString(c.getColumnIndex("PreFactorKowsarDate")));
+                prefactor.setPreFactorKowsarCode(c.getInt(c.getColumnIndex("PreFactorKowsarCode")));
+                prefactor.setPreFactorExplain(c.getString(c.getColumnIndex("PreFactorExplain")));
+                prefactor.setCustomer(c.getString(c.getColumnIndex("CustomerName")));
+                prefactor.setSumAmount(c.getInt(c.getColumnIndex("SumAmount")));
+                prefactor.setSumPrice(c.getInt(c.getColumnIndex("SumPrice")));
+                prefactor.setRowCount(c.getInt(c.getColumnIndex("RowCount")));
 
-                pfh.add(pf);
+                prefactor_header.add(prefactor);
             }
         }
         c.close();
-        return pfh;
+        return prefactor_header;
     }
-
 
     public ArrayList<PreFactor> getAllPrefactorHeader(String name) {
 
 
         String query = "SELECT h.*, s.SumAmount , s.SumPrice , s.RowCount ,n.CentralName CustomerName FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef " +
                 "join Central n on c.CentralRef=n.CentralCode "
-                + "Left Join (SELECT P.PreFactorCode, sum(p.Amount) as SumAmount , sum(p.Amount * p.Price*g.DefaultUnitValue) as SumPrice, count(*) as RowCount "
+                + "Left Join (SELECT P.PreFactorCode, sum(p.FactorAmount) as SumAmount , sum(p.FactorAmount * p.Price*g.DefaultUnitValue) as SumPrice, count(*) as RowCount "
                 + "From Good g Join Units on UnitCode = GoodUnitRef  Join PreFactor p on GoodRef = GoodCode  Where IfNull(PreFactorCode, 0)>0 "
                 + "Group BY PreFactorCode ) s on h.PreFactorCode = s.PreFactorCode "
                 + "Where n.CentralName Like '%" + name + "%'"
                 + "Order By h.PreFactorCode DESC";
 
-        ArrayList<PreFactor> pfh = new ArrayList<PreFactor>();
+        ArrayList<PreFactor> prefactor_header = new ArrayList<PreFactor>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
 
         if (c != null) {
             while (c.moveToNext()) {
-                PreFactor pf = new PreFactor();
-                pf.setPreFactorCode(c.getInt(c.getColumnIndex("PreFactorCode")));
-                pf.setPreFactorDate(c.getString(c.getColumnIndex("PreFactorDate")));
-                pf.setPreFactorTime(c.getString(c.getColumnIndex("PreFactorTime")));
-                pf.setPreFactorkowsarDate(c.getString(c.getColumnIndex("PreFactorKowsarDate")));
-                pf.setPreFactorKowsarCode(c.getInt(c.getColumnIndex("PreFactorKowsarCode")));
-                pf.setPreFactorExplain(c.getString(c.getColumnIndex("PreFactorExplain")));
-                pf.setCustomer(c.getString(c.getColumnIndex("CustomerName")));
-                pf.setSumAmount(c.getInt(c.getColumnIndex("SumAmount")));
-                pf.setSumPrice(c.getInt(c.getColumnIndex("SumPrice")));
-                pf.setRowCount(c.getInt(c.getColumnIndex("RowCount")));
+                PreFactor prefactor = new PreFactor();
+                prefactor.setPreFactorCode(c.getInt(c.getColumnIndex("PreFactorCode")));
+                prefactor.setPreFactorDate(c.getString(c.getColumnIndex("PreFactorDate")));
+                prefactor.setPreFactorTime(c.getString(c.getColumnIndex("PreFactorTime")));
+                prefactor.setPreFactorkowsarDate(c.getString(c.getColumnIndex("PreFactorKowsarDate")));
+                prefactor.setPreFactorKowsarCode(c.getInt(c.getColumnIndex("PreFactorKowsarCode")));
+                prefactor.setPreFactorExplain(c.getString(c.getColumnIndex("PreFactorExplain")));
+                prefactor.setCustomer(c.getString(c.getColumnIndex("CustomerName")));
+                prefactor.setSumAmount(c.getInt(c.getColumnIndex("SumAmount")));
+                prefactor.setSumPrice(c.getInt(c.getColumnIndex("SumPrice")));
+                prefactor.setRowCount(c.getInt(c.getColumnIndex("RowCount")));
 
-                pfh.add(pf);
+                prefactor_header.add(prefactor);
             }
         }
         c.close();
-        return pfh;
+        return prefactor_header;
     }
 
     public ArrayList<PreFactor> getOpenPrefactorHeader() {
-        String query = "SELECT h.*, s.SumAmount , s.SumPrice, s.RowCount ,n.CentralName CustomerName  FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef "
+        String query = "SELECT h.*, s.SumAmount , s.SumPrice, s.RowCount ,n.CentralName CustomerName "
+                + " FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef "
                 + " join Central n on c.CentralRef=n.CentralCode "
-                + "Left Join (SELECT P.PreFactorCode, sum(p.Amount) as SumAmount , sum(p.Amount * g.MaxSellPrice*g.DefaultUnitValue) as SumPrice, count(*) as RowCount "
-                + "From Good g Join Units on UnitCode = GoodUnitRef  Join PreFactor p on GoodRef = GoodCode  Where IfNull(PreFactorCode, 0)>0 "
-                + "Group BY PreFactorCode ) s on h.PreFactorCode = s.PreFactorCode Where NOT IfNull(PreFactorKowsarCode, 0)>0 "
-                + "Order By h.PreFactorCode DESC";
+                + " Left Join (SELECT P.PreFactorCode, sum(p.FactorAmount) as SumAmount , sum(p.FactorAmount * g.MaxSellPrice*g.DefaultUnitValue) as SumPrice, count(*) as RowCount "
+                + " From Good g Join Units on UnitCode = GoodUnitRef  Join PreFactor p on GoodRef = GoodCode  Where IfNull(PreFactorCode, 0)>0 "
+                + " Group BY PreFactorCode ) s on h.PreFactorCode = s.PreFactorCode Where NOT IfNull(PreFactorKowsarCode, 0)>0 "
+                + " Order By h.PreFactorCode DESC";
 
-        ArrayList<PreFactor> pfh = new ArrayList<PreFactor>();
+        ArrayList<PreFactor> prefactor_header = new ArrayList<PreFactor>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
 
         if (c != null) {
             while (c.moveToNext()) {
-                PreFactor pf = new PreFactor();
-                pf.setPreFactorCode(c.getInt(c.getColumnIndex("PreFactorCode")));
-                pf.setPreFactorDate(c.getString(c.getColumnIndex("PreFactorDate")));
-                pf.setPreFactorTime(c.getString(c.getColumnIndex("PreFactorTime")));
-                pf.setPreFactorkowsarDate(c.getString(c.getColumnIndex("PreFactorKowsarDate")));
-                pf.setPreFactorKowsarCode(c.getInt(c.getColumnIndex("PreFactorKowsarCode")));
-                pf.setPreFactorExplain(c.getString(c.getColumnIndex("PreFactorExplain")));
-                pf.setCustomer(c.getString(c.getColumnIndex("CustomerName")));
-                pf.setSumAmount(c.getInt(c.getColumnIndex("SumAmount")));
-                pf.setSumPrice(c.getInt(c.getColumnIndex("SumPrice")));
-                pf.setRowCount(c.getInt(c.getColumnIndex("RowCount")));
+                PreFactor prefactor = new PreFactor();
+                prefactor.setPreFactorCode(c.getInt(c.getColumnIndex("PreFactorCode")));
+                prefactor.setPreFactorDate(c.getString(c.getColumnIndex("PreFactorDate")));
+                prefactor.setPreFactorTime(c.getString(c.getColumnIndex("PreFactorTime")));
+                prefactor.setPreFactorkowsarDate(c.getString(c.getColumnIndex("PreFactorKowsarDate")));
+                prefactor.setPreFactorKowsarCode(c.getInt(c.getColumnIndex("PreFactorKowsarCode")));
+                prefactor.setPreFactorExplain(c.getString(c.getColumnIndex("PreFactorExplain")));
+                prefactor.setCustomer(c.getString(c.getColumnIndex("CustomerName")));
+                prefactor.setSumAmount(c.getInt(c.getColumnIndex("SumAmount")));
+                prefactor.setSumPrice(c.getInt(c.getColumnIndex("SumPrice")));
+                prefactor.setRowCount(c.getInt(c.getColumnIndex("RowCount")));
 
-                pfh.add(pf);
+                prefactor_header.add(prefactor);
             }
         }
         c.close();
-        return pfh;
+        return prefactor_header;
 
     }
 
     public ArrayList<Good> getAllPreFactorRows(String name, Integer aPreFactorCode) {
         name = name.replaceAll(" ", "%");
-        String query = "SELECT * FROM Good g Join PreFactor on GoodRef = GoodCode Join Units u on u.UnitCode = g.GoodUnitRef  Where (GoodName Like '%" + name + "%' and PreFactorCode = " + aPreFactorCode + ") order by GoodCode DESC ";
+        String query = "SELECT p.*,g.*,u.*  FROM Good g " +
+                "Join PreFactor p on GoodRef = GoodCode " +
+                "Join Units u on u.UnitCode = g.GoodUnitRef  " +
+                "Where (GoodName Like '%" + name + "%' and PreFactorCode = " + aPreFactorCode + ") order by GoodCode DESC ";
         ArrayList<Good> goods = new ArrayList<Good>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
@@ -704,20 +573,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Good gooddetail = new Good();
                 gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
                 gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
-
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex("Amount")));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
+                gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex("FactorAmount")));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex("GoodType")));
                 goods.add(gooddetail);
             }
         }
@@ -726,7 +594,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Good> getAllPreFactorRows(Integer aPreFactorCode) {
-        String query = "SELECT * FROM Good g Join PreFactor on GoodRef = GoodCode Join Units u on u.UnitCode = g.GoodUnitRef Where PreFactorCode = " + aPreFactorCode + " order by GoodCode DESC ";
+        String query = "SELECT  p.*,g.*,u.*  FROM Good g " +
+                "Join PreFactor p on GoodRef = GoodCode " +
+                "Join Units u on u.UnitCode = g.GoodUnitRef " +
+                "Where PreFactorCode = " + aPreFactorCode + " order by GoodCode DESC ";
         ArrayList<Good> goods = new ArrayList<Good>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
@@ -736,26 +607,147 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Good gooddetail = new Good();
                 gooddetail.setShortage(c.getInt(c.getColumnIndex("Shortage")));
                 gooddetail.setRowCode(c.getInt(c.getColumnIndex("RowCode")));
-                gooddetail.setGoodCode(c.getInt(c.getColumnIndex(KEY_CODE)));
-                gooddetail.setGoodName(c.getString(c.getColumnIndex(KEY_NAME)));
-                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex(KEY3)));
-                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex(KEY4)));
-                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex(KEY5)));
-                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex(KEY6)));
+                gooddetail.setGoodCode(c.getInt(c.getColumnIndex("GoodCode")));
+                gooddetail.setGoodName(c.getString(c.getColumnIndex("GoodName")));
+                gooddetail.setGoodExplain1(c.getString(c.getColumnIndex("GoodExplain1")));
+                gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
+                gooddetail.setFirstBarCode(c.getString(c.getColumnIndex("FirstBarCode")));
+                gooddetail.setMaxSellPrice(c.getInt(c.getColumnIndex("MaxSellPrice")));
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
-
                 gooddetail.setPrice(c.getInt(c.getColumnIndex("Price")));
-                gooddetail.setImageName(c.getString(c.getColumnIndex(KEY7)));
-                gooddetail.setUnitName(c.getString(c.getColumnIndex(KEY29)));
-                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex(KEY30)));
-                gooddetail.setAmount(c.getInt(c.getColumnIndex("Amount")));
-                gooddetail.setGoodType(c.getString(c.getColumnIndex(KEY27)));
+                gooddetail.setImageName(c.getString(c.getColumnIndex("GoodExplain6")));
+                gooddetail.setUnitName(c.getString(c.getColumnIndex("UnitName")));
+                gooddetail.setDefaultUnitValue(c.getInt(c.getColumnIndex("DefaultUnitValue")));
+                gooddetail.setAmount(c.getInt(c.getColumnIndex("FactorAmount")));
+                gooddetail.setGoodType(c.getString(c.getColumnIndex("GoodType")));
                 goods.add(gooddetail);
             }
         }
         c.close();
         return goods;
     }
+
+    public void UpdatePreFactorHeader_Customer(Integer pfcode, Integer Customer) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("Update PrefactorHeader set CustomerRef='" + Customer + "' where PreFactorCode = " + pfcode + "; ");
+        Cursor c = db.rawQuery("Select * From(Select Case PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 When 3 Then SellPrice3 \n" +
+                "       When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 End \n" +
+                "   * Case When SellPriceType = 1 Then MaxSellPrice/100 Else 1 End as NewPrice, Price, GoodCode From PreFactor p \n" +
+                "Join PreFactorHeader h on h.PreFactorCode = p.PreFactorCode\n" +
+                "Join Customer on CustomerCode = CustomerRef Join Good g on GoodRef = GoodCode\n" +
+                "Where h.PreFactorCode = " + pfcode + ") ss Where Price<> NewPrice", null);
+
+
+        if (c != null) {
+            while (c.moveToNext()) {
+
+                db.execSQL("Update PreFactor set Price=" + c.getString(c.getColumnIndex("NewPrice"))
+                        + " Where PreFactorCode =" + pfcode + " And GoodRef =" + c.getString(c.getColumnIndex("GoodCode")));
+            }
+        }
+
+
+        c.close();
+    }
+
+    public Integer GetLastPreFactorHeader() {
+
+        String query = "SELECT * FROM PrefactorHeader Where PreFactorKowsarCode = 0 order by PreFactorCode DESC";
+        SQLiteDatabase database = getReadableDatabase();
+        Integer Res = 0;
+        Cursor c = database.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            c.moveToNext();
+            Res = c.getInt(c.getColumnIndex("PreFactorCode"));
+        }
+        c.close();
+        return Res;
+    }
+
+    public void update_explain(Integer pfcode, String explain) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "Update PreFactorHeader set PreFactorExplain = '" + explain + "' Where IfNull(PreFactorCode,0)=" + pfcode;
+        Log.e("testanbar_query", query);
+        db.execSQL(query);
+    }
+
+    public void DeletePreFactorRow(Integer pfcode, Integer code) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = " Delete From PreFactor Where IfNull(PreFactorCode,0)=" + pfcode + " And (RowCode =" + code + " or 0=" + code + ")";
+        db.execSQL(query);
+    }
+
+    public void DeletePreFactor(Integer pfcode) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = " Delete From PrefactorHeader Where IfNull(PreFactorCode,0)=" + pfcode;
+        db.execSQL(query);
+    }
+
+    public void DeleteEmptyPreFactor() {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = " DELETE FROM PrefactorHeader WHERE PreFactorCode NOT IN (SELECT PreFactorCode FROM Prefactor )";
+        db.execSQL(query);
+    }
+
+    public void UpdatePreFactor(Integer PreFactorCode, Integer PreFactorKowsarCode, String PreFactorDate) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "Update PreFactorHeader Set PreFactorKowsarCode = " + PreFactorKowsarCode + ", PreFactorKowsarDate = '" + PreFactorDate + "' Where ifnull(PreFactorCode ,0)= " + PreFactorCode + ";";
+        Log.e("testanbar_query", query);
+        db.execSQL(query);
+    }
+
+    public long getFactorSum(Integer pfcode) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = " select sum(FactorAmount*price*DefaultUnitValue) as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)=" + pfcode;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        long sm = c.getLong(c.getColumnIndex("sm"));
+        c.close();
+        return sm;
+    }
+
+    public Integer getFactorSumAmount(Integer pfcode) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "select sum(FactorAmount) as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)=" + pfcode;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        Integer sm = c.getInt(c.getColumnIndex("sm"));
+        c.close();
+        return sm;
+    }
+
+    public String getFactorCustomer(Integer pfcode) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sm;
+
+        String query = "SELECT n.CentralName CustomerName  FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef "
+                + " join Central n on c.CentralRef=n.CentralCode "
+                + " Where IfNull(PreFactorCode,0)= " + pfcode;
+        //String query = "select n.CentralName CustomerName as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)="+pfcode;
+        Cursor c = db.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            sm = c.getString(c.getColumnIndex("CustomerName"));
+            c.close();
+        } else {
+            sm = "فاکتوری انتخاب نشده";
+        }
+        return sm;
+    }
+
+    public long getsum_sumfactor() {
+        String query = "select sum(price) as sm From PreFactor";
+        SQLiteDatabase database = getReadableDatabase();
+        long Res = 0;
+        Cursor c = database.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            c.moveToNext();
+            Res = c.getLong(c.getColumnIndex("sm"));
+        }
+        c.close();
+        return Res;
+    }
+
 
     public ArrayList<Customer> AllCustomer(String name, boolean aOnlyActive) {
 
@@ -805,7 +797,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Customers;
     }
 
-    public int Customer_check(String name) {
+    public Integer Customer_check(String name) {
         Integer res = 0;
         String query = "select centralcode from central where d_codemelli ='" + name + "'";
         SQLiteDatabase database = getReadableDatabase();
@@ -818,6 +810,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
         return res;
+    }
+
+    public Integer getCustomerGoodSellPrice(Integer aPreFactorHeaderCode, Integer aGoodCode) {
+        Integer iResult = 0;
+        String query = "Select MaxSellPrice, Case c.PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 "
+                + " When 3 Then SellPrice3 When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 "
+                + "  Else Case When g.SellPriceType = 0 Then MaxSellPrice Else 100 End End "
+                + " * Case When g.SellPriceType = 0 Then 1 Else MaxSellPrice /100 End As Price "
+                + "From Good g Join PreFactorHeader h on PreFactorCode = " + aPreFactorHeaderCode
+                + " Join Customer c on c.CustomerCode = h.CustomerRef Where GoodCode = " + aGoodCode;
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor c = database.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            iResult = c.getInt(c.getColumnIndex("Price"));
+        }
+        c.close();
+        return iResult;
     }
 
     public ArrayList<Customer> city() {
@@ -839,138 +849,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return city;
     }
 
-    public void UpdatePreFactorHeader_Customer(int pfcode, int Customer) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("Update PrefactorHeader set CustomerRef='" + Customer + "' where PreFactorCode = " + pfcode + "; ");
-        Cursor c = db.rawQuery("Select * From(Select Case PriceTip When 1 Then SellPrice1 When 2 Then SellPrice2 When 3 Then SellPrice3 \n" +
-                "       When 4 Then SellPrice4 When 5 Then SellPrice5 When 6 Then SellPrice6 End \n" +
-                "   * Case When SellPriceType = 1 Then MaxSellPrice/100 Else 1 End as NewPrice, Price, GoodCode From PreFactor p \n" +
-                "Join PreFactorHeader h on h.PreFactorCode = p.PreFactorCode\n" +
-                "Join Customer on CustomerCode = CustomerRef Join Good g on GoodRef = GoodCode\n" +
-                "Where h.PreFactorCode = " + pfcode + ") ss Where Price<> NewPrice", null);
 
+    public ArrayList<GoodGroup> getAllGroups(String GName, Integer GL) {
+        String gs = GL.toString();
+
+        String query = "SELECT * FROM GoodsGrp s WHERE Name like '%" + GName + "%'";
+        if (GL > 0) {
+            query = query + " And ((L1=" + gs + " And L2=0) or (L2=" + gs + " And L3=0) or (L3=" + gs + " And L4=0) or (L4=" + gs + " And L5=0) or (L5=" + gs + "))";
+        } else {
+            query = query + " And L1>0 and L2=0 order by 1 desc";
+        }
+
+        ArrayList<GoodGroup> groups = new ArrayList<GoodGroup>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor c = database.rawQuery(query, null);
 
         if (c != null) {
             while (c.moveToNext()) {
+                GoodGroup grp = new GoodGroup();
+                grp.setGoodGroupCode(c.getInt(c.getColumnIndex("GroupCode")));
+                grp.setName(c.getString(c.getColumnIndex("Name")));
+                grp.setL1(c.getInt(c.getColumnIndex("L1")));
+                grp.setL2(c.getInt(c.getColumnIndex("L2")));
+                grp.setL3(c.getInt(c.getColumnIndex("L3")));
+                grp.setL4(c.getInt(c.getColumnIndex("L4")));
+                grp.setL5(c.getInt(c.getColumnIndex("L5")));
+                groups.add(grp);
 
-                db.execSQL("Update PreFactor set Price=" + c.getString(c.getColumnIndex("NewPrice"))
-                        + " Where PreFactorCode =" + pfcode + " And GoodRef =" + c.getString(c.getColumnIndex("GoodCode")));
             }
         }
-
-
         c.close();
+        return groups;
     }
 
-    public Integer GetLastPreFactorHeader() {
-
-        String query = "SELECT * FROM PrefactorHeader Where PreFactorKowsarCode = 0 order by PreFactorCode DESC";
+    public String getgoodgroups(Integer code) {
+        String query;
+        query = "Select Name From GoodGroup p join GoodsGrp g on p.GoodGroupRef = g.Groupcode where GoodRef = " + code;
         SQLiteDatabase database = getReadableDatabase();
-        Integer Res = 0;
+        String Res = "";
         Cursor c = database.rawQuery(query, null);
         if (c.getCount() > 0) {
-            c.moveToNext();
-            Res = c.getInt(c.getColumnIndex("PreFactorCode"));
+            while (c.moveToNext()) {
+                if (Res.equals("")) {
+                    Res = c.getString(c.getColumnIndex("Name"));
+                } else {
+                    Res = Res + " - " + c.getString(c.getColumnIndex("Name"));
+                }
+            }
         }
         c.close();
         return Res;
     }
 
-
-    public void update_explain(int pfcode, String explain) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "Update PreFactorHeader set PreFactorExplain = '" + explain + "' Where IfNull(PreFactorCode,0)=" + pfcode;
-        Log.e("asli_query", query);
-        db.execSQL(query);
-    }
-
-    public void DeletePreFactorRow(Integer pfcode, Integer code) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = " Delete From PreFactor Where IfNull(PreFactorCode,0)=" + pfcode + " And (RowCode =" + code + " or 0=" + code + ")";
-        db.execSQL(query);
-    }
-
-    public void DeletePreFactor(Integer pfcode) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = " Delete From PrefactorHeader Where IfNull(PreFactorCode,0)=" + pfcode;
-        db.execSQL(query);
-    }
-
-    public void DeleteEmptyPreFactor() {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = " DELETE FROM PrefactorHeader WHERE PreFactorCode NOT IN (SELECT PreFactorCode FROM Prefactor )";
-        db.execSQL(query);
-    }
-
-    public void UpdatePreFactor(Integer PreFactorCode, Integer PreFactorKowsarCode, String PreFactorDate) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "Update PreFactorHeader Set PreFactorKowsarCode = " + PreFactorKowsarCode + ", PreFactorKowsarDate = '" + PreFactorDate + "' Where ifnull(PreFactorCode ,0)= " + PreFactorCode + ";";
-        Log.e("asli_query", query);
-        db.execSQL(query);
-    }
-
-    public long getFactorSum(Integer pfcode) {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = " select sum(Amount*price*DefaultUnitValue) as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)=" + pfcode;
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-        long sm = c.getLong(c.getColumnIndex("sm"));
-        c.close();
-        return sm;
-    }
-
-    public Integer getFactorSumAmount(Integer pfcode) {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "select sum(Amount) as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)=" + pfcode;
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-        Integer sm = c.getInt(c.getColumnIndex("sm"));
-        c.close();
-        return sm;
-    }
-
-    public String getFactorCustomer(Integer pfcode) {
-        SQLiteDatabase db = getReadableDatabase();
-        String sm;
-
-        String query = "SELECT n.CentralName CustomerName  FROM PreFactorHeader h Join Customer c  on c.CustomerCode = h.CustomerRef "
-                + " join Central n on c.CentralRef=n.CentralCode "
-                + " Where IfNull(PreFactorCode,0)= " + pfcode;
-        //String query = "select n.CentralName CustomerName as sm From PreFactor join Good on GoodRef=GoodCode Where IfNull(PreFactorCode,0)="+pfcode;
-        Cursor c = db.rawQuery(query, null);
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            sm = c.getString(c.getColumnIndex("CustomerName"));
-            c.close();
-        } else {
-            sm = "فاکتوری انتخاب نشده";
-        }
-        return sm;
-    }
-
-
-    public void InsertFavorites(int code) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query;
-        query = " Select * From Favorites Where GoodRef =" + code;
-        Cursor c = db.rawQuery(query, null);
-
-        if (c.getCount() == 0) {
-            db.execSQL("INSERT INTO Favorites(GoodRef) VALUES(" + code + "); ");
-        }
-        c.close();
-    }
-
-    public String getActiveCode() {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = " select DataValue From Config Where KeyValue = 'ActiveCode' ";
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-        if (c.getCount() > 0) query = c.getString(c.getColumnIndex("DataValue"));
-        else query = "";
-        c.close();
-        return query;
-    }
 
     public UserInfo LoadPersonalInfo() {
         UserInfo user = new UserInfo();
@@ -1091,51 +1021,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
-
-
-    public String[] getAllSpinnerContent() {
-
-        String query = "Select * from AppColumns ";
-//where ObjectType = '"+obj+"'
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor c = database.rawQuery(query, null);
-
-        ArrayList<String> spinnerContent = new ArrayList<String>();
-        if (c.moveToFirst()) {
-            do {
-                String PropertySchemaCode = c.getString(c.getColumnIndexOrThrow("DisplayName"));
-                //  ArrayList<String> property =
-                spinnerContent.add(PropertySchemaCode);
-            } while (c.moveToNext());
-        }
-        c.close();
-
-
-        String[] allSpinner = new String[spinnerContent.size()];
-        allSpinner = spinnerContent.toArray(allSpinner);
-
-        return allSpinner;
-    }
-
-
-    public long getsum_sumfactor() {
-        String query = "select sum(price) as sm From PreFactor";
-        SQLiteDatabase database = getReadableDatabase();
-        long Res = 0;
-        Cursor c = database.rawQuery(query, null);
-        if (c.getCount() > 0) {
-            c.moveToNext();
-            Res = c.getLong(c.getColumnIndex("sm"));
-        }
-        c.close();
-        return Res;
-    }
-
 }

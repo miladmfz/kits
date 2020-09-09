@@ -201,7 +201,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                                 String srch = action.arabicToenglish(editable.toString());
-                                goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                                goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                                 adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                                 gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                                 re.setLayoutManager(gridLayoutManager);
@@ -221,7 +221,7 @@ public class SearchActivity extends AppCompatActivity {
                 });
 
 
-        goods = dbh.getAllGood(scan, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+        goods = dbh.getAllGood(scan, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
         adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
         gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
         re.setLayoutManager(gridLayoutManager);
@@ -237,14 +237,14 @@ public class SearchActivity extends AppCompatActivity {
                     line.setVisibility(View.GONE);
                     change_search.setText("جستجوی عادی");
                     conter = conter + 1;
-                    Log.e("asli_conter", "" + conter);
+                    Log.e("testanbar_conter", "" + conter);
                 } else {
                     line_pro.setVisibility(View.GONE);
                     filter_active.setVisibility(View.GONE);
                     line.setVisibility(View.VISIBLE);
                     change_search.setText("جستجوی پیشرفته");
                     conter = conter - 1;
-                    Log.e("asli_conter", "" + conter);
+                    Log.e("testanbar_conter", "" + conter);
                 }
             }
         });
@@ -352,7 +352,7 @@ public class SearchActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                         gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -368,7 +368,7 @@ public class SearchActivity extends AppCompatActivity {
 
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                         gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -392,7 +392,7 @@ public class SearchActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                         gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -407,7 +407,7 @@ public class SearchActivity extends AppCompatActivity {
                     sEdit.apply();
                     if (conter == 0) {
                         String srch = action.arabicToenglish(edtsearch.getText().toString());
-                        goods = dbh.getAllGood(srch, id, showflag, 0, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
+                        goods = dbh.getAllGood(srch, id, shPref.getBoolean("activestack", true), shPref.getBoolean("goodamount", true), itemamount);
                         adapter = new Good_ProSearch_Adapter(goods, SearchActivity.this);
                         gridLayoutManager = new GridLayoutManager(SearchActivity.this, grid);//grid
                         re.setLayoutManager(gridLayoutManager);
@@ -520,7 +520,7 @@ public class SearchActivity extends AppCompatActivity {
             if (Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))) != 0) {
                 intent = new Intent(SearchActivity.this, BuyActivity.class);
                 intent.putExtra("PreFac", Integer.parseInt(Objects.requireNonNull(shPref.getString("prefactor_code", null))));
-                intent.putExtra("showflag", 2);
+
                 startActivity(intent);
 
             } else {

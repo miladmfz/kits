@@ -20,7 +20,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Good_buy_history_Adapter_line extends RecyclerView.Adapter<Good_buy_history_Adapter_line.GoodViewHolder> {
-
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private ArrayList<Good> goods;
     private long sum = 0;
@@ -51,13 +50,11 @@ public class Good_buy_history_Adapter_line extends RecyclerView.Adapter<Good_buy
 
 
         holder.goodnameTextView.setText(Farsi_number.PerisanNumber(goodView.getGoodName()));
-        holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + goodView.getPrice()))));
+        holder.priceTextView.setText(Farsi_number.PerisanNumber(decimalFormat.format(goodView.getPrice())));
         holder.amount.setText(Farsi_number.PerisanNumber(goodView.getAmount().toString()));
         holder.code.setText(Farsi_number.PerisanNumber(goodView.getGoodCode().toString()));
         holder.total.setText(Farsi_number.PerisanNumber(decimalFormat.format(Integer.valueOf("" + price))));
 
-//        intent = new Intent(mContext, BuyActivity.class);
-//        intent.putExtra("sum", sum);
 
 
     }

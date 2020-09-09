@@ -29,7 +29,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
     private Action action;
-    //    private EditText regemail, regname, regmobile, regmelicode, regaddress, regphone, regpostalcode, reghdb;
     private EditText regborker, reggrid, regdelay, regitemamount;
 
     @Override
@@ -51,14 +50,6 @@ public class RegistrationActivity extends AppCompatActivity {
         Button regbtn = findViewById(R.id.Registr_btn);
 
         regborker = findViewById(R.id.Registr_borker);
-//        regemail = findViewById(R.id.Registr_email);
-//        regname = findViewById(R.id.Registr_name);
-//        regmobile = findViewById(R.id.Registr_mobile);
-//        regmelicode = findViewById(R.id.Registr_melicode);
-//        regaddress = findViewById(R.id.Registr_address);
-//        regphone = findViewById(R.id.Registr_phone);
-//        regpostalcode = findViewById(R.id.Registr_postalcode);
-//        reghdb = findViewById(R.id.Registr_bhd);
         reggrid = findViewById(R.id.Registr_grid);
         regdelay = findViewById(R.id.Registr_delay);
         regitemamount = findViewById(R.id.Registr_itemamount);
@@ -71,14 +62,6 @@ public class RegistrationActivity extends AppCompatActivity {
         UserInfo auser = dbh.LoadPersonalInfo();
 
         regborker.setText(Farsi_number.PerisanNumber(auser.getBrokerCode()));
-//        regemail.setText(Farsi_number.PerisanNumber(auser.getEmail()));
-//        regname.setText(Farsi_number.PerisanNumber(auser.getNameFamily()));
-//        regaddress.setText(Farsi_number.PerisanNumber(auser.getAddress()));
-//        regmobile.setText(Farsi_number.PerisanNumber(auser.getMobile()));
-//        regmelicode.setText(Farsi_number.PerisanNumber(auser.getMelliCode()));
-//        regphone.setText(Farsi_number.PerisanNumber(auser.getPhone()));
-//        regpostalcode.setText(Farsi_number.PerisanNumber(auser.getPostalCode()));
-//        reghdb.setText(Farsi_number.PerisanNumber(auser.getBirthDate()));
         reggrid.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("grid", null))))));
         regdelay.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("delay", null))))));
         regitemamount.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("itemamount", null))))));
@@ -158,14 +141,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void Registration() {
         UserInfo auser = new UserInfo();
-//        auser.setEmail(action.arabicToenglish(regemail.getText().toString()));
-//        auser.setNameFamily(action.arabicToenglish(regname.getText().toString()));
-//        auser.setAddress(action.arabicToenglish(regaddress.getText().toString()));
-//        auser.setPhone(action.arabicToenglish(regphone.getText().toString()));
-//        auser.setMobile(action.arabicToenglish(regmobile.getText().toString()));
-//        auser.setBirthDate(action.arabicToenglish(reghdb.getText().toString()));
-//        auser.setMelliCode(action.arabicToenglish(regmelicode.getText().toString()));
-//        auser.setPostalCode(action.arabicToenglish(regpostalcode.getText().toString()));
         auser.setBrokerCode(action.arabicToenglish(regborker.getText().toString()));
         dbh.SavePersonalInfo(auser);
     }

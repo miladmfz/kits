@@ -133,9 +133,9 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                             "\n";
                     ArrayList<Good> goodsbd = new ArrayList<Good>();
                     kd = kd.replaceAll("/", "");
-                    goodsbd = dbh.getAllGood_pfcode(facView.getPreFactorCode(), "", 0, 2, 0, false);
+                    goodsbd = dbh.getAllGood_pfcode(facView.getPreFactorCode());
                     J = goodsbd.size();
-                    Log.e("asli_PreFactorRSize : ", "" + J);
+                    Log.e("tr_PreSize : ", "" + J);
                     Good b;
                     for (I = 0; I < J; I++) {
                         b = goodsbd.get(I);
@@ -146,7 +146,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                                 + b.getFactorAmount() + ","
                                 + b.getPrice() + ","
                                 + b.getMaxSellPrice() + "\n";
-                        Log.e("asli_PreFactorRows", "" + I + ":" + filebody);
+                        Log.e("testanbar_PreFactorRows", "" + I + ":" + filebody);
                     }
                     Toast.makeText(mContext, filebody, Toast.LENGTH_SHORT).show();
                     File myFile;
@@ -201,7 +201,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         Intent intent = new Intent(mContext, BuyActivity.class);
                                         intent.putExtra("PreFac", facView.getPreFactorCode());
-                                        intent.putExtra("showflag", 2);
+
                                         mContext.startActivity(intent);
                                     }
                                 })
@@ -260,7 +260,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                     sEdit.apply();
                     Intent intent = new Intent(mContext, BuyActivity.class);
                     intent.putExtra("PreFac", facView.getPreFactorCode());
-                    intent.putExtra("showflag", 2);
+
                     mContext.startActivity(intent);
                 }
             }

@@ -60,21 +60,6 @@ public class SplashActivity extends AppCompatActivity {
         sEdit.putString("prefactor_code", "0");
         sEdit.putString("prefactor_good", "0");
 
-        try {
-            database.execSQL("Alter Table Good Add Column ReservedAmount INTEGER default 0");
-
-        } catch (Exception e) {
-            Log.e("asli_Alter_Reserve", "" + e.getMessage());
-        }
-
-        try {
-            database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'KsrImage_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'KsrImage_LastRepCode')");
-
-        } catch (Exception e) {
-            Log.e("asli_Alter_Reserve", "" + e.getMessage());
-        }
-
-
         sEdit.apply();
 
         if (firstStart) {
@@ -88,6 +73,8 @@ public class SplashActivity extends AppCompatActivity {
             sEdit.putBoolean("real_amount", true);
             sEdit.putBoolean("activestack", true);
             sEdit.putBoolean("goodamount", true);
+            sEdit.putString("brokerstack", "0");
+
             sEdit.apply();
         }
         Handler handler;
@@ -166,7 +153,7 @@ public class SplashActivity extends AppCompatActivity {
 
     public void createtable() {
         database = openOrCreateDatabase("KowsarDb.sqlite", MODE_PRIVATE, null);
-        database.execSQL("CREATE TABLE IF NOT EXISTS PreFactor (RowCode INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , GoodRef INTEGER, Amount INTEGER, Shortage INTEGER, PreFactorDate TEXT, PreFactorCode INTEGER, Price INTEGER)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS PreFactor (RowCode INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , GoodRef INTEGER, FactorAmount INTEGER, Shortage INTEGER, PreFactorDate TEXT, PreFactorCode INTEGER, Price INTEGER)");
         database.execSQL("CREATE TABLE IF NOT EXISTS PrefactorHeader ( PreFactorCode INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, PreFactorDate TEXT," +
                 " PreFactorTime TEXT, PreFactorKowsarCode INTEGER, PreFactorKowsarDate TEXT, PreFactorExplain TEXT, CustomerRef INTEGER, BrokerRef INTEGER)");
         database.execSQL("CREATE TABLE IF NOT EXISTS Favorites ( GoodRef INTEGER )");
@@ -194,7 +181,6 @@ public class SplashActivity extends AppCompatActivity {
         database.execSQL("Create Index IF Not Exists IX_Good_GoodUnitRef on Good (GoodUnitRef)");
 
     }
-
 
     public void requstforpermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {

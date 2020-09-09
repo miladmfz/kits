@@ -3,6 +3,7 @@ package com.kits.asli.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -15,6 +16,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.kits.asli.R;
+import com.kits.asli.model.DatabaseHelper;
+import com.kits.asli.model.UserInfo;
+import com.kits.asli.webService.APIClient;
+import com.kits.asli.webService.APIInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +29,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 
 public class Replication {
 
-    private final Context mContext;
 
+    private final Context mContext;
+    APIInterface apiInterface = APIClient.getCleint().create(APIInterface.class);
+    private SharedPreferences.Editor sEdit;
+
+    private SharedPreferences shPref;
     private String SERVER_IP_ADDRESS;
     private SQLiteDatabase database;
     private Integer RepRowCount = 200;
@@ -37,11 +49,14 @@ public class Replication {
     private String RepTable = "";
     private String xCode = "0";
     private Dialog dialog;
+    private DatabaseHelper dbh;
 
     public Replication(Context mContext) {
         this.mContext = mContext;
+        this.dbh = new DatabaseHelper(mContext);
         SERVER_IP_ADDRESS = mContext.getString(R.string.SERVERIP);
         dialog = new Dialog(mContext);
+        shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
 
     }
 
@@ -49,6 +64,32 @@ public class Replication {
     public void dialog() {
         dialog.setContentView(R.layout.rep_prog);
         dialog.show();
+    }
+
+
+    public void BrokerStack() {
+        UserInfo auser = dbh.LoadPersonalInfo();
+        Call<String> call1 = apiInterface.BrokerStack("BrokerStack", auser.getBrokerCode());
+        call1.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    if (!response.body().equals(shPref.getString("brokerstack", null))) {
+                        sEdit = shPref.edit();
+                        sEdit.putString("brokerstack", response.body());
+                        sEdit.apply();
+                        Log.e("brokerstack=", "" + shPref.getString("brokerstack", ""));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+        });
+
     }
 
     public void replicate_all() {
@@ -59,7 +100,6 @@ public class Replication {
     public void replicate_customer() {
         replicateCentralChange_customer();
     }
-
 
     public void replicateCentralChange() {
 
@@ -127,10 +167,6 @@ public class Replication {
 
                                         database.execSQL(qCol);
                                         d.close();
-                                        break;
-                                    case "D":
-                                    case "d":
-                                        database.execSQL("delete from Central Where CentralCode=" + code);
                                         break;
                                 }
 
@@ -226,13 +262,9 @@ public class Replication {
                                         database.execSQL(qCol);
                                         d.close();
                                         break;
-                                    case "D":
-                                    case "d":
-                                        database.execSQL("delete from City Where CityCode=" + code);
-                                        break;
                                 }
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -331,13 +363,9 @@ public class Replication {
                                         database.execSQL(qCol);
                                         d.close();
                                         break;
-                                    case "D":
-                                    case "d":
-                                        database.execSQL("delete from Address Where AddressCode=" + code);
-                                        break;
                                 }
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -429,12 +457,8 @@ public class Replication {
                                         database.execSQL(qCol);
                                         d.close();
                                         break;
-                                    case "D":
-                                    case "d":
-                                        database.execSQL("delete from Customer Where CustomerCode=" + code);
-                                        break;
                                 }
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -518,13 +542,15 @@ public class Replication {
                                                     Object value = jo.get(key);
 
                                                     value = value.toString().replaceAll("'", "''");
-                                                    qCol.append(",").append(key);
-                                                    qVal.append(",'").append(value).append("'");
-                                                    if (qUpd.toString().equals("")) {
-                                                        qUpd = new StringBuilder("Update Good Set " + key + "='" + value + "'");
-                                                    }
-                                                    else {
-                                                        qUpd.append(",").append(key).append("='").append(value).append("'");
+                                                    if (!key.equals("RLClassName")) {
+                                                        qCol.append(",").append(key);
+                                                        qVal.append(",'").append(value).append("'");
+
+                                                        if (qUpd.toString().equals("")) {
+                                                            qUpd = new StringBuilder("Update Good Set " + key + "='" + value + "'");
+                                                        } else {
+                                                            qUpd.append(",").append(key).append("='").append(value).append("'");
+                                                        }
                                                     }
                                                 } catch (JSONException ignored) {
                                                 }
@@ -546,7 +572,7 @@ public class Replication {
                                         database.execSQL("delete from good where goodcode = " + code + " and not exists (select 1 From PreFactor Where GoodRef =" + code + ")");
                                         break;
                                 }
-                                Log.e("asli_repstrQuery", qCol.toString());
+                                Log.e("testanbar_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -567,7 +593,7 @@ public class Replication {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("asli_volleyError", volleyError + "");
+                Log.e("testanbar_volleyError", volleyError + "");
                 volleyError.printStackTrace();
             }
         }) {
@@ -622,25 +648,27 @@ public class Replication {
                                     case "u":
                                     case "I":
                                     case "i":
-                                        //String Amount = String.valueOf((jo.getDouble("Amount") - jo.getDouble("ReservedAmount")));
                                         String Amount = String.valueOf((jo.getDouble("Amount")));
                                         String ReservedAmount = String.valueOf((jo.getDouble("ReservedAmount")));
+                                        String GoodStackCode = String.valueOf((jo.getDouble("GoodStackCode")));
+                                        String StackRef = String.valueOf((jo.getDouble("StackRef")));
                                         String ActiveStack = jo.getString("ActiveStack");
-
-                                        Cursor d = database.rawQuery("Select Count(*) AS cntRec From Good Where GoodCode =" + code, null);
+                                        Cursor d = database.rawQuery("Select Count(*) AS cntRec From GoodStack Where GoodRef =" + code + " And StackRef=" + StackRef, null);
                                         d.moveToFirst();
+                                        int nc = d.getInt(d.getColumnIndex("cntRec"));
+                                        if (nc == 0) {
+                                            qCol = "INSERT INTO GoodStack( GoodStackCode ,GoodRef,StackRef,Amount,ReservedAmount,ActiveStack)  VALUES ( " + GoodStackCode + "," + code + "," + StackRef + "," + Amount + "," + ReservedAmount + "," + ActiveStack + ")";
+                                        } else {
+                                            qCol = "Update GoodStack Set Amount = " + Amount + ", ActiveStack=" + ActiveStack + ", ReservedAmount=" + ReservedAmount + " Where GoodRef=" + code + " And StackRef=" + StackRef;
+                                        }
+                                        database.execSQL(qCol);
+                                        d.close();
 
-                                    {
-                                        qCol = "Update Good Set StackAmount = " + Amount + ", ActiveStack=" + ActiveStack + ", ReservedAmount=" + ReservedAmount + " Where GoodCode=" + code;
-                                    }
-
-                                    database.execSQL(qCol);
-                                    d.close();
-                                    break;
+                                        break;
                                 }
 
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -724,9 +752,11 @@ public class Replication {
 //                                                    qCol = qCol + "," + key;
 //                                                    qVal = qVal + ",'" + value + "'";
                                                     value = value.toString().replaceAll("'", "''");
+                                                    if (!key.equals("RLClassName")) {
 
-                                                    qCol.append(",").append(key);
-                                                    qVal.append(",'").append(value).append("'");
+                                                        qCol.append(",").append(key);
+                                                        qVal.append(",'").append(value).append("'");
+                                                    }
                                                 } catch (JSONException ignored) {
                                                 }
                                             }
@@ -735,7 +765,7 @@ public class Replication {
                                         database.execSQL(qCol.toString());
                                         break;
                                 }
-                                Log.e("asli_repstrQuery", qCol.toString());
+                                Log.e("testanbar_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -815,8 +845,11 @@ public class Replication {
                                             if ((!key.equals("RLOpType")) & (!key.equals("RepLogDataCode")) & (!key.equals("GoodGroupCode"))) {
                                                 try {
                                                     Object value = jo.get(key);
-                                                    qCol.append(",").append(key);
-                                                    qVal.append(",'").append(value).append("'");
+                                                    if (!key.equals("RLClassName")) {
+
+                                                        qCol.append(",").append(key);
+                                                        qVal.append(",'").append(value).append("'");
+                                                    }
                                                 } catch (JSONException ignored) {
                                                 }
                                             }
@@ -829,7 +862,7 @@ public class Replication {
                                         database.execSQL("delete from GoodGroup where GoodGroupCode = " + code);
                                         break;
                                 }
-                                Log.e("asli_repstrQuery", qCol.toString());
+                                Log.e("testanbar_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -997,11 +1030,13 @@ public class Replication {
                                                 try {
                                                     Object value = jo.get(key);
                                                     value = value.toString().replaceAll("'", "''");
+                                                    if (!key.equals("RLClassName")) {
 
-                                                    if (qCol.toString().equals("")) {
-                                                        qCol = new StringBuilder(key + "='" + value + "'");
-                                                    } else {
-                                                        qCol.append(",").append(key).append("='").append(value).append("'");
+                                                        if (qCol.toString().equals("")) {
+                                                            qCol = new StringBuilder(key + "='" + value + "'");
+                                                        } else {
+                                                            qCol.append(",").append(key).append("='").append(value).append("'");
+                                                        }
                                                     }
                                                 } catch (JSONException ignored) {
                                                 }
@@ -1009,11 +1044,11 @@ public class Replication {
                                         }
                                         qCol = new StringBuilder("Update Good Set " + qCol + " Where GoodCode=" + code);
 //                                        qCol = "INSERT OR REPLACE INTO Good( GoodCode " + qCol + ") VALUES(" + code + qVal + ")";
-                                        Log.e("asli_repstrQuery", qCol.toString());
+                                        Log.e("testanbar_repstrQuery", qCol.toString());
                                         database.execSQL(qCol.toString());
                                         break;
                                 }
-                                Log.e("asli_repstrQuery", qCol.toString());
+                                Log.e("testanbar_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1111,7 +1146,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1201,7 +1236,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1302,7 +1337,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1395,7 +1430,7 @@ public class Replication {
                                         d.close();
                                         break;
                                 }
-                                Log.e("asli_repstrQuery", qCol);
+                                Log.e("testanbar_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1429,5 +1464,6 @@ public class Replication {
         };
         queue.add(stringrequste);
     }
+
 
 }
