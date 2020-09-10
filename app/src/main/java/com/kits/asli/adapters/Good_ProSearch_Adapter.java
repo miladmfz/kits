@@ -163,28 +163,28 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
                         pri_multi = goodView.getMaxSellPrice();
                     }
                     if (goods.get(position).isCheck()) {
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.SearchActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
                             SearchActivity activity = (SearchActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.Search_date_detailActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
                             Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.GrpActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
                             GrpActivity activity = (GrpActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
                         }
                     } else {
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.SearchActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
                             SearchActivity activity = (SearchActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.Search_date_detailActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
                             Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.GrpActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
                             GrpActivity activity = (GrpActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
                         }
@@ -225,28 +225,28 @@ public class Good_ProSearch_Adapter extends RecyclerView.Adapter<Good_ProSearch_
                         pri_multi = goodView.getMaxSellPrice();
                     }
                     if (goods.get(position).isCheck()) {
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.SearchActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
                             SearchActivity activity = (SearchActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.Search_date_detailActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
                             Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.GrpActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
                             GrpActivity activity = (GrpActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 1);
                         }
                     } else {
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.SearchActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.SearchActivity")) {
                             SearchActivity activity = (SearchActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.Search_date_detailActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.Search_date_detailActivity")) {
                             Search_date_detailActivity activity = (Search_date_detailActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
                         }
-                        if (mContext.getClass().getName().equals("com.mfz.testanbar.activity.GrpActivity")) {
+                        if (mContext.getClass().getName().equals("com.kits.asli.activity.GrpActivity")) {
                             GrpActivity activity = (GrpActivity) mContext;
                             activity.good_select_function(pri_multi, goodView.getGoodCode(), 0);
                         }

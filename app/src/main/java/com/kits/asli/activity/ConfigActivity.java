@@ -21,7 +21,6 @@ import com.kits.asli.model.UserInfo;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ConfigActivity extends AppCompatActivity {
 

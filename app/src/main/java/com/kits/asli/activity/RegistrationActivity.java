@@ -21,7 +21,6 @@ import com.kits.asli.model.UserInfo;
 
 import java.util.Objects;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegistrationActivity extends AppCompatActivity {
 

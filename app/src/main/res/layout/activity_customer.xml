@@ -82,7 +82,7 @@
                 app:strokeColor="@color/grey_1000"
                 app:strokeWidth="1dp"
                 style="?attr/materialButtonOutlinedStyle"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.recyclerview.widget.RecyclerView

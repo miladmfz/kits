@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.kits.asli.R;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class AboutusActivity extends AppCompatActivity {
 

@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.kits.asli.R;
 import com.kits.asli.model.DatabaseHelper;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailsettingActivity extends AppCompatActivity {
 

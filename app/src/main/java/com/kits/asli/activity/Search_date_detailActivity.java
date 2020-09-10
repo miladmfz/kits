@@ -38,11 +38,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class Search_date_detailActivity extends AppCompatActivity {
 
-    private Integer conter = 0;
+    private Integer conter = 0, id = 1;
     private Integer date, grid;
     private SharedPreferences shPref;
     private SharedPreferences.Editor sEdit;
@@ -96,6 +96,9 @@ public class Search_date_detailActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         assert data != null;
         date = data.getInt("date");
+        if (getString(R.string.app_name).equals("آسیم")) {
+            id = data.getInt("id");
+        }
     }
 
     public void init() {
@@ -138,6 +141,8 @@ public class Search_date_detailActivity extends AppCompatActivity {
 
 
         re = findViewById(R.id.search_date_recycler);
+
+
         try {
             goods = dbh.getAllGood_ByDate(date, false, shPref.getBoolean("goodamount", true));
         } catch (ParseException e) {
@@ -148,6 +153,26 @@ public class Search_date_detailActivity extends AppCompatActivity {
         re.setLayoutManager(gridLayoutManager);
         re.setAdapter(adapter);
         re.setItemAnimator(new DefaultItemAnimator());
+
+        if (id == 1) {
+            try {
+                goods = dbh.getAllGood_ByDate(date, false, shPref.getBoolean("goodamount", true));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            adapter = new Good_ProSearch_Adapter(goods, Search_date_detailActivity.this);
+            gridLayoutManager = new GridLayoutManager(Search_date_detailActivity.this, grid);
+            re.setLayoutManager(gridLayoutManager);
+            re.setAdapter(adapter);
+            re.setItemAnimator(new DefaultItemAnimator());
+        } else {
+            goods = dbh.getAllGood_ByDate_asim();
+            adapter = new Good_ProSearch_Adapter(goods, Search_date_detailActivity.this);
+            gridLayoutManager = new GridLayoutManager(Search_date_detailActivity.this, grid);
+            re.setLayoutManager(gridLayoutManager);
+            re.setAdapter(adapter);
+            re.setItemAnimator(new DefaultItemAnimator());
+        }
 
 
         final SwitchMaterial mySwitch_goodamount = findViewById(R.id.search_date_switch_amount);

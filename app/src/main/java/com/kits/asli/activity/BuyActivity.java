@@ -155,7 +155,7 @@ public class BuyActivity extends AppCompatActivity {
                         .show();
             }
         });
-        if (dbh.getAllGood_pfcode(PreFac, "", 0, 2, 0, false).size() < 1) {
+        if (dbh.getAllGood_pfcode(PreFac).size() < 1) {
             Toast.makeText(this, "کالای برای اصلاح موجود نمی باشد", Toast.LENGTH_SHORT).show();
 
             finish();

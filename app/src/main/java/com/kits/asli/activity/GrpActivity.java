@@ -45,8 +45,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class GrpActivity extends AppCompatActivity {
 

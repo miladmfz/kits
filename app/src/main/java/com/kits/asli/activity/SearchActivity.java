@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SearchActivity extends AppCompatActivity {
 

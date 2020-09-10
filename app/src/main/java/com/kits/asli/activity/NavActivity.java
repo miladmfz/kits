@@ -106,7 +106,9 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             navigationView.getMenu().findItem(R.id.nav_porforosh).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_pazel).setVisible(true);
         }
-
+        if (getString(R.string.app_name).equals("آسیم")) {
+            navigationView.getMenu().findItem(R.id.nav_tajdid).setVisible(true);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -305,6 +307,12 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             } else if (id == R.id.nav_search_date) {
                 intent = new Intent(NavActivity.this, Search_dateActivity.class);
                 startActivity(intent);
+            } else if (id == R.id.nav_tajdid) {
+                if (getString(R.string.app_name).equals("آسیم")) {
+                    intent = new Intent(NavActivity.this, Search_date_detailActivity.class);
+                    intent.putExtra("id", 0);
+                    startActivity(intent);
+                }
             } else if (id == R.id.nav_cfg) {
                 intent = new Intent(NavActivity.this, ConfigActivity.class);
                 startActivity(intent);
@@ -363,7 +371,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                         }
-                        Log.e("asli_msg=", "" + msg);
+                        Log.e("asim_msg=", "" + msg);
                     }
                 });
 
@@ -375,7 +383,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                         }
-                        Log.e("asli_msg=", "" + msg);
+                        Log.e("asim_msg=", "" + msg);
                     }
                 });
 
@@ -418,8 +426,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 public void onComplete(@NonNull Task<Location> task) {
                     location = task.getResult();
                     if (location != null) {
-                        Log.e("asli_getLatitude", "" + location.getLatitude());
-                        Log.e("asli_getLongitude", "" + location.getLongitude());
+                        Log.e("asim_getLatitude", "" + location.getLatitude());
+                        Log.e("asim_getLongitude", "" + location.getLongitude());
 
                         try {
                             Geocoder geocoder;
@@ -436,18 +444,18 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                             String postalCode = addresses.get(0).getPostalCode();
                             String knownName = addresses.get(0).getFeatureName();
 
-                            Log.e("asli_locate_address", "" + address);
-                            Log.e("asli_locate_city", "" + city);
-                            Log.e("asli_locate_state", "" + state);
-                            Log.e("asli_locate_country", "" + country);
-                            Log.e("asli_locate_postalCode", "" + postalCode);
-                            Log.e("asli_locate_knownName", "" + knownName);
+                            Log.e("asim_locate_address", "" + address);
+                            Log.e("asim_locate_city", "" + city);
+                            Log.e("asim_locate_state", "" + state);
+                            Log.e("asim_locate_country", "" + country);
+                            Log.e("asim_locate_postalCode", "" + postalCode);
+                            Log.e("asim_locate_knownName", "" + knownName);
 
 
                         } catch (Exception e) {
-                            Log.e("asli_locate_Exception", "" + e.getMessage());
-                            Log.e("asli_locate_Exception", "" + e.getLocalizedMessage());
-                            Log.e("asli_locate_Exception", "" + e.toString());
+                            Log.e("asim_locate_Exception", "" + e.getMessage());
+                            Log.e("asim_locate_Exception", "" + e.getLocalizedMessage());
+                            Log.e("asim_locate_Exception", "" + e.toString());
 
                         }
 

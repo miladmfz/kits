@@ -29,7 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.mContext = context;
     }
 
-
     public ArrayList<Good> getAllGood(String search, Integer aGroupCode, Boolean aOnlyActive, Boolean aOnlyAvailable, Integer itemamount) {
         SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
         String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
@@ -235,6 +234,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             gooddetail.setReservedAmount(c.getInt(c.getColumnIndex("ReservedAmount")));
             try {
                 gooddetail.setDate1(c.getString(c.getColumnIndex("Date1")));
+                gooddetail.setNvarchar20(c.getString(c.getColumnIndex("Nvarchar4")));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -245,6 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 gooddetail.setAmount1(c.getInt(c.getColumnIndex("StackAmount2")));
                 gooddetail.setAmount2(c.getInt(c.getColumnIndex("StackAmount3")));
             }
+
             if (mContext.getString(R.string.app_name).equals("چشمه غیر کتابی")) {
                 gooddetail.setSellPrice1(c.getInt(c.getColumnIndex("SellPrice1")));
                 gooddetail.setGoodExplain2(c.getString(c.getColumnIndex("GoodExplain2")));
