@@ -150,7 +150,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                                 + b.getMaxSellPrice() + "\n";
                         Log.e("testanbar_PreFactorRows", "" + I + ":" + filebody);
                     }
-                    Toast.makeText(mContext, filebody, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "فایل ذخیره شد", Toast.LENGTH_SHORT).show();
                     File myFile;
                     String baseDir = Environment.getExternalStorageDirectory() + "/Kowsar/PreFactor_Excels";
                     String fileName = "PreFactor_" + kcf + "_" + cn + "_" + kdf + ".xlsx";

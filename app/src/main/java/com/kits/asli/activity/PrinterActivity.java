@@ -145,7 +145,7 @@ public class PrinterActivity extends AppCompatActivity {
 
 
                             TextView company_tv = new TextView(PrinterActivity.this);
-                            company_tv.setText(Farsi_number.PerisanNumber("فاکتور فروش  " + getString(R.string.app_name)));
+                            company_tv.setText(Farsi_number.PerisanNumber("فاکتور فروش " + getString(R.string.app_name)));
                             company_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                             company_tv.setTextSize(36);
                             company_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -186,16 +186,16 @@ public class PrinterActivity extends AppCompatActivity {
                             TextView total_amount_tv = new TextView(PrinterActivity.this);
                             total_amount_tv.setText(Farsi_number.PerisanNumber(" تعداد کل:   " + dbh.getFactorSumAmount(PreFac)));
                             total_amount_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            total_amount_tv.setTextSize(36);
+                            total_amount_tv.setTextSize(30);
                             total_amount_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             total_amount_tv.setGravity(Gravity.RIGHT);
                             total_amount_tv.setPadding(0, 20, 0, 10);
 
 
                             TextView total_price_tv = new TextView(PrinterActivity.this);
-                            total_price_tv.setText(Farsi_number.PerisanNumber(" قیمت کل :   " + decimalFormat.format(dbh.getFactorSum(PreFac))));
+                            total_price_tv.setText(Farsi_number.PerisanNumber(" قیمت کل : " + decimalFormat.format(dbh.getFactorSum(PreFac)) + " ریال"));
                             total_price_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            total_price_tv.setTextSize(36);
+                            total_price_tv.setTextSize(30);
                             total_price_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             total_price_tv.setGravity(Gravity.RIGHT);
 
@@ -221,39 +221,33 @@ public class PrinterActivity extends AppCompatActivity {
 
                                 TextView good_name_tv = new TextView(PrinterActivity.this);
                                 good_name_tv.setText(Farsi_number.PerisanNumber(g.getGoodName()));
-                                good_name_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(357, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                                good_name_tv.setTextSize(20);
+                                good_name_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                                good_name_tv.setTextSize(24);
                                 good_name_tv.setGravity(Gravity.CENTER);
-
                                 good_name_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                good_name_tv.setPadding(0, 10, 0, 0);
 
-                                LinearLayoutCompat secondary_layout = new LinearLayoutCompat(PrinterActivity.this);
-                                secondary_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, 50));
-                                secondary_layout.setGravity(Gravity.CENTER);
-                                secondary_layout.setOrientation(LinearLayoutCompat.HORIZONTAL);
-                                secondary_layout.setWeightSum(9);
 
-                                TextView good_price_tv = new TextView(PrinterActivity.this);
-                                good_price_tv.setText(Farsi_number.PerisanNumber(String.valueOf(decimalFormat.format(g.getPrice()))));
-                                good_price_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT, 3));
-                                good_price_tv.setTextSize(24);
-                                good_price_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+//                                TextView good_price_tv = new TextView(PrinterActivity.this);
+//                                good_price_tv.setText(Farsi_number.PerisanNumber(" فی :"+ decimalFormat.format(g.getPrice()) + "  ریال"));
+//                                good_price_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+//                                good_price_tv.setTextSize(24);
+//                                good_price_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
                                 TextView good_amount_tv = new TextView(PrinterActivity.this);
-                                good_amount_tv.setText(Farsi_number.PerisanNumber(String.valueOf(g.getAmount())));
-                                good_amount_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT, 3));
+                                good_amount_tv.setText(Farsi_number.PerisanNumber(" تعداد : " + g.getAmount() + " " + g.getUnitName() + "  فی :" + decimalFormat.format(g.getPrice()) + "  ریال"));
+                                //good_amount_tv.setText(Farsi_number.PerisanNumber(" تعداد : "+ g.getAmount() + " "+ g.getUnitName()));
+                                good_amount_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                                 good_amount_tv.setTextSize(24);
                                 good_amount_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
                                 TextView good_totalprice_tv = new TextView(PrinterActivity.this);
-                                good_totalprice_tv.setText(Farsi_number.PerisanNumber(decimalFormat.format(g.getAmount() * g.getPrice())));
-                                good_totalprice_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT, 3));
+                                good_totalprice_tv.setText(Farsi_number.PerisanNumber("جمع کل  :  " + decimalFormat.format(g.getAmount() * g.getPrice()) + "  ریال"));
+                                good_totalprice_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                                 good_totalprice_tv.setTextSize(24);
                                 good_totalprice_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                good_totalprice_tv.setPadding(0, 0, 0, 10);
 
-                                secondary_layout.addView(good_price_tv);
-                                secondary_layout.addView(good_amount_tv);
-                                secondary_layout.addView(good_totalprice_tv);
 
                                 ViewPager extra_ViewPager = new ViewPager(PrinterActivity.this);
                                 extra_ViewPager.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, 2));
@@ -261,7 +255,9 @@ public class PrinterActivity extends AppCompatActivity {
 
 
                                 first_layout.addView(good_name_tv);
-                                first_layout.addView(secondary_layout);
+                                //first_layout.addView(good_price_tv);
+                                first_layout.addView(good_amount_tv);
+                                first_layout.addView(good_totalprice_tv);
                                 first_layout.addView(extra_ViewPager);
                                 boby_good_layout.addView(first_layout);
 
