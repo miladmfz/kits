@@ -139,6 +139,35 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="start"
+                        android:layout_margin="2dp"
+                        android:onClick="start"
+                        android:layout_weight="0.5" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="stop"
+                        android:layout_margin="2dp"
+                        android:onClick="stop"
+                        android:layout_weight="0.5" />
+
+                </LinearLayout>
+
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listView" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/mainactivity_test"
                     android:layout_width="match_parent"
@@ -151,6 +180,7 @@
                     app:strokeWidth="1dp"
                     app:backgroundTint="@color/red_900"
                     android:textSize="42sp"
+                    android:onClick="test_fun"
                     android:visibility="gone" />
 
 

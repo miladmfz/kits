@@ -9,5 +9,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
+    <style name="LoadingNormal">
+        <item name="android:background">@drawable/qspinner_base</item>
+        <item name="android:layout_width">@dimen/loading</item>
+        <item name="android:layout_height">@dimen/loading</item>
+    </style>
 </resources>

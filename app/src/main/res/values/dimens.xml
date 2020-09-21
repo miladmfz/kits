@@ -6,4 +6,21 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
+
+    <!-- http://developer.android.com/design/style/metrics-grids.html -->
+    <dimen name="gapSmall">4dp</dimen>
+    <dimen name="gapMedium">8dp</dimen>
+    <dimen name="gapLarge">16dp</dimen>
+    <dimen name="gapXLarge">32dp</dimen>
+    <dimen name="gapXXLarge">64dp</dimen>
+
+    <!-- http://developer.android.com/design/style/typography.html -->
+    <dimen name="textSizeMicro">12sp</dimen>
+    <dimen name="textSizeSmall">14sp</dimen>
+    <dimen name="textSizeMedium">18sp</dimen>
+    <dimen name="textSizeLarge">22sp</dimen>
+
+    <dimen name="loading">48dp</dimen>
+
+
 </resources>

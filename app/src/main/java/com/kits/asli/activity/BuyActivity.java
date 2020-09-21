@@ -41,6 +41,7 @@ public class BuyActivity extends AppCompatActivity {
     private int Internet = 1, il = 0;
     private Integer PreFac = 0;
     private DatabaseHelper dbh = new DatabaseHelper(BuyActivity.this);
+
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
 
 
@@ -94,7 +95,7 @@ public class BuyActivity extends AppCompatActivity {
 
         price.setText(Farsi_number.PerisanNumber(String.valueOf(dbh.getFactorSum(PreFac))));
         amount.setText(Farsi_number.PerisanNumber("" + dbh.getFactorSumAmount(PreFac)));
-        customer.setText(Farsi_number.PerisanNumber("" + dbh.getFactorCustomer(PreFac)));
+        customer.setText(Farsi_number.PerisanNumber(dbh.getFactorCustomer(PreFac)));
         row.setText(Farsi_number.PerisanNumber("" + goods.size()));
 
 
@@ -157,6 +158,7 @@ public class BuyActivity extends AppCompatActivity {
         });
         if (dbh.getAllGood_pfcode(PreFac).size() < 1) {
             Toast.makeText(this, "کالای برای اصلاح موجود نمی باشد", Toast.LENGTH_SHORT).show();
+
 
             finish();
         }

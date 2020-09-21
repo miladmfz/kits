@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.kits.asli"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "9.6.0"
@@ -60,7 +60,6 @@ dependencies {
     implementation 'com.android.support:support-v4:29.0.0'
     implementation 'com.github.markomilos:paginate:0.5.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //implementation 'com.squareup.okhttp3:okhttp:3.14.4'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'com.android.support:design:29.0.0'
@@ -69,7 +68,5 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.android.volley:volley:1.1.1'
-
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
 }

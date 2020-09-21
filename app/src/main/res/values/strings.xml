@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="new_printer">اتصال به پرینتر</string>
+    <string name="print">پرینت کردن</string>
+    <string name="switch_on_printer">مطمئن شوید چاپگر روشن است. اگر اتصال برقرار نیست ، لطفاً چاپگر را خاموش کرده و دوباره روشن کنید.</string>
+    <string name="connecting">اتصال به چاپگر از طریق بلوتوث</string>
+    <string name="non_paired_printers1">هیچ چاپگر متصلی وجود ندارد</string>
+    <string name="non_paired_printers2">لطفاً چاپگر را روشن کرده و با زدن دکمه آن را به تلفن خود متصل کنید.  چاپگرهای Bixolon رمزشان 0000 است.</string>
+    <string name="printer_ready1">چاپگر آماده است</string>
+    <string name="printer_ready2">برای شروع چاپ روی دکمه " پرینت کردن " ضربه بزنید</string>
+
 
     <string name="app_name"> اصلی </string>
     <string name="app_img_name">asli_good</string>
@@ -11,7 +20,6 @@
 
     <string name="SERVERIP">87.107.78.234:60005</string>
     <string name="Kowsar_log">87.107.78.234:60005</string>
-
 
 
     <string name="good_search">جستجوی کالا</string>
@@ -117,7 +125,7 @@
     <string name="prefactor_send">ارسال فاکتور</string>
     <string name="prefactor_editexplain">تغییر توضیحات</string>
     <string name="prefactor_editcustomer">تغییر مشتری</string>
-    <string name="prefactor_excel">خروجی اکسل</string>
+    <string name="prefactor_excel">خروجی اکسل , پرینت</string>
     <string name="prefactor_report">گزارش اقلام فاکتور</string>
     <string name="prefactor_editgood">اصلاح اقلام فاکتور</string>
     <string name="prefactor_select">انتخاب فاکتور</string>

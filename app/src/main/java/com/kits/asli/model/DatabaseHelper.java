@@ -718,6 +718,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sm;
     }
 
+    public Integer getFactorcode(Integer pfcode) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "select PreFactorCode as sm From PrefactorHeader  Where IfNull(PreFactorCode,0)=" + pfcode;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        Integer sm = c.getInt(c.getColumnIndex("sm"));
+        c.close();
+        return sm;
+    }
+
+    public String getFactordate(Integer pfcode) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "select PreFactorDate as sm From PrefactorHeader  Where IfNull(PreFactorCode,0)=" + pfcode;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        String sm = c.getString(c.getColumnIndex("sm"));
+        c.close();
+        return sm;
+    }
+
     public String getFactorCustomer(Integer pfcode) {
         SQLiteDatabase db = getReadableDatabase();
         String sm;

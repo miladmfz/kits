@@ -25,7 +25,9 @@ import com.kits.asli.R;
 import com.kits.asli.activity.BuyActivity;
 import com.kits.asli.activity.BuyhistoryActivity;
 import com.kits.asli.activity.CustomerActivity;
+import com.kits.asli.activity.NavActivity;
 import com.kits.asli.activity.PrefactorActivity;
+import com.kits.asli.activity.PrinterActivity;
 import com.kits.asli.activity.SearchActivity;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
@@ -175,6 +177,9 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                         e.printStackTrace();
                     }
                 }
+                Intent intent2 = new Intent(mContext, PrinterActivity.class);
+                intent2.putExtra("PreFac", facView.getPreFactorCode());
+                mContext.startActivity(intent2);
             }
 
         });
@@ -296,6 +301,8 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                         goods.size();
                     }
                 }
+
+
             }
         });
 

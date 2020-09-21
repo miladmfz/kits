@@ -1,16 +1,13 @@
 package com.kits.asli.activity;
 
 
-import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+
 import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 
 import android.os.Build;
@@ -30,14 +27,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.work.WorkManager;
-import com.google.android.gms.location.FusedLocationProviderClient;
-
-import com.google.android.gms.location.LocationServices;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -51,8 +44,6 @@ import com.kits.asli.model.Farsi_number;
 
 import java.text.DecimalFormat;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -63,7 +54,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private SharedPreferences shPref;
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private Replication replication;
-    FusedLocationProviderClient fusedLocationProviderClient;
+
     Location location;
     WorkManager workManager;
 
@@ -139,13 +130,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         if (getString(R.string.app_name).equals("اصلی")) {
             test.setVisibility(View.VISIBLE);
         }
-
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                test_fun();
-            }
-        });
 
 
 
@@ -415,62 +399,75 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
     }
 
+    public void start(View v) {
 
-    private void test_fun() {
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NavActivity.this);
-        if (ActivityCompat.checkSelfPermission(NavActivity.this
-                , Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    location = task.getResult();
-                    if (location != null) {
-                        Log.e("asim_getLatitude", "" + location.getLatitude());
-                        Log.e("asim_getLongitude", "" + location.getLongitude());
-
-                        try {
-                            Geocoder geocoder;
-                            List<Address> addresses;
-                            geocoder = new Geocoder(NavActivity.this, Locale.getDefault());
-
-                            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
-
-                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                            String city = addresses.get(0).getLocality();
-                            String state = addresses.get(0).getAdminArea();
-                            String country = addresses.get(0).getCountryName();
-                            String postalCode = addresses.get(0).getPostalCode();
-                            String knownName = addresses.get(0).getFeatureName();
-
-                            Log.e("asim_locate_address", "" + address);
-                            Log.e("asim_locate_city", "" + city);
-                            Log.e("asim_locate_state", "" + state);
-                            Log.e("asim_locate_country", "" + country);
-                            Log.e("asim_locate_postalCode", "" + postalCode);
-                            Log.e("asim_locate_knownName", "" + knownName);
-
-
-                        } catch (Exception e) {
-                            Log.e("asim_locate_Exception", "" + e.getMessage());
-                            Log.e("asim_locate_Exception", "" + e.getLocalizedMessage());
-                            Log.e("asim_locate_Exception", "" + e.toString());
-
-                        }
-
-
-                    }
-                }
-            });
-        } else {
-            ActivityCompat.requestPermissions(NavActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    44);
-        }
     }
 
+    public void stop(View v) {
 
+
+    }
+
+    public void test_fun(View v) {
+
+        intent = new Intent(NavActivity.this, PrinterActivity.class);
+
+        startActivity(intent);
+
+
+//        BackgroundJob bjob=new BackgroundJob(getApplicationContext());
+//        new Thread(bjob).start();
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NavActivity.this);
+//        if (ActivityCompat.checkSelfPermission(NavActivity.this
+//                , Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Location> task) {
+//                    location = task.getResult();
+//                    if (location != null) {
+//                        Log.e("asim_getLatitude", "" + location.getLatitude());
+//                        Log.e("asim_getLongitude", "" + location.getLongitude());
+//
+//                        try {
+//                            Geocoder geocoder;
+//                            List<Address> addresses;
+//                            geocoder = new Geocoder(NavActivity.this, Locale.getDefault());
+//
+//                            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//
+//
+//                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+//                            String city = addresses.get(0).getLocality();
+//                            String state = addresses.get(0).getAdminArea();
+//                            String country = addresses.get(0).getCountryName();
+//                            String postalCode = addresses.get(0).getPostalCode();
+//                            String knownName = addresses.get(0).getFeatureName();
+//
+//                            Log.e("asim_locate_address", "" + address);
+//                            Log.e("asim_locate_city", "" + city);
+//                            Log.e("asim_locate_state", "" + state);
+//                            Log.e("asim_locate_country", "" + country);
+//                            Log.e("asim_locate_postalCode", "" + postalCode);
+//                            Log.e("asim_locate_knownName", "" + knownName);
+//
+//
+//                        } catch (Exception e) {
+//                            Log.e("asim_locate_Exception", "" + e.getMessage());
+//                            Log.e("asim_locate_Exception", "" + e.getLocalizedMessage());
+//                            Log.e("asim_locate_Exception", "" + e.toString());
+//
+//                        }
+//
+//
+//                    }
+//                }
+//            });
+//        } else {
+//            ActivityCompat.requestPermissions(NavActivity.this,
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                    44);
+//        }
+    }
 
 }
 
