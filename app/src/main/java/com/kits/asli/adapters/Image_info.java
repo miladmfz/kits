@@ -44,7 +44,7 @@ public class Image_info {
 
     public void SaveImage_factor(Bitmap finalBitmap, Integer code) {
         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File myDir = new File(root + "/Kowsar/" + app_img_name + "/");
+        File myDir = new File(root + "/Kowsar/factor_image/");
         myDir.mkdirs();
 
         String fname = code + ".jpg";
