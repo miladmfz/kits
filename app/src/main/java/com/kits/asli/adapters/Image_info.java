@@ -42,6 +42,24 @@ public class Image_info {
         }
     }
 
+    public void SaveImage_factor(Bitmap finalBitmap, Integer code) {
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        File myDir = new File(root + "/Kowsar/" + app_img_name + "/");
+        myDir.mkdirs();
+
+        String fname = code + ".jpg";
+        File file = new File(myDir, fname);
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void DeleteImage(Integer code) {
         String root = Environment.getExternalStorageDirectory().getAbsolutePath();

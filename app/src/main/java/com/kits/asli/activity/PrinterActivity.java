@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bixolon.printer.BixolonPrinter;
 import com.kits.asli.R;
+import com.kits.asli.adapters.Image_info;
 import com.kits.asli.model.BluetoothUtil;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
@@ -268,7 +269,8 @@ public class PrinterActivity extends AppCompatActivity {
                             main_layout.addView(title_layout);
                             main_layout.addView(boby_good_layout);
                             main_layout.addView(total_layout);
-
+                            Image_info image_info = new Image_info(PrinterActivity.this);
+                            image_info.SaveImage_factor(loadBitmapFromView(main_layout), PreFac);
 
                             bixolonPrinterApi.printBitmap(loadBitmapFromView(main_layout)
                                     , BixolonPrinter.ALIGNMENT_CENTER
