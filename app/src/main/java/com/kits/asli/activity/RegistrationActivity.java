@@ -56,6 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         SwitchMaterial regselloff = findViewById(R.id.Registr_selloff);
         SwitchMaterial real_amount = findViewById(R.id.Registr_real_amount);
+        SwitchMaterial auto_rep = findViewById(R.id.Registr_autorep);
 
 
         UserInfo auser = dbh.LoadPersonalInfo();
@@ -65,11 +66,25 @@ public class RegistrationActivity extends AppCompatActivity {
         regdelay.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("delay", null))))));
         regitemamount.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("itemamount", null))))));
 
+
         if (Integer.parseInt(Objects.requireNonNull(shPref.getString("selloff", null))) == 0) {
             regselloff.setChecked(false);
         } else {
             regselloff.setChecked(true);
         }
+
+        if (shPref.getBoolean("real_amount", true)) {
+            real_amount.setChecked(true);
+        } else {
+            real_amount.setChecked(false);
+        }
+
+        if (shPref.getBoolean("auto_rep", true)) {
+            auto_rep.setChecked(true);
+        } else {
+            auto_rep.setChecked(false);
+        }
+
 
         regselloff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -92,12 +107,6 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
 
-        if (shPref.getBoolean("real_amount", true)) {
-            real_amount.setChecked(true);
-        } else {
-            real_amount.setChecked(false);
-        }
-
         real_amount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -111,6 +120,27 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     sEdit = shPref.edit();
                     sEdit.putBoolean("real_amount", false);
+                    sEdit.apply();
+                    Toast.makeText(RegistrationActivity.this, "خیر", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+
+        auto_rep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("auto_rep", true);
+                    sEdit.apply();
+                    Toast.makeText(RegistrationActivity.this, "بله", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    sEdit = shPref.edit();
+                    sEdit.putBoolean("auto_rep", false);
                     sEdit.apply();
                     Toast.makeText(RegistrationActivity.this, "خیر", Toast.LENGTH_SHORT).show();
 

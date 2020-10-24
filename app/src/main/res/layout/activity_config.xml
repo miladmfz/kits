@@ -30,253 +30,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/config_broker"
-            android:textColor="@color/grey_1000"
-            android:layout_weight="0.5"
-
-            />
-
-        <TextView
-            android:id="@+id/config_borker"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittest1"
-
-            android:layout_weight="0.5"
-            android:gravity="center" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/config_item"
-            android:textColor="@color/grey_1000"
-
-            android:layout_weight="0.5"
-
-            />
-
-        <TextView
-            android:id="@+id/config_grid"
-
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittest1"
-
-            android:layout_weight="0.5"
-            android:gravity="center" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/config_searchitem"
-            android:textColor="@color/grey_1000"
-
-            android:layout_weight="0.5"
-
-            />
-
-        <TextView
-            android:id="@+id/config_itemamount"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittest1"
-
-            android:layout_weight="0.5"
-            android:gravity="center" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/config_off"
-            android:layout_weight="0.5"
-            android:textColor="@color/grey_1000"
-
-            />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-
-            android:id="@+id/config_selloff"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:enabled="false"
-            android:checked="true"
-
-            android:layout_gravity="center" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:enabled="false"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/config_real_amount"
-            android:layout_weight="0.5"
-            android:textColor="@color/grey_1000"
-
-            />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-
-            android:id="@+id/config_real_amount"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:checked="true"
-            android:enabled="false"
-            android:layout_gravity="center" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:enabled="true"
-            android:checked="true"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/config_delay"
-            android:textColor="@color/grey_1000"
-
-            android:layout_weight="0.5"
-
-            />
-
-        <TextView
-            android:id="@+id/config_delay"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittest1"
-
-            android:layout_weight="0.5"
-            android:gravity="center" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layoutDirection="ltr"
-            android:text="@string/config_totalprice"
-            android:layout_weight="0.5"
-            android:textColor="@color/grey_1000"
-
-            />
-
-        <TextView
-            android:id="@+id/config_sum_factor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edittest1"
-
-            android:layout_weight="0.5"
-            android:gravity="center" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_margin="2dp"
-
-        >
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:layout_margin="10dp">
 
             <Button
                 android:id="@+id/config_to_reg"
@@ -318,10 +80,282 @@
                 style="?attr/materialButtonOutlinedStyle"
 
                 />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_broker"
+                    android:textColor="@color/grey_1000"
+                    android:layout_weight="0.5"
+
+                    />
+
+                <TextView
+                    android:id="@+id/config_borker"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edittest1"
+
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_item"
+                    android:textColor="@color/grey_1000"
+
+                    android:layout_weight="0.5"
+
+                    />
+
+                <TextView
+                    android:id="@+id/config_grid"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edittest1"
+
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_searchitem"
+                    android:textColor="@color/grey_1000"
+
+                    android:layout_weight="0.5"
+
+                    />
+
+                <TextView
+                    android:id="@+id/config_itemamount"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edittest1"
+
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_off"
+                    android:layout_weight="0.5"
+                    android:textColor="@color/grey_1000"
+
+                    />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+
+                    android:id="@+id/config_selloff"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:enabled="false"
+                    android:checked="true"
+
+                    android:layout_gravity="center" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:enabled="false"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_real_amount"
+                    android:layout_weight="0.5"
+                    android:textColor="@color/grey_1000"
+
+                    />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+
+                    android:id="@+id/config_real_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:checked="true"
+                    android:enabled="false"
+                    android:layout_gravity="center" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:enabled="true"
+                    android:checked="true"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="بروزرسانی خودکار"
+                    android:layout_weight="0.5"
+                    android:textColor="@color/grey_1000"
+
+                    />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+
+                    android:id="@+id/config_autorep"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:checked="true"
+                    android:enabled="false"
+                    android:layout_gravity="center" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:enabled="true"
+                    android:checked="true"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/config_delay"
+                    android:textColor="@color/grey_1000"
+
+                    android:layout_weight="0.5"
+
+                    />
+
+                <TextView
+                    android:id="@+id/config_delay"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edittest1"
+
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layoutDirection="ltr"
+                    android:text="@string/config_totalprice"
+                    android:layout_weight="0.5"
+                    android:textColor="@color/grey_1000"
+
+                    />
+
+                <TextView
+                    android:id="@+id/config_sum_factor"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edittest1"
+
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

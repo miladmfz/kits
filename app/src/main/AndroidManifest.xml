@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="q">
-        <activity android:name=".activity.PrinterActivity"></activity>
         <activity android:name=".activity.AboutusActivity" />
         <activity android:name=".activity.BuyActivity" />
         <activity android:name=".activity.BuyhistoryActivity" />
@@ -25,6 +24,7 @@
         <activity android:name=".activity.NavActivity" />
         <activity android:name=".activity.PrefactorActivity" />
         <activity android:name=".activity.PrefactoropenActivity" />
+        <activity android:name=".activity.PrinterActivity" />
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.ScanCodeActivity" />
         <activity android:name=".activity.Search_date_detailActivity" />
@@ -43,9 +43,6 @@
         <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
         <!-- </intent-filter> -->
         <!-- </service> -->
-        <service
-            android:name=".application.ExampleJobExample"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <uses-library
             android:name="org.apache.http.legacy"

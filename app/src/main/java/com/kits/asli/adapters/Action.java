@@ -486,7 +486,7 @@ public class Action {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("testanbar_response = ", response + "");
+                    Log.e("asli_response = ", response + "");
                     JSONArray object = new JSONArray(response);
                     JSONObject jo = object.getJSONObject(0);
                     il = object.length();
@@ -498,8 +498,8 @@ public class Action {
                             toast.setGravity(Gravity.CENTER, 10, 10);
                             toast.show();
                             String factorDate = jo.getString("PreFactorDate");
-                            Log.e("testanbar_factorcode  ", kowsarcode.toString());
-                            Log.e("testanbar_factordate  ", factorDate);
+                            Log.e("asli_factorcode  ", kowsarcode.toString());
+                            Log.e("asli_factordate  ", factorDate);
                             dbh.UpdatePreFactor(factor_code, kowsarcode, factorDate);
                             shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
                             SharedPreferences.Editor sEdit = shPref.edit();
@@ -538,7 +538,7 @@ public class Action {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(mContext, "بروز خطا در اطلاعات", Toast.LENGTH_SHORT).show();
-                    Log.e("testanbar_prin", e.toString());
+                    Log.e("asli_prin", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -546,7 +546,7 @@ public class Action {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 Toast.makeText(mContext, "ارتباط با سرور میسر نمی باشد.", Toast.LENGTH_SHORT).show();
-                Log.e("testanbar_prin", volleyError.toString());
+                Log.e("asli_prin", volleyError.toString());
             }
         }) {
             @Override
@@ -562,7 +562,7 @@ public class Action {
                 pc.close();
 
 
-                Log.e("testanbar_reqqqq", pr1);
+                Log.e("asli_reqqqq", pr1);
                 params.put("PFHDQASW", pr1);
                 Cursor c = dtb.rawQuery("Select GoodRef, FactorAmount, Price From PreFactor Where  GoodRef>0 and  Prefactorcode = " + factor_code, null);
 
@@ -570,7 +570,7 @@ public class Action {
                 //pr2 = CursorToJson(c);
                 c.close();
 
-                Log.e("testanbar_reqqqq", pr2);
+                Log.e("asli_reqqqq", pr2);
                 params.put("PFDTQASW", pr2);
                 return params;
             }
@@ -671,12 +671,12 @@ public class Action {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         String strDate = sdf.format(c.getTime());
 
-        Log.e("testanbar_device_Id", android_id);
-        Log.e("testanbar_address_ip", mContext.getString(R.string.SERVERIP));
-        Log.e("testanbar_server_name", mContext.getString(R.string.app_name));
-        Log.e("testanbar_factor_code", Objects.requireNonNull(shPref.getString("prefactor_code", null)));
-        Log.e("testanbar_Date", Date);
-        Log.e("testanbar_strDate", strDate);
+        Log.e("asli_device_Id", android_id);
+        Log.e("asli_address_ip", mContext.getString(R.string.SERVERIP));
+        Log.e("asli_server_name", mContext.getString(R.string.app_name));
+        Log.e("asli_factor_code", Objects.requireNonNull(shPref.getString("prefactor_code", null)));
+        Log.e("asli_Date", Date);
+        Log.e("asli_strDate", strDate);
         UserInfo auser = dbh.LoadPersonalInfo();
 
         APIInterface apiInterface = APIClient_kowsar.getCleint_log().create(APIInterface.class);
@@ -684,12 +684,12 @@ public class Action {
         cl.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                Log.e("testanbar_onResponse", "" + response.body());
+                Log.e("asli_onResponse", "" + response.body());
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("testanbar_onFailure", "" + t.toString());
+                Log.e("asli_onFailure", "" + t.toString());
             }
         });
 

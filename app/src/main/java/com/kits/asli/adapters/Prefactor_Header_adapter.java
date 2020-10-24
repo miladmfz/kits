@@ -148,7 +148,7 @@ public class Prefactor_Header_adapter extends RecyclerView.Adapter<Prefactor_Hea
                                 + b.getFactorAmount() + ","
                                 + b.getPrice() + ","
                                 + b.getMaxSellPrice() + "\n";
-                        Log.e("testanbar_PreFactorRows", "" + I + ":" + filebody);
+                        Log.e("asli_PreFactorRows", "" + I + ":" + filebody);
                     }
                     Toast.makeText(mContext, "فایل ذخیره شد", Toast.LENGTH_SHORT).show();
                     File myFile;

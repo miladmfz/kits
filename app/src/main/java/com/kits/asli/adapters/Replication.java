@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class Replication {
     private String xCode = "0";
     private Dialog dialog;
     private DatabaseHelper dbh;
+    String url;
 
     public Replication(Context mContext) {
         this.mContext = mContext;
@@ -57,7 +59,8 @@ public class Replication {
         SERVER_IP_ADDRESS = mContext.getString(R.string.SERVERIP);
         dialog = new Dialog(mContext);
         shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
-
+        database = mContext.openOrCreateDatabase("KowsarDb.sqlite", Context.MODE_PRIVATE, null);
+        url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
     }
 
 
@@ -104,8 +107,6 @@ public class Replication {
     public void replicateCentralChange() {
 
         dialog();
-        database = mContext.openOrCreateDatabase("KowsarDb.sqlite", Context.MODE_PRIVATE, null);
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
         RepTable = "Central";
         if (LastRepCode.equals("0")) {
 
@@ -170,7 +171,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("farhang_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
 
@@ -192,7 +193,6 @@ public class Replication {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("qy", "6");
 
                 volleyError.printStackTrace();
             }
@@ -212,7 +212,7 @@ public class Replication {
     }
 
     public void replicateCityChange() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "City";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='City_LastRepCode'", null);
@@ -264,7 +264,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -302,7 +302,7 @@ public class Replication {
     }
 
     public void replicateAddressChange() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "Address";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='Address_LastRepCode'", null);
@@ -365,7 +365,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -402,7 +402,7 @@ public class Replication {
     }
 
     public void replicateCustomerChange() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "Customer";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='Customer_LastRepCode'", null);
@@ -458,7 +458,7 @@ public class Replication {
                                         d.close();
                                         break;
                                 }
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -496,7 +496,7 @@ public class Replication {
 
     public void replicateGoodChange() {
 
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "Good";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery(" Select DataValue From Config Where KeyValue = 'Good_LastRepCode' ", null);
@@ -572,7 +572,7 @@ public class Replication {
                                         database.execSQL("delete from good where goodcode = " + code + " and not exists (select 1 From PreFactor Where GoodRef =" + code + ")");
                                         break;
                                 }
-                                Log.e("testanbar_repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -593,7 +593,7 @@ public class Replication {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("testanbar_volleyError", volleyError + "");
+                Log.e("asli_volleyError", volleyError + "");
                 volleyError.printStackTrace();
             }
         }) {
@@ -612,7 +612,7 @@ public class Replication {
 
     public void replicateGoodStackChange() {
 
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "GoodStack";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='GoodStack_LastRepCode'", null);
@@ -668,7 +668,7 @@ public class Replication {
                                 }
 
 
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -707,7 +707,7 @@ public class Replication {
     }
 
     public void replicateGoodsGrpChange() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "GoodsGrp";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='GoodsGrp_LastRepCode'", null);
@@ -765,7 +765,7 @@ public class Replication {
                                         database.execSQL(qCol.toString());
                                         break;
                                 }
-                                Log.e("testanbar_repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -802,7 +802,7 @@ public class Replication {
     }
 
     public void replicateGoodGroupChange() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "GoodGroup";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='GoodGroup_LastRepCode'", null);
@@ -862,7 +862,7 @@ public class Replication {
                                         database.execSQL("delete from GoodGroup where GoodGroupCode = " + code);
                                         break;
                                 }
-                                Log.e("testanbar_repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -902,7 +902,7 @@ public class Replication {
 
     public void replicateGoodImageChange() {
 
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "KsrImage";
 
         if (LastRepCode.equals("0")) {
@@ -987,7 +987,7 @@ public class Replication {
     }
 
     public void replicateGoodPropertyValueChange() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "PropertyValue";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='PropertyValue_LastRepCode'", null);
@@ -1044,11 +1044,11 @@ public class Replication {
                                         }
                                         qCol = new StringBuilder("Update Good Set " + qCol + " Where GoodCode=" + code);
 //                                        qCol = "INSERT OR REPLACE INTO Good( GoodCode " + qCol + ") VALUES(" + code + qVal + ")";
-                                        Log.e("testanbar_repstrQuery", qCol.toString());
+                                        Log.e("asli_repstrQuery", qCol.toString());
                                         database.execSQL(qCol.toString());
                                         break;
                                 }
-                                Log.e("testanbar_repstrQuery", qCol.toString());
+                                Log.e("asli_repstrQuery", qCol.toString());
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1089,7 +1089,7 @@ public class Replication {
 
         dialog();
         database = mContext.openOrCreateDatabase("KowsarDb.sqlite", Context.MODE_PRIVATE, null);
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "Central";
         if (LastRepCode.equals("0")) {
             Cursor cd = database.rawQuery("Select DataValue From Config Where KeyValue = 'Central_LastRepCode'", null);
@@ -1146,7 +1146,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1184,7 +1184,7 @@ public class Replication {
     }
 
     public void replicateCityChange_customer() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "City";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='City_LastRepCode'", null);
@@ -1236,7 +1236,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1274,7 +1274,7 @@ public class Replication {
     }
 
     public void replicateAddressChange_customer() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "Address";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='Address_LastRepCode'", null);
@@ -1337,7 +1337,7 @@ public class Replication {
                                         break;
                                 }
 
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }
@@ -1374,7 +1374,7 @@ public class Replication {
     }
 
     public void replicateCustomerChange_customer() {
-        String url = "http://" + SERVER_IP_ADDRESS + "/login/index.php";
+
         RepTable = "Customer";
         if (LastRepCode.equals("0")) {
             Cursor c = database.rawQuery("Select DataValue From Config Where KeyValue ='Customer_LastRepCode'", null);
@@ -1430,7 +1430,7 @@ public class Replication {
                                         d.close();
                                         break;
                                 }
-                                Log.e("testanbar_repstrQuery", qCol);
+                                Log.e("asli_repstrQuery", qCol);
                                 xCode = code;
                                 LastRepCode = repcode;
                             }

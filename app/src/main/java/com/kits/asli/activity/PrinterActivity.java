@@ -5,6 +5,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 
@@ -19,9 +20,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,8 +79,9 @@ public class PrinterActivity extends AppCompatActivity {
     LinearLayoutCompat main_layout;
     LinearLayoutCompat title_layout;
     LinearLayoutCompat boby_good_layout;
+    LinearLayoutCompat good_layout;
     LinearLayoutCompat total_layout;
-    ViewPager ViewPager;
+    ViewPager ViewPager, ViewPager_chap, ViewPager_rast;
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
 
     @Override
@@ -115,12 +119,9 @@ public class PrinterActivity extends AppCompatActivity {
                     /** Where the actual print happens. BTW, the easyest code. */
                     public void run() {
                         try {
-                            //FIXME this example hardcodes the text values to increase a little the readability of the code. Don't do it in production! :)
 
-                            bixolonPrinterApi.setSingleByteFont(BixolonPrinter.CODE_PAGE_FARSI); //It fixes an issue printing special values like €, áéíóú...
 
-                            //BEWARE THE DOG: The 260 and 50 values are really MAGIC. They aren't as siple as width and height. It can break the Bitmap print.
-
+                            bixolonPrinterApi.setSingleByteFont(BixolonPrinter.CODE_PAGE_FARSI);
                             Thread.sleep(PRINTING_SLEEP_TIME); // Don't strees the printer while printing the Bitmap... it don't like it.
 
                             intent();
@@ -128,27 +129,44 @@ public class PrinterActivity extends AppCompatActivity {
                             main_layout = new LinearLayoutCompat(PrinterActivity.this);
                             title_layout = new LinearLayoutCompat(PrinterActivity.this);
                             boby_good_layout = new LinearLayoutCompat(PrinterActivity.this);
+                            good_layout = new LinearLayoutCompat(PrinterActivity.this);
                             total_layout = new LinearLayoutCompat(PrinterActivity.this);
                             ViewPager = new ViewPager(PrinterActivity.this);
+                            ViewPager_rast = new ViewPager(PrinterActivity.this);
+                            ViewPager_chap = new ViewPager(PrinterActivity.this);
 
                             main_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT));
                             title_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(351, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                             boby_good_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(352, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                            good_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(352, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                             total_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(353, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
 
                             main_layout.setOrientation(LinearLayoutCompat.VERTICAL);
+                            main_layout.setBackgroundResource(R.color.white);
                             title_layout.setOrientation(LinearLayoutCompat.VERTICAL);
+                            good_layout.setOrientation(LinearLayoutCompat.HORIZONTAL);
                             boby_good_layout.setOrientation(LinearLayoutCompat.VERTICAL);
                             total_layout.setOrientation(LinearLayoutCompat.VERTICAL);
 
+                            main_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                            title_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                            good_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                            boby_good_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                            total_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+
                             ViewPager.setLayoutParams(new LinearLayoutCompat.LayoutParams(354, 3));
                             ViewPager.setBackgroundResource(R.color.colorPrimaryDark);
+                            ViewPager_rast.setLayoutParams(new LinearLayoutCompat.LayoutParams(2, LinearLayoutCompat.LayoutParams.MATCH_PARENT));
+                            ViewPager_rast.setBackgroundResource(R.color.colorPrimaryDark);
+                            ViewPager_chap.setLayoutParams(new LinearLayoutCompat.LayoutParams(2, LinearLayoutCompat.LayoutParams.MATCH_PARENT));
+                            ViewPager_chap.setBackgroundResource(R.color.colorPrimaryDark);
 
 
                             TextView company_tv = new TextView(PrinterActivity.this);
-                            company_tv.setText(Farsi_number.PerisanNumber("فاکتور فروش " + getString(R.string.app_name)));
+                            company_tv.setText(Farsi_number.PerisanNumber("فاکتور فروش"));
                             company_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            company_tv.setTextSize(36);
+                            company_tv.setTextSize(16);
                             company_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             company_tv.setGravity(Gravity.CENTER);
                             company_tv.setPadding(0, 0, 0, 20);
@@ -157,7 +175,7 @@ public class PrinterActivity extends AppCompatActivity {
                             TextView customername_tv = new TextView(PrinterActivity.this);
                             customername_tv.setText(Farsi_number.PerisanNumber(" نام مشتری :   " + dbh.getFactorCustomer(PreFac)));
                             customername_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            customername_tv.setTextSize(26);
+                            customername_tv.setTextSize(10);
                             customername_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             customername_tv.setGravity(Gravity.RIGHT);
                             customername_tv.setPadding(0, 0, 0, 15);
@@ -165,7 +183,7 @@ public class PrinterActivity extends AppCompatActivity {
                             TextView factorcode_tv = new TextView(PrinterActivity.this);
                             factorcode_tv.setText(Farsi_number.PerisanNumber(" کد فاکتور :   " + dbh.getFactorcode(PreFac)));
                             factorcode_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            factorcode_tv.setTextSize(26);
+                            factorcode_tv.setTextSize(10);
                             factorcode_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             factorcode_tv.setGravity(Gravity.RIGHT);
                             factorcode_tv.setPadding(0, 0, 0, 15);
@@ -173,7 +191,7 @@ public class PrinterActivity extends AppCompatActivity {
                             TextView factordate_tv = new TextView(PrinterActivity.this);
                             factordate_tv.setText(Farsi_number.PerisanNumber(" تارخ فاکتور :   " + dbh.getFactordate(PreFac)));
                             factordate_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            factordate_tv.setTextSize(26);
+                            factordate_tv.setTextSize(10);
                             factordate_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             factordate_tv.setGravity(Gravity.RIGHT);
                             factordate_tv.setPadding(0, 0, 0, 35);
@@ -187,7 +205,7 @@ public class PrinterActivity extends AppCompatActivity {
                             TextView total_amount_tv = new TextView(PrinterActivity.this);
                             total_amount_tv.setText(Farsi_number.PerisanNumber(" تعداد کل:   " + dbh.getFactorSumAmount(PreFac)));
                             total_amount_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            total_amount_tv.setTextSize(30);
+                            total_amount_tv.setTextSize(14);
                             total_amount_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             total_amount_tv.setGravity(Gravity.RIGHT);
                             total_amount_tv.setPadding(0, 20, 0, 10);
@@ -196,87 +214,146 @@ public class PrinterActivity extends AppCompatActivity {
                             TextView total_price_tv = new TextView(PrinterActivity.this);
                             total_price_tv.setText(Farsi_number.PerisanNumber(" قیمت کل : " + decimalFormat.format(dbh.getFactorSum(PreFac)) + " ریال"));
                             total_price_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                            total_price_tv.setTextSize(30);
+                            total_price_tv.setTextSize(12);
                             total_price_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             total_price_tv.setGravity(Gravity.RIGHT);
 
+                            TextView phone_tv = new TextView(PrinterActivity.this);
+                            phone_tv.setText(Farsi_number.PerisanNumber("۰۹۰۱۹۹۹۹۹۸۷\n تلفن سفارشات"));
+                            phone_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                            phone_tv.setTextSize(16);
+                            phone_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            phone_tv.setGravity(Gravity.CENTER);
+                            phone_tv.setPadding(0, 35, 0, 35);
+
 
                             TextView kowsar_tv = new TextView(PrinterActivity.this);
-                            kowsar_tv.setText(Farsi_number.PerisanNumber("تمامی حقوق این نرم افزار متعلق به گروه نرم افزاری کوثر می باشد شماره تماس3–66569320"));
+                            kowsar_tv.setText(Farsi_number.PerisanNumber("گروه نرم افزاری کوثر\n شماره تماس3–66569320"));
                             kowsar_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                             kowsar_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            kowsar_tv.setTextSize(20);
+                            kowsar_tv.setTextSize(8);
                             kowsar_tv.setGravity(Gravity.CENTER);
                             kowsar_tv.setPadding(0, 20, 0, 100);
 
 
                             total_layout.addView(total_amount_tv);
                             total_layout.addView(total_price_tv);
+                            total_layout.addView(phone_tv);
                             total_layout.addView(kowsar_tv);
 
-
+                            good_layout.addView(ViewPager_rast);
+                            int j = 0;
                             for (Good g : goods) {
+                                j++;
                                 LinearLayoutCompat first_layout = new LinearLayoutCompat(PrinterActivity.this);
                                 first_layout.setLayoutParams(new LinearLayoutCompat.LayoutParams(356, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                                 first_layout.setOrientation(LinearLayoutCompat.VERTICAL);
 
+                                LinearLayoutCompat name_detail = new LinearLayoutCompat(PrinterActivity.this);
+                                name_detail.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                                name_detail.setOrientation(LinearLayoutCompat.HORIZONTAL);
+                                name_detail.setWeightSum(6);
+                                name_detail.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+                                TextView radif = new TextView(PrinterActivity.this);
+                                radif.setText(Farsi_number.PerisanNumber(String.valueOf(j)));
+                                radif.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 5));
+                                radif.setTextSize(10);
+                                radif.setGravity(Gravity.CENTER);
+                                radif.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                radif.setPadding(0, 10, 0, 10);
+
+                                ViewPager ViewPager_goodname = new ViewPager(PrinterActivity.this);
+                                ViewPager_goodname.setLayoutParams(new LinearLayoutCompat.LayoutParams(2, LinearLayoutCompat.LayoutParams.MATCH_PARENT));
+                                ViewPager_goodname.setBackgroundResource(R.color.colorPrimaryDark);
                                 TextView good_name_tv = new TextView(PrinterActivity.this);
+
                                 good_name_tv.setText(Farsi_number.PerisanNumber(g.getGoodName()));
-                                good_name_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                                good_name_tv.setTextSize(24);
-                                good_name_tv.setGravity(Gravity.CENTER);
+                                good_name_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1));
+                                good_name_tv.setTextSize(10);
+                                good_name_tv.setGravity(Gravity.RIGHT);
                                 good_name_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                                good_name_tv.setPadding(0, 10, 0, 0);
+                                good_name_tv.setPadding(0, 10, 5, 0);
 
+                                name_detail.addView(radif);
+                                name_detail.addView(ViewPager_goodname);
+                                name_detail.addView(good_name_tv);
 
-//                                TextView good_price_tv = new TextView(PrinterActivity.this);
-//                                good_price_tv.setText(Farsi_number.PerisanNumber(" فی :"+ decimalFormat.format(g.getPrice()) + "  ریال"));
-//                                good_price_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-//                                good_price_tv.setTextSize(24);
-//                                good_price_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                LinearLayoutCompat detail = new LinearLayoutCompat(PrinterActivity.this);
+                                detail.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+                                detail.setOrientation(LinearLayoutCompat.HORIZONTAL);
+                                detail.setWeightSum(9);
+                                detail.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
+                                TextView good_price_tv = new TextView(PrinterActivity.this);
+                                good_price_tv.setText(Farsi_number.PerisanNumber(decimalFormat.format(g.getPrice())));
+                                good_price_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 3));
+                                good_price_tv.setTextSize(9);
+                                good_price_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                good_price_tv.setGravity(Gravity.CENTER);
 
                                 TextView good_amount_tv = new TextView(PrinterActivity.this);
-                                good_amount_tv.setText(Farsi_number.PerisanNumber(" تعداد : " + g.getAmount() + " " + g.getUnitName() + "  فی :" + decimalFormat.format(g.getPrice()) + "  ریال"));
-                                //good_amount_tv.setText(Farsi_number.PerisanNumber(" تعداد : "+ g.getAmount() + " "+ g.getUnitName()));
-                                good_amount_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                                good_amount_tv.setTextSize(24);
+                                good_amount_tv.setText(Farsi_number.PerisanNumber(String.valueOf(g.getAmount())));
+                                good_amount_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 3));
+                                good_amount_tv.setTextSize(10);
                                 good_amount_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                good_amount_tv.setGravity(Gravity.CENTER);
 
                                 TextView good_totalprice_tv = new TextView(PrinterActivity.this);
-                                good_totalprice_tv.setText(Farsi_number.PerisanNumber("جمع کل  :  " + decimalFormat.format(g.getAmount() * g.getPrice()) + "  ریال"));
-                                good_totalprice_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-                                good_totalprice_tv.setTextSize(24);
+                                good_totalprice_tv.setText(Farsi_number.PerisanNumber(decimalFormat.format(g.getAmount() * g.getPrice())));
+                                good_totalprice_tv.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 3));
+                                good_totalprice_tv.setTextSize(9);
                                 good_totalprice_tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                                 good_totalprice_tv.setPadding(0, 0, 0, 10);
+                                good_totalprice_tv.setGravity(Gravity.CENTER);
 
+                                ViewPager ViewPager_sell1 = new ViewPager(PrinterActivity.this);
+                                ViewPager_sell1.setLayoutParams(new LinearLayoutCompat.LayoutParams(2, LinearLayoutCompat.LayoutParams.MATCH_PARENT));
+                                ViewPager_sell1.setBackgroundResource(R.color.colorPrimaryDark);
+                                ViewPager ViewPager_sell2 = new ViewPager(PrinterActivity.this);
+                                ViewPager_sell2.setLayoutParams(new LinearLayoutCompat.LayoutParams(2, LinearLayoutCompat.LayoutParams.MATCH_PARENT));
+                                ViewPager_sell2.setBackgroundResource(R.color.colorPrimaryDark);
+
+                                detail.addView(good_price_tv);
+                                detail.addView(ViewPager_sell1);
+                                detail.addView(good_amount_tv);
+                                detail.addView(ViewPager_sell2);
+                                detail.addView(good_totalprice_tv);
 
                                 ViewPager extra_ViewPager = new ViewPager(PrinterActivity.this);
                                 extra_ViewPager.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, 2));
                                 extra_ViewPager.setBackgroundResource(R.color.colorPrimaryDark);
 
+                                ViewPager extra_ViewPager1 = new ViewPager(PrinterActivity.this);
+                                extra_ViewPager1.setLayoutParams(new LinearLayoutCompat.LayoutParams(350, 2));
+                                extra_ViewPager1.setBackgroundResource(R.color.colorPrimaryDark);
 
-                                first_layout.addView(good_name_tv);
-                                //first_layout.addView(good_price_tv);
-                                first_layout.addView(good_amount_tv);
-                                first_layout.addView(good_totalprice_tv);
+
+                                first_layout.addView(name_detail);
                                 first_layout.addView(extra_ViewPager);
+                                first_layout.addView(detail);
+                                first_layout.addView(extra_ViewPager1);
+
                                 boby_good_layout.addView(first_layout);
 
 
                             }
+                            good_layout.addView(boby_good_layout);
+                            good_layout.addView(ViewPager_chap);
 
 
                             main_layout.addView(title_layout);
-                            main_layout.addView(boby_good_layout);
+                            main_layout.addView(good_layout);
                             main_layout.addView(total_layout);
-                            Image_info image_info = new Image_info(PrinterActivity.this);
-                            image_info.SaveImage_factor(loadBitmapFromView(main_layout), PreFac);
+
 
                             bixolonPrinterApi.printBitmap(loadBitmapFromView(main_layout)
                                     , BixolonPrinter.ALIGNMENT_CENTER
                                     , 400
-                                    , 50
+                                    , 70
                                     , false);
+                            Image_info image_info = new Image_info(PrinterActivity.this);
+                            image_info.SaveImage_factor(loadBitmapFromView(main_layout), PreFac);
 
                         } catch (Exception e) {
                             Log.e("ERROR", "Printing", e);

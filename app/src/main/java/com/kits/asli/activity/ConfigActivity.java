@@ -50,16 +50,6 @@ public class ConfigActivity extends AppCompatActivity {
         Button toreg = findViewById(R.id.config_to_reg);
 
 
-//        Button detailsett = findViewById(R.id.config_detailsetting);
-//        TextView email = findViewById(R.id.config_email);
-//        TextView gname = findViewById(R.id.config_name);
-//        TextView mobile = findViewById(R.id.config_mobile);
-//        TextView melicode = findViewById(R.id.config_melicode);
-//        TextView address = findViewById(R.id.config_address);
-//        TextView phone = findViewById(R.id.config_phone);
-//        TextView postalcode = findViewById(R.id.config_postalcode);
-//        TextView hdb = findViewById(R.id.config_bhd);
-
 
         TextView borker = findViewById(R.id.config_borker);
         TextView grid = findViewById(R.id.config_grid);
@@ -69,6 +59,7 @@ public class ConfigActivity extends AppCompatActivity {
 
         SwitchMaterial regselloff = findViewById(R.id.config_selloff);
         SwitchMaterial real_amount = findViewById(R.id.config_real_amount);
+        SwitchMaterial auto_rep = findViewById(R.id.config_autorep);
 
 
 
@@ -79,14 +70,7 @@ public class ConfigActivity extends AppCompatActivity {
 
 
         borker.setText(Farsi_number.PerisanNumber(auser.getBrokerCode()));
-//        email.setText(Farsi_number.PerisanNumber(auser.getEmail()));
-//        gname.setText(Farsi_number.PerisanNumber(auser.getNameFamily()));
-//        address.setText(Farsi_number.PerisanNumber(auser.getAddress()));
-//        mobile.setText(Farsi_number.PerisanNumber(auser.getMobile()));
-//        melicode.setText(Farsi_number.PerisanNumber(auser.getMelliCode()));
-//        phone.setText(Farsi_number.PerisanNumber(auser.getPhone()));
-//        postalcode.setText(Farsi_number.PerisanNumber(auser.getPostalCode()));
-//        hdb.setText(Farsi_number.PerisanNumber(auser.getBirthDate()));
+
 
         grid.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("grid", null))))));
         delay.setText(Farsi_number.PerisanNumber(String.valueOf(Integer.parseInt(Objects.requireNonNull(shPref.getString("delay", null))))));
@@ -102,6 +86,12 @@ public class ConfigActivity extends AppCompatActivity {
             real_amount.setChecked(true);
         } else {
             real_amount.setChecked(false);
+        }
+
+        if (shPref.getBoolean("auto_rep", true)) {
+            auto_rep.setChecked(true);
+        } else {
+            auto_rep.setChecked(false);
         }
 
         tohome.setOnClickListener(new View.OnClickListener() {

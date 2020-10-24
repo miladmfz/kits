@@ -131,7 +131,7 @@ public class Good_buy_Adapter extends RecyclerView.Adapter<Good_buy_Adapter.Good
 
                 @Override
                 public void onFailure(Call<String> call2, Throwable t) {
-                    Log.e("testanbar_onFailure", "" + t.toString());
+                    Log.e("asli_onFailure", "" + t.toString());
                 }
             });
 

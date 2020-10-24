@@ -280,7 +280,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Date mDate = frmt.parse(dc.getString(dc.getColumnIndex("xDay")));
         String xDate = utilities.getShamsidate(mDate);
 
-        query = "SELECT u.*,g.*,0 FactorAmount,  0 Shortage, 0 Price, 0 RowCode FROM Good g " +
+        query = "SELECT ss.*,u.*,g.*,0 FactorAmount,  0 Shortage, 0 Price, 0 RowCode FROM Good g " +
                 "Join Units u on UnitCode = GoodUnitRef " +
                 "Join(Select  GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack" +
                 " From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=ss.GoodRef ";
@@ -330,7 +330,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
 
         SQLiteDatabase database = getReadableDatabase();
-        String query = "SELECT u.*,g.*,0 FactorAmount,  0 Shortage, 0 Price, 0 RowCode FROM Good g " +
+        String query = "SELECT ss.*,u.*,g.*,0 FactorAmount,  0 Shortage, 0 Price, 0 RowCode FROM Good g " +
                 "Join Units u on UnitCode = GoodUnitRef " +
                 "Join(Select  GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack " +
                 "From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=ss.GoodRef " +
@@ -669,7 +669,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void update_explain(Integer pfcode, String explain) {
         SQLiteDatabase db = getWritableDatabase();
         String query = "Update PreFactorHeader set PreFactorExplain = '" + explain + "' Where IfNull(PreFactorCode,0)=" + pfcode;
-        Log.e("testanbar_query", query);
+        Log.e("asli_query", query);
         db.execSQL(query);
     }
 
@@ -694,7 +694,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void UpdatePreFactor(Integer PreFactorCode, Integer PreFactorKowsarCode, String PreFactorDate) {
         SQLiteDatabase db = getWritableDatabase();
         String query = "Update PreFactorHeader Set PreFactorKowsarCode = " + PreFactorKowsarCode + ", PreFactorKowsarDate = '" + PreFactorDate + "' Where ifnull(PreFactorCode ,0)= " + PreFactorCode + ";";
-        Log.e("testanbar_query", query);
+        Log.e("asli_query", query);
         db.execSQL(query);
     }
 

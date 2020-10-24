@@ -30,6 +30,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,12 +42,14 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.kits.asli.R;
 import com.kits.asli.adapters.Action;
 import com.kits.asli.adapters.Replication;
+import com.kits.asli.application.WManager;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.Farsi_number;
 
 import java.text.DecimalFormat;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,7 +60,6 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private DecimalFormat decimalFormat = new DecimalFormat("0,000");
     private Replication replication;
 
-    Location location;
     WorkManager workManager;
 
 
@@ -76,9 +80,18 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     public void init() {
         action = new Action(NavActivity.this);
         replication = new Replication(NavActivity.this);
-
-
         shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
+
+
+        if (shPref.getBoolean("auto_rep", true)) {
+            Constraints conster = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+            PeriodicWorkRequest req = new PeriodicWorkRequest.Builder(WManager.class, 15, TimeUnit.MINUTES)
+                    .setConstraints(conster)
+                    .build();
+            workManager = WorkManager.getInstance(NavActivity.this);
+            workManager.enqueue(req);
+        }
+
 
         Toolbar toolbar = findViewById(R.id.NavActivity_toolbar);
 
@@ -355,7 +368,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                         }
-                        Log.e("asim_msg=", "" + msg);
+                        Log.e("asli_msg=", "" + msg);
                     }
                 });
 
@@ -367,7 +380,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                         }
-                        Log.e("asim_msg=", "" + msg);
+                        Log.e("asli_msg=", "" + msg);
                     }
                 });
 
@@ -375,48 +388,16 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 
 
 
-//        Data data = new Data.Builder().putString("manager","donwloadfile").build();
-//        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-//        final PeriodicWorkRequest req= new PeriodicWorkRequest.Builder(Wmanager.class,15, TimeUnit.MINUTES).setInputData(data).setConstraints(constraints).build();
-//        //final OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).setConstraints(constraints).build();
-//
-//        // OneTimeWorkRequest req= new OneTimeWorkRequest.Builder(Wmanager.class).build();
-//
-//        workManager = WorkManager.getInstance(NavActivity.this);
-//        workManager.enqueue(req);
-//        workManager.getWorkInfoByIdLiveData(req.getId()).observe(NavActivity.this, new Observer<WorkInfo>() {
-//            @Override
-//            public void onChanged(WorkInfo workInfo) {
-//                if(workInfo!=null){
-//                    if(workInfo.getState()==WorkInfo.State.RUNNING){
-//                        workManager.cancelWorkById(req.getId());
-//
-//                    }
-//                }
-//            }
-//        });
+
 
 
     }
 
-    public void start(View v) {
-
-    }
-
-    public void stop(View v) {
-
-
-    }
 
     public void test_fun(View v) {
 
-        intent = new Intent(NavActivity.this, PrinterActivity.class);
-
-        startActivity(intent);
 
 
-//        BackgroundJob bjob=new BackgroundJob(getApplicationContext());
-//        new Thread(bjob).start();
 //        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NavActivity.this);
 //        if (ActivityCompat.checkSelfPermission(NavActivity.this
 //                , Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -467,6 +448,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
 //                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
 //                    44);
 //        }
+
+
     }
 
 }

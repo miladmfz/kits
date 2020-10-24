@@ -17,8 +17,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.kits.asli.R;
+import com.kits.asli.application.WManager;
 import com.kits.asli.model.DatabaseHelper;
 import com.kits.asli.model.UserInfo;
 
@@ -28,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -36,6 +40,8 @@ public class SplashActivity extends AppCompatActivity {
     SQLiteDatabase database;
     SharedPreferences shPref;
     SharedPreferences.Editor sEdit;
+    WorkManager workManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +62,18 @@ public class SplashActivity extends AppCompatActivity {
     public void init() {
         shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
         boolean firstStart = shPref.getBoolean("firstStart", true);
+        boolean start1 = shPref.getBoolean("start1", true);
         sEdit = shPref.edit();
         sEdit.putString("prefactor_code", "0");
         sEdit.putString("prefactor_good", "0");
 
         sEdit.apply();
+
+        if (start1) {
+            sEdit.putBoolean("start1", false);
+            sEdit.putBoolean("auto_rep", true);
+            sEdit.apply();
+        }
 
         if (firstStart) {
             Registration();
@@ -74,6 +87,7 @@ public class SplashActivity extends AppCompatActivity {
             sEdit.putBoolean("activestack", true);
             sEdit.putBoolean("goodamount", true);
             sEdit.putString("brokerstack", "0");
+            //           sEdit.putBoolean("auto_rep", true);
 
             sEdit.apply();
         }

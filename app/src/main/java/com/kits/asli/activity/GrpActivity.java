@@ -229,14 +229,14 @@ public class GrpActivity extends AppCompatActivity {
                     line.setVisibility(View.GONE);
                     change_search.setText("جستجوی عادی");
                     conter = conter + 1;
-                    Log.e("testanbar_conter", "" + conter);
+                    Log.e("asli_conter", "" + conter);
                 } else {
                     line_pro.setVisibility(View.GONE);
                     filter_active.setVisibility(View.GONE);
                     line.setVisibility(View.VISIBLE);
                     change_search.setText("جستجوی پیشرفته");
                     conter = conter - 1;
-                    Log.e("testanbar_conter", "" + conter);
+                    Log.e("asli_conter", "" + conter);
                 }
             }
         });
