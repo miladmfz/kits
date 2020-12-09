@@ -194,6 +194,7 @@ public class CustomerActivity extends AppCompatActivity {
         for (Customer city : citys) {
             city_array.add(city.getCityName());
         }
+
         ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(CustomerActivity.this,
                 android.R.layout.simple_spinner_item, city_array);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.kits.asli.BuildConfig;
 import com.kits.asli.R;
 import com.kits.asli.application.WManager;
 import com.kits.asli.model.DatabaseHelper;
@@ -59,6 +61,11 @@ public class SplashActivity extends AppCompatActivity {
 
     //***************************************************************************************
 
+    public void update() {
+
+
+    }
+
     public void init() {
         shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
         boolean firstStart = shPref.getBoolean("firstStart", true);
@@ -69,11 +76,23 @@ public class SplashActivity extends AppCompatActivity {
 
         sEdit.apply();
 
-        if (start1) {
-            sEdit.putBoolean("start1", false);
-            sEdit.putBoolean("auto_rep", true);
-            sEdit.apply();
-        }
+
+//
+//        try {
+//            String databaseversion="";
+//            String versionname=BuildConfig.VERSION_NAME;
+//            Cursor cd = database.rawQuery("Select DataValue From Config Where KeyValue = 'VersionInfo'", null);
+//            cd.moveToFirst();
+//            databaseversion=cd.getString(0);
+//            cd.close();
+//            if(!versionname.equals(databaseversion)){
+//                database.execSQL("DROP TABLE IF EXISTS Good");
+//
+//            }
+//        }catch (Exception exceptione){
+//            Log.e("try_exceptione",exceptione.getMessage());
+//        }
+
 
         if (firstStart) {
             Registration();
@@ -186,6 +205,7 @@ public class SplashActivity extends AppCompatActivity {
         database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'Customer_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'Customer_LastRepCode')");
         database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'BrokerCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'BrokerCode')");
         database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'KsrImage_LastRepCode', '0' Where Not Exists(Select * From Config Where KeyValue = 'KsrImage_LastRepCode')");
+        database.execSQL("INSERT INTO config(keyvalue, datavalue) Select 'VersionInfo', '" + BuildConfig.VERSION_NAME + "' Where Not Exists(Select * From Config Where KeyValue = 'VersionInfo')");
 
 
         database.execSQL("Create Index IF Not Exists IX_GoodGroup_GoodRef on GoodGroup (GoodRef)");
@@ -193,6 +213,8 @@ public class SplashActivity extends AppCompatActivity {
         database.execSQL("Create Index IF Not Exists IX_PreFactor_GoodRef on PreFactor (GoodRef)");
         database.execSQL("Create Index IF Not Exists IX_PreFactor_GoodRef on PreFactor (PreFactorCode)");
         database.execSQL("Create Index IF Not Exists IX_Good_GoodUnitRef on Good (GoodUnitRef)");
+        database.execSQL("CREATE INDEX IF NOT EXISTS IX_GoodStack_GoodRef ON GoodStack (GoodRef, StackRef)");
+        database.execSQL("CREATE INDEX IF NOT EXISTS IX_Good_GoodName ON Good (GoodName)");
 
     }
 

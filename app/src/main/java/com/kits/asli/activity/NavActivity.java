@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.kits.asli.BuildConfig;
 import com.kits.asli.R;
 import com.kits.asli.adapters.Action;
 import com.kits.asli.adapters.Replication;
@@ -83,14 +84,14 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         shPref = getSharedPreferences("act", Context.MODE_PRIVATE);
 
 
-        if (shPref.getBoolean("auto_rep", true)) {
-            Constraints conster = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            PeriodicWorkRequest req = new PeriodicWorkRequest.Builder(WManager.class, 15, TimeUnit.MINUTES)
-                    .setConstraints(conster)
-                    .build();
-            workManager = WorkManager.getInstance(NavActivity.this);
-            workManager.enqueue(req);
-        }
+//        if (shPref.getBoolean("auto_rep", true)) {
+//            Constraints conster = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+//            PeriodicWorkRequest req = new PeriodicWorkRequest.Builder(WManager.class, 15, TimeUnit.MINUTES)
+//                    .setConstraints(conster)
+//                    .build();
+//            workManager = WorkManager.getInstance(NavActivity.this);
+//            workManager.enqueue(req);
+//        }
 
 
         Toolbar toolbar = findViewById(R.id.NavActivity_toolbar);
@@ -114,7 +115,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
             navigationView.getMenu().findItem(R.id.nav_tajdid).setVisible(true);
         }
         navigationView.setNavigationItemSelectedListener(this);
-
+        TextView tv_versionname = findViewById(R.id.header_versionname);
+        tv_versionname.setText(BuildConfig.VERSION_NAME);
 
         noti();
 

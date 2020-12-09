@@ -569,6 +569,7 @@ public class Replication {
                                         break;
                                     case "D":
                                     case "d":
+
                                         database.execSQL("delete from good where goodcode = " + code + " and not exists (select 1 From PreFactor Where GoodRef =" + code + ")");
                                         break;
                                 }

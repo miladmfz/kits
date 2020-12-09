@@ -119,7 +119,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         String cond = " Where 1=1";
-        String query = "SELECT *,0 FactorAmount, 0 Shortage, 0 Price, 0 RowCode  FROM Good Join Units on UnitCode = GoodUnitRef Join(Select  goodref, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=GoodRef ";
+        String query = "SELECT *,0 FactorAmount, 0 Shortage, 0 Price, 0 RowCode  " +
+                "FROM Good Join Units on UnitCode = GoodUnitRef " +
+                "Join(Select  goodref, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount" +
+                ",ActiveStack From GoodStack  " + stkCond + " Group By GoodRef) ss on GoodCode=GoodRef ";
 
 
         if (aOnlyAvailable) {
@@ -202,11 +205,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Good getGoodByCode(Integer code, Integer pfcode) {
         SharedPreferences shPref = mContext.getSharedPreferences("act", Context.MODE_PRIVATE);
         String stkCond = "Where StackRef in (" + shPref.getString("brokerstack", null) + ")";
+        String query = "";
+        if (mContext.getString(R.string.app_name).equals("چشمه")) {
+            query = "SELECT u.*, g.*, ss.*,"
+                    + "(Select s.Amount From Goodstack s Where GoodRef=GoodCode And StackRef=1001) StackAmount2,"
+                    + "(Select s.Amount From Goodstack s Where GoodRef=GoodCode And StackRef=1001) StackAmount3,"
+                    + " sw.FactorAmount FROM Good g Join Units u on UnitCode = GoodUnitRef "
+                    + " Join (Select GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack"
+                    + " From GoodStack  " + stkCond + " Group By GoodRef) ss on ss.GoodRef = GoodCode "
+                    + " Left Join (Select GoodRef, Sum(FactorAmount) FactorAmount "
+                    + " From PreFactor Where PreFactorCode =" + pfcode + " Group BY GoodRef) sw on sw.GoodRef = GoodCode "
+                    + " WHERE GoodCode = " + code + " or FirstBarCode = '" + code + "' or Isbn ='" + code + "'";
+        } else {
+            query = "SELECT u.*, g.*, ss.*,"
+                    + " sw.FactorAmount FROM Good g Join Units u on UnitCode = GoodUnitRef "
+                    + " Join (Select GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack"
+                    + " From GoodStack  " + stkCond + " Group By GoodRef) ss on ss.GoodRef = GoodCode "
+                    + " Left Join (Select GoodRef, Sum(FactorAmount) FactorAmount "
+                    + " From PreFactor Where PreFactorCode =" + pfcode + " Group BY GoodRef) sw on sw.GoodRef = GoodCode "
+                    + " WHERE GoodCode = " + code + " or FirstBarCode = '" + code + "' or Isbn ='" + code + "'";
+        }
 
-        String query = "SELECT u.*, g.*, ss.*, sw.FactorAmount FROM Good g Join Units u on UnitCode = GoodUnitRef "
-                + " Join (Select GoodRef, Sum(Amount) as StackAmount, Sum(ReservedAmount) as ReservedAmount,ActiveStack From GoodStack  " + stkCond + " Group By GoodRef) ss on ss.GoodRef = GoodCode "
-                + " Left Join (Select GoodRef, Sum(FactorAmount) FactorAmount From PreFactor Where PreFactorCode =" + pfcode + " Group BY GoodRef) sw on sw.GoodRef = GoodCode "
-                + " WHERE GoodCode = " + code + " or FirstBarCode = '" + code + "' or Isbn ='" + code + "'";
+
         Good gooddetail = new Good();
         SQLiteDatabase database = getReadableDatabase();
         Cursor c = database.rawQuery(query, null);
